@@ -33,18 +33,30 @@ function performSearch(query) {
 
 function setActiveNav() {
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const currentDir = window.location.pathname; // 获取完整路径用于判断分类
+
     const navLinks = document.querySelectorAll('.flex-1.space-y-1 a, nav.hidden.md\\:flex a');
 
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
+        let isActive = false;
+
+        // 检查是否是当前页面
         if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-            if (href === 'index.html' && currentPath === 'index.html') {
-                link.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
-                link.classList.remove('text-slate-500', 'dark:text-slate-400', 'hover:text-slate-900', 'dark:hover:text-slate-100');
-            } else if (href === currentPath) {
-                link.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
-                link.classList.remove('text-slate-500', 'dark:text-slate-400', 'hover:text-slate-900', 'dark:hover:text-slate-100');
+            isActive = true;
+        }
+        // 特殊处理：当在文章详情页时，根据页面数据属性判断应高亮哪个分类
+        else if (document.body.hasAttribute('data-category')) {
+            const category = document.body.getAttribute('data-category');
+            if ((category.includes('embedded') || category.includes('iot')) &&
+                (href.includes('emed.html') || link.textContent.includes('物联网'))) {
+                isActive = true;
             }
+        }
+
+        if (isActive) {
+            link.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
+            link.classList.remove('text-slate-500', 'dark:text-slate-400', 'hover:text-slate-900', 'dark:hover:text-slate-100');
         } else {
             link.classList.remove('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
         }

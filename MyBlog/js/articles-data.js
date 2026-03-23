@@ -35,5 +35,17 @@ const articlesData = [
         authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDZ0-ip_3kEI2vCMNlWxfaZ-lyunG9NFLOfUcOP1R8ciVnQOqMIws8ZwstmbP4Gob3DBVjmaomuM3Mc4IkUVFgOS58LaawIFWJAEp9KjFchIQTxe2l-gGnQL3J6i4KznoLfRhLPEjuVQIN21M75BBEnW0miKxsiVpa8mj_bm3NdiN9DVtP2jTMUkVMlPjbIycYnWbS8xa_4wnFGH2ZHCx_T5MDxbeOG6tk4IDo1Y6QS_Qs39REFf7Xx7OxT0gKy5I9az-RqaYF2aljp",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCi7hB5hQEV6-PV1tSdHFkLzliiclyWGlIsMyNt6QFlxZ1-yx9xQm8YWhrSi_EQ46KQAt1WJaYGHegu8xkA50SZfCiOtyio4Da6WpbPfhUf7H4hFe_zFzacm1sw3_5Q9jJgSVW-X8WDt2czJ1DEvKeSug1EesdEpM_E4lVYnKZwgniR02KR0PE5D02oVM-ywJfvjUqe4hpC5ZdLoZswA6Barw9Q5nZSMXXkez2pGfmVv7b3FM4ZHAUFJG9Mza8TvguPFsfchAnyKmcl",
         url: "articles/serverless-practice.html"
+    },
+    {
+        id: 3,
+        title: "Serverless 大规模应用实践：应对月均千万级请求",
+        summary: "深入了解冷启动优化、状态管理以及当你的基础设施完全是瞬态时的可观测性实战策略。",
+        category: "DevOps",
+        date: "2024年5月12日",
+        readTime: "阅读时间 15 分钟",
+        author: "Marco K.",
+        authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDZ0-ip_3kEI2vCMNlWxfaZ-lyunG9NFLOfUcOP1R8ciVnQOqMIws8ZwstmbP4Gob3DBVjmaomuM3Mc4IkUVFgOS58LaawIFWJAEp9KjFchIQTxe2l-gGnQL3J6i4KznoLfRhLPEjuVQIN21M75BBEnW0miKxsiVpa8mj_bm3NdiN9DVtP2jTMUkVMlPjbIycYnWbS8xa_4wnFGH2ZHCx_T5MDxbeOG6tk4IDo1Y6QS_Qs39REFf7Xx7OxT0gKy5I9az-RqaYF2aljp",
+        coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCi7hB5hQEV6-PV1tSdHFkLzliiclyWGlIsMyNt6QFlxZ1-yx9xQm8YWhrSi_EQ46KQAt1WJaYGHegu8xkA50SZfCiOtyio4Da6WpbPfhUf7H4hFe_zFzacm1sw3_5Q9jJgSVW-X8WDt2czJ1DEvKeSug1EesdEpM_E4lVYnKZwgniR02KR0PE5D02oVM-ywJfvjUqe4hpC5ZdLoZswA6Barw9Q5nZSMXXkez2pGfmVv7b3FM4ZHAUFJG9Mza8TvguPFsfchAnyKmcl",
+        url: "articles/serverless-practice.html"
     }
 ];
