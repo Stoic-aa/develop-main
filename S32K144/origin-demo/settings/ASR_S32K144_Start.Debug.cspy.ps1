@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "D:\IAR\common\bin\cspybat" -f "D:\Autosar\AUTOSAR_TOOLs\S32K144_SIP\MICROSAR\CBD1800257_D01_S32K1xx\Applications\S32K144_Start_new_IAR\settings\ASR_S32K144_Start.Debug.general.xcl" --backend -f "D:\Autosar\AUTOSAR_TOOLs\S32K144_SIP\MICROSAR\CBD1800257_D01_S32K1xx\Applications\S32K144_Start_new_IAR\settings\ASR_S32K144_Start.Debug.driver.xcl" 
+& "D:\IAR\common\bin\cspybat" -f "C:\Users\20969\Desktop\Develop-main\S32K144\origin-demo\settings\ASR_S32K144_Start.Debug.general.xcl" --backend -f "C:\Users\20969\Desktop\Develop-main\S32K144\origin-demo\settings\ASR_S32K144_Start.Debug.driver.xcl" 
 }
 else
 {
-& "D:\IAR\common\bin\cspybat" -f "D:\Autosar\AUTOSAR_TOOLs\S32K144_SIP\MICROSAR\CBD1800257_D01_S32K1xx\Applications\S32K144_Start_new_IAR\settings\ASR_S32K144_Start.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\Autosar\AUTOSAR_TOOLs\S32K144_SIP\MICROSAR\CBD1800257_D01_S32K1xx\Applications\S32K144_Start_new_IAR\settings\ASR_S32K144_Start.Debug.driver.xcl" 
+& "D:\IAR\common\bin\cspybat" -f "C:\Users\20969\Desktop\Develop-main\S32K144\origin-demo\settings\ASR_S32K144_Start.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\20969\Desktop\Develop-main\S32K144\origin-demo\settings\ASR_S32K144_Start.Debug.driver.xcl" 
 }

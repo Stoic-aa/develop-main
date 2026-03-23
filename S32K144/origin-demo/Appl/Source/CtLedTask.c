@@ -163,9 +163,15 @@ LedCnt++;
 
 LedState ^= 0x01;
 
+static unsigned char RearLeftPositon =0;
+static unsigned char RearRightPositon=0;
 
 
  Dio_WriteChannel(112,LedState);
+
+ Rte_Write_FrontInterLight_bool_Signal(1);
+ Rte_Read_CtLedTask_RearLeft_WindowPosition_u8_Signal(&RearLeftPositon);
+ Rte_Read_CtLedTask_RearRight_WindowPosition_u8_Signal(&RearRightPositon);
 
 /**********************************************************************************************************************
  * DO NOT CHANGE THIS COMMENT!           << End of runnable implementation >>               DO NOT CHANGE THIS COMMENT!
