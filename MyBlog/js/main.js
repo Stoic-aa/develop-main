@@ -18,12 +18,22 @@ function performSearch(query) {
     alert(`正在搜索: ${query}`);
 }
 
+function normalizePath(path) {
+    return (path || '')
+        .split('?')[0]
+        .split('#')[0]
+        .trim()
+        .split('/')
+        .filter(Boolean)
+        .pop() || '';
+}
+
 function setActiveNav() {
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const fullPath = window.location.pathname;
+    const fileName = normalizePath(fullPath) || 'index.html';
     const navLinks = document.querySelectorAll('.flex-1.space-y-1 a');
 
     navLinks.forEach(link => {
-        // 移除所有可能的激活样式（包括硬编码的）
         link.classList.remove(
             'bg-blue-50',
             'dark:bg-blue-900/20',
@@ -32,7 +42,6 @@ function setActiveNav() {
             'rounded-lg'
         );
 
-        // 统一添加默认的未激活样式
         link.classList.add(
             'text-slate-500',
             'dark:text-slate-400',
@@ -40,16 +49,29 @@ function setActiveNav() {
             'dark:hover:text-slate-100'
         );
 
-        // 检查当前链接是否匹配当前页面路径
-        const linkHref = link.getAttribute('href');
-        if (linkHref === currentPath) {
-            // 移除未激活样式并添加激活样式
+        const linkHref = normalizePath(link.getAttribute('href'));
+        let isMatch = (linkHref === fileName);
+
+        if (!isMatch && !['index.html', 'emed.html', 'web.html', 'ai.html'].includes(fileName)) {
+            if (typeof articlesData !== 'undefined' && Array.isArray(articlesData)) {
+                const currentArticle = articlesData.find(article => {
+                    return normalizePath(article.url) === fileName;
+                });
+
+                if (currentArticle && normalizePath(currentArticle.categoryPage) === linkHref) {
+                    isMatch = true;
+                }
+            }
+        }
+
+        if (isMatch) {
             link.classList.remove(
                 'text-slate-500',
                 'dark:text-slate-400',
                 'hover:text-slate-900',
                 'dark:hover:text-slate-100'
             );
+
             link.classList.add(
                 'bg-blue-50',
                 'dark:bg-blue-900/20',
@@ -60,6 +82,9 @@ function setActiveNav() {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', setActiveNav);
+
 function setupDarkModeToggle() {
     const storedTheme = localStorage.getItem('theme');
 

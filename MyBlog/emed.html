@@ -98,80 +98,49 @@
     </style>
 
     <script>
-        // 页面加载完成后插入 header 组件
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('components/header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // 并行加载所有组件
+                const [headerHtml, sidebarHtml, footerHtml, rightSidebarHtml] = await Promise.all([
+                    fetch('components/header.html').then(r => r.text()),
+                    fetch('components/sidebar.html').then(r => r.text()),
+                    fetch('components/footer.html').then(r => r.text()),
+                    fetch('components/right-sidebar.html').then(r => r.text())
+                ]);
 
-                    // 确保 header 组件已加载后再初始化搜索功能
-                    setTimeout(() => {
-                        const searchInput = document.querySelector('input[placeholder*="搜索"]');
-                        if (searchInput) {
-                            searchInput.addEventListener('keypress', function (e) {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    if (typeof performSearch === 'function') {
-                                        performSearch(this.value);
-                                    }
-                                }
-                            });
+                // 插入组件
+                document.getElementById('header-placeholder').innerHTML = headerHtml;
+                document.getElementById('sidebar-placeholder').innerHTML = sidebarHtml;
+                document.getElementById('footer-placeholder').innerHTML = footerHtml;
+
+                const placeholders = document.querySelectorAll('.right-sidebar-placeholder');
+                placeholders.forEach(placeholder => {
+                    placeholder.innerHTML = rightSidebarHtml;
+                });
+
+                // 初始化搜索功能
+                const searchInput = document.querySelector('input[placeholder*="搜索"]');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (typeof performSearch === 'function') {
+                                performSearch(this.value);
+                            }
                         }
-
-                        // 再次执行导航高亮，确保所有组件都已加载
-                        if (typeof setActiveNav === 'function') {
-                            setActiveNav();
-                        }
-                    }, 0);
-                })
-                .catch(error => console.error('Error loading header:', error));
-        });
-    </script>
-
-    <script>
-        // 页面加载完成后插入 sidebar 组件，并在插入后执行导航高亮
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('components/sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-placeholder').innerHTML = data;
-
-                    // 确保侧边栏组件已加载后再执行导航高亮
-                    setTimeout(() => {
-                        if (typeof setActiveNav === 'function') {
-                            setActiveNav();
-                        }
-                    }, 0);
-                })
-                .catch(error => console.error('Error loading sidebar:', error));
-        });
-    </script>
-
-    <script>
-        // 页面加载完成后插入 footer 组件
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('components/footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('footer-placeholder').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading header:', error));
-        });
-    </script>
-
-    <script>
-        // 页面加载完成后插入 right-sidebar 组件
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('components/right-sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    const placeholders = document.querySelectorAll('.right-sidebar-placeholder');
-                    placeholders.forEach(placeholder => {
-                        placeholder.innerHTML = data;
                     });
-                })
-                .catch(error => console.error('Error loading right sidebar:', error));
+                }
+
+                // 等待DOM完全更新后执行导航高亮
+                setTimeout(() => {
+                    if (typeof setActiveNav === 'function') {
+                        setActiveNav();
+                    }
+                }, 0);
+
+            } catch (error) {
+                console.error('Error loading components:', error);
+            }
         });
     </script>
 

@@ -10,7 +10,8 @@ const articlesData = [
         author: "Alex Rivera",
         authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDKMypWjifb2rCLhTcYoblv9M4Nzt3n7VxrjKVXBf3O1D4_2aWlEBLzKXPr7EXKyHyoYzn7BV8HLPqQvI-PEOqHQdcm9h09DZVyZ-bBHK3W-o0lPJvapVfuJeN6xyi4aDHWJHTohRe0nHF6zLQcvDtQHcdXBMoBir7UcsgfsdbINBNmEl3rztbIqVowKtbjzir8pvh4XqeCSCW8fuRr9mzmv2piqpO9uiQUuZTVK1nJmOUMpW538cIfYW7uZp7dDvGcwN3TpGdibqs2",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuD4lia_ItABEPaIHJLU_XLtHbHMvjXj3KIZrvA3oMM-qMPFnvMeAOzwo-lkM8XPh2SxZFqXcMi4zVHrTl6_uVAxMNAqAPuCr6m6xGcLCsmnLRMtayPXlF5DFKUyVj0F8FOB2x5HN3HaqUJpDA8hA-VikCQK0uHyWH3BT6ATLfsNNwIVfH2D8Ay1ARCIYSmMbHC6iFJ-eHWhGvACwMV_OiN9Ni17j8qC0WNGB18-fwRPK_9KML0Z6w-TFJGgIxkruhrRuzuDkSaGFyLd",
-        url: "articles/rust-embedded-iot.html"
+        url: "articles/rust-embedded-iot.html",
+        categoryPage: "emed.html"  // 新增：指定该文章属于哪个分类页面
     },
     {
         id: 2,
@@ -22,7 +23,8 @@ const articlesData = [
         author: "David Park",
         authorAvatar: "https://example.com/avatar4.jpg",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCJAUZLKMCBkMucCNSE3nVKTxatTs54ABVdX7i7hL2O2v34ruTv68e8V-RT1ihvJ_a3bAftl8YoSs1W0R87fliHOaYFeeDw62C7KXvpK4xzm_7P1mJDvXncOY8HsgjsDT-jvq-rN8IJXdYOl1wt1IuxWAs7GkOFFw7anp48x6V5df0GB2nCk-HLkG5cumzTjrk4qc__SoYxpiO0N_BhTSxLYgXoPUr-a4uvyYp6xEtGUpAGSd1605wQIe4T43bRbKlCKvo8gztYINHH",
-        url: "articles/riscv-embedded-ai.html"
+        url: "articles/riscv-embedded-ai.html",
+        categoryPage: "emed.html"  // 新增：RISC-V 也属于物联网/嵌入式分类
     },
     {
         id: 3,
@@ -34,7 +36,8 @@ const articlesData = [
         author: "Michael Brown",
         authorAvatar: "https://example.com/avatar5.jpg",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuAxjb5TCwb_5SpX2NUCdD4Ko8pq3nOI1PWtR0r9L3jnsnSnh4SOYyfiDzJ2T1y3wXkJ9WRenhFPo41BFDoVUBQ0Q2uLlDZhePjKyVyn86EKQzQgnE_e4wUmyL20Ff5zHQXlxtT-zrcrM11JaiHaGl3QI09Nbj4oywTkS0rjud1JCUZSgI7Wz_lcA_-rBFx_u-BRdGS108aHE1RXYPadDOJTpZx5SoW1QOHndNOVygSrwidn2FQTybl1_Qz_xWh_WTS5s8jfBcMLCtMw",
-        url: "articles/autosar-software-defined-cars.html"
+        url: "articles/autosar-software-defined-cars.html",
+        categoryPage: "emed.html"  // 新增：汽车电子也属于物联网/嵌入式分类
     },
     {
         id: 4,
@@ -46,7 +49,8 @@ const articlesData = [
         author: "Emily Wilson",
         authorAvatar: "https://example.com/avatar6.jpg",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBNIzffedsv-yVqaa3bNM2yDE2toDi57VhjgRSf6lszMLbryuT_bqE0JrfU6DKsosLi3e7BhOo2Wb_RzWviO0WvGYwaQuMvOjenQ5kK4dvPt7DgcxuvFuweqY2CD00oYo3n3OuXV0Yjt6xocoSD0OPOo_4nXU0jbzCzdbFYcsORq_gRrF8JSht1s7xiTqFw98jz5s8CBLMyNLLxTQkYKXE9y9jgN9dfGyy15bFjK4VRbTW0ch-yI9i2KmwdL6vCMXmMP1f3kKE7Fapn",
-        url: "articles/hardware-root-of-trust-iot-security.html"
+        url: "articles/hardware-root-of-trust-iot-security.html",
+        categoryPage: "emed.html"  // 新增：安全防御也属于物联网/嵌入式分类
     },
     {
         id: 5,
@@ -58,7 +62,8 @@ const articlesData = [
         author: "Sarah Chen",
         authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBd4rrSHioaUJt_ccGLke7uKoFhs8lSCMik77Eg9_YfEMlg4kzF8qXFPMuLtqa1uDIbKVrmzBfURDNSXSEhqw3COESqbS1wkDT8Jqg4MXUVazxfIAFFwEfji6YTn5J6uvQqbRGSy9uEEZKSTc44Lyf9RfuYXNgES5ee0ftJfjNfu4YafoVVFz1uqFbctD09fNRqpw5foC6A1aQUbuhYQE3kEMWMu0_FlhWczSLCC89PH-WPzS3WeX4ofTn5ltPlRiqtTd-LncIYNA7K",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCF9jYyaPMKuyxfDG0_f671SykyN4SY7Vq6pC3_5PMFtUl80fSEpF9l2TgocNCm9FrGMtjlpXscrxSP-WI_WlIGZHB1tVE98oUEU_h2__CJytcgAsL6QByuuQsMo_QIK-QCLFDBDuyrBtrU1Hgc4xAwAjZBbf5f2eZFT2DF1YkgFtY0uPad5G4Xom3GViBe_t1AuJnVSr5_QlGfbU0t4UzMR6yKux4_lM1p1r20gFuVC7M2kj8obQFispD_KPaLv0rADiptQnvXGphu",
-        url: "articles/ui-design-philosophy.html"
+        url: "articles/ui-design-philosophy.html",
+        categoryPage: "web.html"  // 新增：UI设计属于Web开发分类
     },
     {
         id: 6,
@@ -70,6 +75,7 @@ const articlesData = [
         author: "Marco K.",
         authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuDZ0-ip_3kEI2vCMNlWxfaZ-lyunG9NFLOfUcOP1R8ciVnQOqMIws8ZwstmbP4Gob3DBVjmaomuM3Mc4IkUVFgOS58LaawIFWJAEp9KjFchIQTxe2l-gGnQL3J6i4KznoLfRhLPEjuVQIN21M75BBEnW0miKxsiVpa8mj_bm3NdiN9DVtP2jTMUkVMlPjbIycYnWbS8xa_4wnFGH2ZHCx_T5MDxbeOG6tk4IDo1Y6QS_Qs39REFf7Xx7OxT0gKy5I9az-RqaYF2aljp",
         coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCi7hB5hQEV6-PV1tSdHFkLzliiclyWGlIsMyNt6QFlxZ1-yx9xQm8YWhrSi_EQ46KQAt1WJaYGHegu8xkA50SZfCiOtyio4Da6WpbPfhUf7H4hFe_zFzacm1sw3_5Q9jJgSVW-X8WDt2czJ1DEvKeSug1EesdEpM_E4lVYnKZwgniR02KR0PE5D02oVM-ywJfvjUqe4hpC5ZdLoZswA6Barw9Q5nZSMXXkez2pGfmVv7b3FM4ZHAUFJG9Mza8TvguPFsfchAnyKmcl",
-        url: "articles/serverless-practice.html"
+        url: "articles/serverless-practice.html",
+        categoryPage: "web.html"  // 新增：Serverless属于Web开发分类
     },
 ];
