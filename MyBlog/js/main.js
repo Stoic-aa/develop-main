@@ -1,18 +1,5 @@
 // 博客通用功能脚本
 document.addEventListener('DOMContentLoaded', function () {
-    // 搜索功能
-    const searchInput = document.querySelector('input[placeholder*="搜索"]');
-    if (searchInput) {
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performSearch(this.value);
-            }
-        });
-    }
-
-    // 导航高亮
-    setActiveNav();
 
     // 暗黑模式切换
     setupDarkModeToggle();
@@ -33,36 +20,46 @@ function performSearch(query) {
 
 function setActiveNav() {
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    const currentDir = window.location.pathname; // 获取完整路径用于判断分类
-
-    const navLinks = document.querySelectorAll('.flex-1.space-y-1 a, nav.hidden.md\\:flex a');
+    const navLinks = document.querySelectorAll('.flex-1.space-y-1 a');
 
     navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        let isActive = false;
+        // 移除所有可能的激活样式（包括硬编码的）
+        link.classList.remove(
+            'bg-blue-50',
+            'dark:bg-blue-900/20',
+            'text-blue-700',
+            'dark:text-blue-300',
+            'rounded-lg'
+        );
 
-        // 检查是否是当前页面
-        if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-            isActive = true;
-        }
-        // 特殊处理：当在文章详情页时，根据页面数据属性判断应高亮哪个分类
-        else if (document.body.hasAttribute('data-category')) {
-            const category = document.body.getAttribute('data-category');
-            if ((category.includes('embedded') || category.includes('iot')) &&
-                (href.includes('emed.html') || link.textContent.includes('物联网'))) {
-                isActive = true;
-            }
-        }
+        // 统一添加默认的未激活样式
+        link.classList.add(
+            'text-slate-500',
+            'dark:text-slate-400',
+            'hover:text-slate-900',
+            'dark:hover:text-slate-100'
+        );
 
-        if (isActive) {
-            link.classList.add('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
-            link.classList.remove('text-slate-500', 'dark:text-slate-400', 'hover:text-slate-900', 'dark:hover:text-slate-100');
-        } else {
-            link.classList.remove('bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300');
+        // 检查当前链接是否匹配当前页面路径
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPath) {
+            // 移除未激活样式并添加激活样式
+            link.classList.remove(
+                'text-slate-500',
+                'dark:text-slate-400',
+                'hover:text-slate-900',
+                'dark:hover:text-slate-100'
+            );
+            link.classList.add(
+                'bg-blue-50',
+                'dark:bg-blue-900/20',
+                'text-blue-700',
+                'dark:text-blue-300',
+                'rounded-lg'
+            );
         }
     });
 }
-
 function setupDarkModeToggle() {
     const storedTheme = localStorage.getItem('theme');
 

@@ -104,20 +104,47 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('header-placeholder').innerHTML = data;
+
+                    // 确保 header 组件已加载后再初始化搜索功能
+                    setTimeout(() => {
+                        const searchInput = document.querySelector('input[placeholder*="搜索"]');
+                        if (searchInput) {
+                            searchInput.addEventListener('keypress', function (e) {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    if (typeof performSearch === 'function') {
+                                        performSearch(this.value);
+                                    }
+                                }
+                            });
+                        }
+
+                        // 再次执行导航高亮，确保所有组件都已加载
+                        if (typeof setActiveNav === 'function') {
+                            setActiveNav();
+                        }
+                    }, 0);
                 })
                 .catch(error => console.error('Error loading header:', error));
         });
     </script>
 
     <script>
-        // 页面加载完成后插入 header 组件
+        // 页面加载完成后插入 sidebar 组件，并在插入后执行导航高亮
         document.addEventListener('DOMContentLoaded', function () {
             fetch('components/sidebar.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('sidebar-placeholder').innerHTML = data;
+
+                    // 确保侧边栏组件已加载后再执行导航高亮
+                    setTimeout(() => {
+                        if (typeof setActiveNav === 'function') {
+                            setActiveNav();
+                        }
+                    }, 0);
                 })
-                .catch(error => console.error('Error loading header:', error));
+                .catch(error => console.error('Error loading sidebar:', error));
         });
     </script>
 
