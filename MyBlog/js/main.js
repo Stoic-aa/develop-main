@@ -12,12 +12,26 @@ let currentPage = 0;
 const ARTICLES_PER_PAGE = 5;
 
 function initializeArticles() {
-    // 按日期从新到旧排序
-    allSortedArticles = [...articlesData].sort((a, b) => {
-        const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
-        const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
-        return new Date(dateB) - new Date(dateA);
-    });
+    // 获取当前页面路径
+    const currentPath = window.location.pathname;
+    const isHomepage = currentPath.includes('index.html') || currentPath.endsWith('/');
+
+    // 根据页面决定使用哪个数据源
+    if (isHomepage && typeof homepageArticlesData !== 'undefined') {
+        // 首页使用专门的推荐文章数据
+        allSortedArticles = [...homepageArticlesData].sort((a, b) => {
+            const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
+            const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
+            return new Date(dateB) - new Date(dateA);
+        });
+    } else {
+        // 其他页面使用全部文章数据
+        allSortedArticles = [...articlesData].sort((a, b) => {
+            const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
+            const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
+            return new Date(dateB) - new Date(dateA);
+        });
+    }
 
     currentPage = 0;
     displayedArticles = [];
@@ -43,7 +57,12 @@ function setupLoadMoreButton() {
 }
 
 function renderArticles() {
-    const blogListContainer = document.querySelector('.space-y-16');
+    // 不同页面使用不同的容器选择器
+    const isHomepage = window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/');
+    const blogListContainer = isHomepage
+        ? document.querySelector('.space-y-10')  // 首页的选择器
+        : document.querySelector('.space-y-16'); // emed.html页面的选择器
+
     if (!blogListContainer) return;
 
     // 清空容器，但保留加载按钮
@@ -52,7 +71,8 @@ function renderArticles() {
 
     // 重新添加文章容器
     const articlesContainer = document.createElement('div');
-    articlesContainer.className = 'space-y-16';
+    // 根据页面设置不同的类名
+    articlesContainer.className = isHomepage ? 'space-y-10' : 'space-y-16';
 
     // 添加文章卡片
     displayedArticles.forEach(article => {
