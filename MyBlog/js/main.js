@@ -1,13 +1,7 @@
 // 博客通用功能脚本
 document.addEventListener('DOMContentLoaded', function () {
-
-    // 暗黑模式切换
     setupDarkModeToggle();
-
-    // 渲染文章列表
     renderArticles();
-
-    // 文章悬停效果
     setupArticleHoverEffects();
 });
 
@@ -28,9 +22,32 @@ function normalizePath(path) {
         .pop() || '';
 }
 
+function getCurrentSlug() {
+    const params = new URLSearchParams(window.location.search);
+    return (params.get('slug') || '').trim();
+}
+
+function getArticleSlug(url) {
+    if (!url) return '';
+
+    try {
+        const fakeUrl = new URL(url, window.location.origin);
+        const querySlug = fakeUrl.searchParams.get('slug');
+        if (querySlug) return querySlug.trim();
+
+        const fileName = normalizePath(fakeUrl.pathname);
+        return fileName.replace('.html', '').trim();
+    } catch (error) {
+        const pureUrl = url.split('?')[0];
+        const fileName = normalizePath(pureUrl);
+        return fileName.replace('.html', '').trim();
+    }
+}
+
 function setActiveNav() {
     const fullPath = window.location.pathname;
     const fileName = normalizePath(fullPath) || 'index.html';
+    const currentSlug = getCurrentSlug();
     const navLinks = document.querySelectorAll('.flex-1.space-y-1 a');
 
     navLinks.forEach(link => {
@@ -52,15 +69,20 @@ function setActiveNav() {
         const linkHref = normalizePath(link.getAttribute('href'));
         let isMatch = (linkHref === fileName);
 
-        if (!isMatch && !['index.html', 'emed.html', 'web.html', 'ai.html'].includes(fileName)) {
-            if (typeof articlesData !== 'undefined' && Array.isArray(articlesData)) {
-                const currentArticle = articlesData.find(article => {
-                    return normalizePath(article.url) === fileName;
-                });
+        if (!isMatch && typeof articlesData !== 'undefined' && Array.isArray(articlesData)) {
+            const currentArticle = articlesData.find(article => {
+                const articlePathName = normalizePath(article.url);
+                const articleSlug = getArticleSlug(article.url);
 
-                if (currentArticle && normalizePath(currentArticle.categoryPage) === linkHref) {
-                    isMatch = true;
+                if (currentSlug) {
+                    return articleSlug === currentSlug;
                 }
+
+                return articlePathName === fileName;
+            });
+
+            if (currentArticle && normalizePath(currentArticle.categoryPage) === linkHref) {
+                isMatch = true;
             }
         }
 
@@ -88,8 +110,10 @@ document.addEventListener('DOMContentLoaded', setActiveNav);
 function setupDarkModeToggle() {
     const storedTheme = localStorage.getItem('theme');
 
-    if (storedTheme === 'dark' ||
-        (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (
+        storedTheme === 'dark' ||
+        (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
         document.documentElement.classList.add('dark');
     } else {
         document.documentElement.classList.remove('dark');
@@ -108,19 +132,15 @@ function setupDarkModeToggle() {
 
 // 渲染文章列表
 function renderArticles() {
-    // 获取文章列表容器
-    const blogListContainer = document.querySelector('.space-y-16'); // 在你的HTML中找到放置文章列表的容器
+    const blogListContainer = document.querySelector('.space-y-16');
     if (!blogListContainer) return;
 
-    // 清空现有内容
     blogListContainer.innerHTML = '';
 
-    // 添加特色文章部分
     const featuredSection = document.createElement('div');
     featuredSection.className = 'space-y-16';
     blogListContainer.appendChild(featuredSection);
 
-    // 循环渲染文章
     articlesData.forEach(article => {
         const articleCard = createArticleCard(article);
         featuredSection.appendChild(articleCard);
@@ -132,6 +152,7 @@ function createArticleCard(article) {
     const articleDiv = document.createElement('article');
     articleDiv.className = 'group cursor-pointer';
     articleDiv.dataset.articleUrl = article.url;
+
     articleDiv.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             <div class="md:col-span-8 space-y-4">
@@ -163,14 +184,11 @@ function createArticleCard(article) {
         </div>
     `;
 
-    // 添加点击事件
     articleDiv.addEventListener('click', function (e) {
-        // 如果点击的是链接或其他交互元素，则不触发文章跳转
         if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a, button')) {
             return;
         }
 
-        // 跳转到文章详情页
         window.location.href = article.url;
     });
 
