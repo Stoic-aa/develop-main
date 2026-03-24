@@ -97,6 +97,42 @@
         }
     </style>
 
+    <script>
+        // 页面加载完成后插入 header 组件
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('components/header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading header:', error));
+        });
+    </script>
+
+    <script>
+        // 页面加载完成后插入 header 组件
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('components/sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading header:', error));
+        });
+    </script>
+
+    <script>
+        // 页面加载完成后插入 header 组件
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('components/footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading header:', error));
+        });
+    </script>
+
     <script src="js/articles-data.js"></script>
     <script src="js/main.js"></script>
 
@@ -104,96 +140,13 @@
 
 <body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
     <!-- TopNavBar -->
-    <header
-        class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm shadow-blue-900/5 transition-all duration-300">
-        <div class="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto font-label text-sm tracking-tight">
-            <div class="flex items-center gap-8">
-                <a class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white font-headline"
-                    href="index.html">
-                    TechEditorial
-                </a>
-                <nav class="hidden md:flex items-center gap-6">
-                    <a class="text-blue-700 dark:text-blue-400 font-semibold border-b-2 border-blue-600 pb-1"
-                        href="index.html">最新文章</a>
-                    <a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-all duration-300"
-                        href="#">存档</a>
-                    <a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-all duration-300"
-                        href="#">订阅通讯</a>
-                </nav>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="relative group hidden sm:block">
-                    <span
-                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
-                    <input
-                        class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-xs w-48 focus:ring-2 focus:ring-primary transition-all"
-                        placeholder="搜索深度洞察..." type="text" />
-                </div>
-                <button class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95">
-                    <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-                </button>
-                <button class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95">
-                    <span class="material-symbols-outlined text-on-surface-variant">settings</span>
-                </button>
-                <img alt="用户头像" class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm"
-                    data-alt="Close up of a professional male avatar"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3ynYbesLUrTc3goQnC3o7wiub2y_g47YW1oLOirFXiYRoR8K5Tmx9tqWRsec6SmeE8MRw8gNCgabDJlZw6ZQW_YhAa4zauaF_b_XpnLymjprtbrYnbPjmxWZZUc7bcv0ctpFHZ-WR760wjxF712kVdvaOzcckFDr577VjPuJK1joHrBLSGrnd-kG01l7bmiS24ptJZz41EKwJ3SWke058XQAqE0griOOAsioOH35f7WOHoF7jRored2AwRtMzzWXWy7ypTLsErn_7" />
-            </div>
-        </div>
-    </header>
+    <!-- 从components/header.html中加载 -->
+    <div id="header-placeholder"></div>
+
     <div class="flex min-h-screen pt-16">
         <!-- SideNavBar -->
-        <aside
-            class="h-screen w-64 fixed left-0 top-0 pt-20 flex flex-col gap-y-2 bg-slate-50 dark:bg-slate-950 border-r border-slate-200/50 dark:border-slate-800/50 font-label font-medium text-sm hidden lg:flex">
-            <div class="px-6 mb-8">
-                <div class="flex items-center gap-3 mb-2">
-                    <div
-                        class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary font-headline font-black">
-                        T</div>
-                    <div>
-                        <h2 class="text-lg font-black text-blue-700 dark:text-blue-500 leading-tight">TechEditorial</h2>
-                        <p class="text-[10px] text-outline uppercase tracking-widest">技术博客</p>
-                    </div>
-                </div>
-            </div>
-            <nav class="flex-1 space-y-1">
-                <a class="cursor-pointer flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 mx-2 hover:translate-x-1 transition-transform duration-200"
-                    href="index.html">
-                    <span class="material-symbols-outlined">home</span>
-                    <span>主页</span>
-                </a>
-                <a class="cursor-pointer flex items-center gap-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg mx-2 px-4 py-2 hover:translate-x-1 transition-transform duration-200"
-                    href="emed.html">
-                    <span class="material-symbols-outlined">memory</span>
-                    <span>物联网/嵌入式</span>
-                </a>
-                <a class="cursor-pointer flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 mx-2 hover:translate-x-1 transition-transform duration-200"
-                    href="#">
-                    <span class="material-symbols-outlined">video_library</span>
-                    <span>Bilibili 频道</span>
-                </a>
-                <a class="cursor-pointer flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 mx-2 hover:translate-x-1 transition-transform duration-200"
-                    href="#">
-                    <span class="material-symbols-outlined">link</span>
-                    <span>友情链接</span>
-                </a>
-                <a class="cursor-pointer flex items-center gap-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 px-4 py-2 mx-2 hover:translate-x-1 transition-transform duration-200"
-                    href="#">
-                    <span class="material-symbols-outlined">person</span>
-                    <span>关于作者</span>
-                </a>
-            </nav>
-            <div class="px-4 py-6 mt-auto">
-                <button
-                    class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-bold text-xs tracking-wide shadow-lg shadow-primary/20 active:scale-[0.98] transition-all">
-                    立即订阅
-                </button>
-                <div class="flex justify-center gap-4 mt-6 text-slate-400 text-xs">
-                    <a class="hover:text-primary transition-colors" href="#">隐私政策</a>
-                    <a class="hover:text-primary transition-colors" href="#">服务条款</a>
-                </div>
-            </div>
-        </aside>
+        <!-- 从components/sidebar.html中加载 -->
+        <div id="sidebar-placeholder"></div>
         <!-- Main Content Area -->
         <main class="flex-1 ml-0 lg:ml-64 px-4 sm:px-8 py-12 flex justify-center">
             <div class="max-w-[850px] w-full space-y-24">
@@ -281,20 +234,8 @@
         </main>
     </div>
     <!-- Footer -->
-    <footer
-        class="w-full py-12 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-all duration-200">
-        <div class="flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto lg:ml-64 px-6">
-            <div class="flex gap-8 mb-4">
-                <a class="text-slate-400 font-label text-xs hover:text-blue-500 underline-offset-4 hover:underline transition-colors duration-200"
-                    href="#">RSS 订阅</a>
-                <a class="text-slate-400 font-label text-xs hover:text-blue-500 underline-offset-4 hover:underline transition-colors duration-200"
-                    href="#">Github 仓库</a>
-                <a class="text-slate-400 font-label text-xs hover:text-blue-500 underline-offset-4 hover:underline transition-colors duration-200"
-                    href="#">联系我们</a>
-            </div>
-            <p class="font-label text-xs text-slate-400">© 2024 TechEditorial. 个人技术博客。</p>
-        </div>
-    </footer>
+    <!-- 从components/footer.html中加载 -->
+    <div id="footer-placeholder"></div>
     <!-- FAB -->
     <button
         class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 lg:hidden">
