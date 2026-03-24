@@ -7,10 +7,9 @@
     <title>TechEditorial | 技术社论</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
@@ -95,12 +94,59 @@
         .group:hover .article-title-hover {
             transform: translateY(-4px) scale(1.02);
         }
+
+        /* 移动端抽屉菜单样式 */
+        #mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            background: white;
+            box-shadow: rgba(0, 0, 0, 0.2) 0 4px 12px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 50;
+            padding: 2rem 0;
+        }
+
+        #mobile-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 60;
+            background: #004ac6;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .sidebar-toggle:hover {
+            background: #003ea8;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar-toggle {
+                display: none;
+            }
+        }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function () {
             try {
-                // 并行加载所有组件
                 const [headerHtml, sidebarHtml, footerHtml, rightSidebarHtml] = await Promise.all([
                     fetch('components/header.html').then(r => r.text()),
                     fetch('components/sidebar.html').then(r => r.text()),
@@ -108,7 +154,6 @@
                     fetch('components/right-sidebar.html').then(r => r.text())
                 ]);
 
-                // 插入组件
                 document.getElementById('header-placeholder').innerHTML = headerHtml;
                 document.getElementById('sidebar-placeholder').innerHTML = sidebarHtml;
                 document.getElementById('footer-placeholder').innerHTML = footerHtml;
@@ -118,7 +163,7 @@
                     placeholder.innerHTML = rightSidebarHtml;
                 });
 
-                // 初始化搜索功能
+                // 初始化搜索
                 const searchInput = document.querySelector('input[placeholder*="搜索"]');
                 if (searchInput) {
                     searchInput.addEventListener('keypress', function (e) {
@@ -131,7 +176,7 @@
                     });
                 }
 
-                // 等待DOM完全更新后执行导航高亮
+                // 延迟执行导航高亮
                 setTimeout(() => {
                     if (typeof setActiveNav === 'function') {
                         setActiveNav();
@@ -142,35 +187,43 @@
                 console.error('Error loading components:', error);
             }
         });
+
+        // 控制移动端抽屉菜单
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            sidebar.classList.toggle('open');
+        }
     </script>
 
-    <!-- 添加这两行 -->
     <script src="js/articles-data.js"></script>
     <script src="js/main.js"></script>
 </head>
 
 <body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
     <!-- TopNavBar -->
-    <!-- 从components/header.html中加载 -->
     <div id="header-placeholder"></div>
 
-    <div class="flex min-h-screen pt-16">
-        <!-- SideNavBar -->
-        <!-- 从components/sidebar.html中加载 -->
-        <div id="sidebar-placeholder"></div>
-        <!-- Main Content Area -->
-        <!-- 修改 main 标签的类名 -->
+    <!-- 侧边栏占位符 -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- 移动端抽屉菜单 -->
+    <div id="mobile-sidebar">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- 这里会由 sidebar.html 动态填充 -->
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="flex min-h-screen pt-16 lg:ml-64">
         <main class="flex-1 ml-0 lg:ml-64 px-4 sm:px-8 py-12 flex justify-center">
-            <!-- 主内容容器 -->
-            <div class="max-w-[850px] w-full space-y-24">
-                <!-- Section 1: Featured Article -->
-                <!-- Section 1: Featured Article - 将由 JavaScript 动态渲染 -->
-                <section id="featured-article-section" class="mb-16">
-                    <!-- 特色文章将由 JavaScript 渲染 -->
-                </section>
-                <!-- Section 2: Four Core Category Cards (Bento Grid Style) -->
+            <div class="max-w-4xl w-full space-y-16">
+                <!-- 特色文章 -->
+                <section id="featured-article-section" class="mb-16"></section>
+
+                <!-- 分类卡片 -->
                 <section class="mb-20">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         <div
                             class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
                             <span class="material-symbols-outlined text-primary mb-4 text-3xl">router</span>
@@ -183,8 +236,7 @@
                             <span class="material-symbols-outlined text-primary mb-4 text-3xl">memory</span>
                             <h3 class="font-headline font-bold text-on-surface text-lg">嵌入式系统</h3>
                             <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Hardware
-                                Lab
-                            </p>
+                                Lab</p>
                         </div>
                         <div
                             class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
@@ -192,31 +244,29 @@
                                 class="material-symbols-outlined text-primary mb-4 text-3xl">precision_manufacturing</span>
                             <h3 class="font-headline font-bold text-on-surface text-lg">自动驾驶</h3>
                             <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">
-                                Self-Driving
-                                AI
-                            </p>
+                                Self-Driving AI</p>
                         </div>
                         <div
                             class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
                             <span class="material-symbols-outlined text-primary mb-4 text-3xl">directions_car</span>
                             <h3 class="font-headline font-bold text-on-surface text-lg">汽车电子</h3>
                             <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Vehicle
-                                Systems
-                            </p>
+                                Systems</p>
                         </div>
                     </div>
                 </section>
-                <!-- Section 3: Latest Technical Insights -->
+
+                <!-- 最新技术动态 -->
                 <div class="flex-1">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="font-headline text-2xl font-bold tracking-tight">最新技术动态</h2>
-                        <a class="text-primary font-label text-xs font-bold uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all"
-                            href="#">
+                        <a href="#"
+                            class="text-primary font-label text-xs font-bold uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all">
                             查看全部 <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
                     <div class="space-y-10">
-                        <!-- 文章将由 JavaScript 动态渲染 -->
+                        <!-- 文章将由 JavaScript 渲染 -->
                     </div>
                 </div>
             </div>
@@ -225,13 +275,19 @@
             <div class="right-sidebar-placeholder"></div>
         </main>
     </div>
+
     <!-- Footer -->
-    <!-- 从components/footer.html中加载 -->
     <div id="footer-placeholder"></div>
-    <!-- FAB -->
+
+    <!-- FAB 按钮 -->
     <button
         class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 lg:hidden">
         <span class="material-symbols-outlined">edit</span>
+    </button>
+
+    <!-- 移动端菜单按钮 -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <span class="material-symbols-outlined">menu</span>
     </button>
 </body>
 
