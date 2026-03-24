@@ -170,3 +170,28 @@ const homepageArticlesData = [
         lastUpdated: "2024年5月12日"
     }
 ];
+
+// 特色文章配置 - 指定首页展示的文章ID
+const featuredArticleConfig = {
+    articleId: 7, // 新增一个特色文章的 id
+    categoryLabel: "深度解析", // 首页展示的分类标签
+    isFeatured: true
+};
+
+// 添加特色文章数据
+const featuredArticleData = {
+    id: 7,
+    title: "从 L3 到 L5 的跨越：自动驾驶系统的算法演进与硬件瓶颈",
+    summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
+    category: "深度解析",
+    date: "2024年5月25日",
+    readTime: "阅读时间 15 分钟",
+    author: "Tech Editorial Team",
+    authorAvatar: "",
+    coverImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuCRlnbbl4FpeU86E_aexwYtabGFlBZ8EfX5Wv6gS2_MwX_7x4cST_sSpxdQDpL83tAyKkEgKg4ZB8XS0l2QXSTfL8Rj6GRXEBnszkgFcN1PtIRDlaMd85nJ0G9IlPcqH2OjRuDbjkgZc-pv7PwrAKX809yicf9Xt5VrmQ5DWLdguINtFg5GUoISPaSldIBYvSxR1uBmI2VtkcfYAT9OxVdcmQCDcWRYm81NimJ9sKeBOon1nP4_vRv2yUgGT9g5qAyl7pIl3GnN1aN3",
+    url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
+    contentFile: "content/l3-to-l5-autonomous-driving.html",
+    categoryPage: "auto.html",
+    tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
+    lastUpdated: "2024年5月25日"
+};

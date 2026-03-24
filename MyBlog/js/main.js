@@ -16,6 +16,11 @@ function initializeArticles() {
     const currentPath = window.location.pathname;
     const isHomepage = currentPath.includes('index.html') || currentPath.endsWith('/');
 
+    // 如果是首页，渲染特色文章
+    if (isHomepage) {
+        renderFeaturedArticle();
+    }
+
     // 根据页面决定使用哪个数据源
     if (isHomepage && typeof homepageArticlesData !== 'undefined') {
         // 首页使用专门的推荐文章数据
@@ -314,4 +319,35 @@ function setupArticleHoverEffects() {
             }
         });
     });
+}
+
+
+function renderFeaturedArticle() {
+    const featuredArticle = featuredArticleData; // 或通过 ID 从 articlesData 中查找
+
+    const featuredSection = document.getElementById('featured-article-section');
+
+    if (featuredArticle) {
+        featuredSection.innerHTML = `
+            <div class="relative group cursor-pointer overflow-hidden rounded-xl bg-surface-container-lowest">
+                <div class="aspect-[16/9] w-full overflow-hidden">
+                    <img alt="${featuredArticle.title}"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        data-alt="${featuredArticle.summary}"
+                        src="${featuredArticle.coverImage}" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+                    </div>
+                </div>
+                <div class="absolute bottom-0 p-8 w-full">
+                    <span
+                        class="inline-block px-3 py-1 bg-primary text-white text-[10px] font-label font-bold tracking-widest uppercase mb-4 rounded-full">${featuredArticleConfig.categoryLabel || featuredArticle.category}</span>
+                    <h1
+                        class="text-3xl md:text-4xl font-headline font-bold text-white mb-4 leading-tight elastic-hover">
+                        ${featuredArticle.title}</h1>
+                    <p class="text-slate-200 font-body text-sm max-w-xl line-clamp-2">
+                        ${featuredArticle.summary}</p>
+                </div>
+            </div>
+        `;
+    }
 }
