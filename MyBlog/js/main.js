@@ -1,9 +1,96 @@
 // 博客通用功能脚本
 document.addEventListener('DOMContentLoaded', function () {
     setupDarkModeToggle();
-    renderArticles();
+    initializeArticles();
     setupArticleHoverEffects();
 });
+
+// 全局变量
+let displayedArticles = [];
+let allSortedArticles = [];
+let currentPage = 0;
+const ARTICLES_PER_PAGE = 5;
+
+function initializeArticles() {
+    // 按日期从新到旧排序
+    allSortedArticles = [...articlesData].sort((a, b) => {
+        const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
+        const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
+        return new Date(dateB) - new Date(dateA);
+    });
+
+    currentPage = 0;
+    displayedArticles = [];
+
+    // 显示第一页的文章
+    loadInitialArticles();
+    setupLoadMoreButton();
+}
+
+function loadInitialArticles() {
+    const initialArticles = allSortedArticles.slice(0, ARTICLES_PER_PAGE);
+    displayedArticles = initialArticles;
+    currentPage = 1;
+
+    renderArticles();
+}
+
+function setupLoadMoreButton() {
+    const loadMoreButton = document.querySelector('button[onclick], button:not([onclick]):not(.article-title-hover):not(.material-symbols-outlined)');
+    if (loadMoreButton) {
+        loadMoreButton.addEventListener('click', loadMoreArticles);
+    }
+}
+
+function renderArticles() {
+    const blogListContainer = document.querySelector('.space-y-16');
+    if (!blogListContainer) return;
+
+    // 清空容器，但保留加载按钮
+    const loadMoreButton = document.querySelector('.pt-12.flex.justify-center');
+    blogListContainer.innerHTML = '';
+
+    // 重新添加文章容器
+    const articlesContainer = document.createElement('div');
+    articlesContainer.className = 'space-y-16';
+
+    // 添加文章卡片
+    displayedArticles.forEach(article => {
+        const articleCard = createArticleCard(article);
+        articlesContainer.appendChild(articleCard);
+    });
+
+    blogListContainer.appendChild(articlesContainer);
+
+    // 重新添加加载按钮
+    if (loadMoreButton) {
+        blogListContainer.appendChild(loadMoreButton);
+
+        // 如果没有更多文章可加载，隐藏加载按钮
+        const remainingArticles = allSortedArticles.length - displayedArticles.length;
+        if (remainingArticles <= 0) {
+            loadMoreButton.style.display = 'none';
+        } else {
+            loadMoreButton.style.display = 'flex';
+        }
+    }
+}
+
+function loadMoreArticles() {
+    const startIndex = currentPage * ARTICLES_PER_PAGE;
+    const endIndex = Math.min(startIndex + ARTICLES_PER_PAGE, allSortedArticles.length);
+
+    const newArticles = allSortedArticles.slice(startIndex, endIndex);
+
+    if (newArticles.length > 0) {
+        displayedArticles = displayedArticles.concat(newArticles);
+        currentPage++;
+
+        renderArticles();
+    }
+}
+
+// 其他函数保持不变...
 
 function performSearch(query) {
     if (query.trim() === '') return;
@@ -63,7 +150,7 @@ function setActiveNav() {
             'text-slate-500',
             'dark:text-slate-400',
             'hover:text-slate-900',
-            'dark:hover:text-slate-100'
+            'dark:hover:text-slate-900'
         );
 
         const linkHref = normalizePath(link.getAttribute('href'));
@@ -91,7 +178,7 @@ function setActiveNav() {
                 'text-slate-500',
                 'dark:text-slate-400',
                 'hover:text-slate-900',
-                'dark:hover:text-slate-100'
+                'dark:hover:text-slate-900'
             );
 
             link.classList.add(
@@ -130,31 +217,6 @@ function setupDarkModeToggle() {
     });
 }
 
-// 渲染文章列表
-// 渲染文章列表
-function renderArticles() {
-    const blogListContainer = document.querySelector('.space-y-16');
-    if (!blogListContainer) return;
-
-    blogListContainer.innerHTML = '';
-
-    const featuredSection = document.createElement('div');
-    featuredSection.className = 'space-y-16';
-    blogListContainer.appendChild(featuredSection);
-
-    // 按日期从新到旧排序后渲染
-    const sortedArticles = [...articlesData].sort((a, b) => {
-        // 处理中文日期格式 "YYYY年M月D日"
-        const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
-        const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
-        return new Date(dateB) - new Date(dateA); // 新日期在前
-    });
-
-    sortedArticles.forEach(article => {
-        const articleCard = createArticleCard(article);
-        featuredSection.appendChild(articleCard);
-    });
-}
 // 创建文章卡片
 function createArticleCard(article) {
     const articleDiv = document.createElement('article');
