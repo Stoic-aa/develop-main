@@ -153,7 +153,7 @@ function getArticleSlug(url) {
 
 function setActiveNav() {
     const fullPath = window.location.pathname;
-    const fileName = normalizePath(fullPath) || 'index.html';
+    const fileName = normalizePath(fullPath); // 移除默认值 'index.html'
     const currentSlug = getCurrentSlug();
     const navLinks = document.querySelectorAll('.flex-1.space-y-1 a');
 
@@ -174,7 +174,19 @@ function setActiveNav() {
         );
 
         const linkHref = normalizePath(link.getAttribute('href'));
+
+        // 直接比较标准化后的路径
         let isMatch = (linkHref === fileName);
+
+        // 如果直接匹配失败，尝试其他匹配方式
+        if (!isMatch) {
+            // 检查原始href是否匹配（包括.html扩展名）
+            const originalHref = link.getAttribute('href');
+            if (originalHref && (fullPath.includes(originalHref) ||
+                normalizePath(fullPath + '.html') === normalizePath(originalHref))) {
+                isMatch = true;
+            }
+        }
 
         if (!isMatch && typeof articlesData !== 'undefined' && Array.isArray(articlesData)) {
             const currentArticle = articlesData.find(article => {
