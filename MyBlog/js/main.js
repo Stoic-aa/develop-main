@@ -131,6 +131,7 @@ function setupDarkModeToggle() {
 }
 
 // 渲染文章列表
+// 渲染文章列表
 function renderArticles() {
     const blogListContainer = document.querySelector('.space-y-16');
     if (!blogListContainer) return;
@@ -141,12 +142,19 @@ function renderArticles() {
     featuredSection.className = 'space-y-16';
     blogListContainer.appendChild(featuredSection);
 
-    articlesData.forEach(article => {
+    // 按日期从新到旧排序后渲染
+    const sortedArticles = [...articlesData].sort((a, b) => {
+        // 处理中文日期格式 "YYYY年M月D日"
+        const dateA = a.date.replace(/[年月]/g, '-').replace('日', '');
+        const dateB = b.date.replace(/[年月]/g, '-').replace('日', '');
+        return new Date(dateB) - new Date(dateA); // 新日期在前
+    });
+
+    sortedArticles.forEach(article => {
         const articleCard = createArticleCard(article);
         featuredSection.appendChild(articleCard);
     });
 }
-
 // 创建文章卡片
 function createArticleCard(article) {
     const articleDiv = document.createElement('article');
