@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>TechLog - Bilibili Channel</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .video-card-transition {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .video-card-transition:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .headline {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .label-text {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#434655",
+                        "on-primary-container": "#eeefff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface": "#191c1e",
+                        "primary": "#004ac6",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#656d84",
+                        "primary-container": "#2563eb",
+                        "surface-container-low": "#f2f4f6",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#d5e3fc",
+                        "secondary": "#515f74",
+                        "tertiary": "#4d556b",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d5e3fc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#00174b",
+                        "outline": "#737686",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed": "#dae2fd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container": "#eceef0",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-secondary-container": "#57657a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-container": "#eef0ff",
+                        "on-secondary-fixed-variant": "#3a485b"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // 加载必需的组件
+                const [headerHtml, sidebarHtml, footerHtml] = await Promise.all([
+                    fetch('components/header.html').then(r => r.text()),
+                    fetch('components/sidebar.html').then(r => r.text()),
+                    fetch('components/footer.html').then(r => r.text())
+                ]);
+
+                // 插入组件
+                document.getElementById('header-placeholder').innerHTML = headerHtml;
+                document.getElementById('sidebar-placeholder').innerHTML = sidebarHtml;
+                document.getElementById('footer-placeholder').innerHTML = footerHtml;
+
+                // 检查是否有右侧边栏占位符，如果有则加载右侧边栏
+                const rightSidebarPlaceholders = document.querySelectorAll('.right-sidebar-placeholder');
+                if (rightSidebarPlaceholders.length > 0) {
+                    try {
+                        const rightSidebarHtml = await fetch('components/right-sidebar.html').then(r => r.text());
+                        rightSidebarPlaceholders.forEach(placeholder => {
+                            placeholder.innerHTML = rightSidebarHtml;
+                        });
+                    } catch (e) {
+                        console.warn('右侧边栏组件不存在或加载失败');
+                    }
+                }
+
+                // 初始化搜索功能
+                const searchInput = document.querySelector('input[placeholder*="搜索"]');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (typeof performSearch === 'function') {
+                                performSearch(this.value);
+                            }
+                        }
+                    });
+                }
+
+                // 确保 DOM 更新后再执行导航高亮
+                setTimeout(() => {
+                    if (typeof setActiveNav === 'function') {
+                        setActiveNav();
+                    }
+                }, 100);
+
+            } catch (error) {
+                console.error('Error loading components:', error);
+            }
+        });
+    </script>
+
+    <script src="js/articles-data.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen">
+    <!-- TopNavBar -->
+    <!-- 从components/header.html中加载 -->
+    <div id="header-placeholder"></div>
+    <!-- Side Navigation Bar (Shared Component) -->
+    <!-- SideNavBar -->
+    <!-- 从components/sidebar.html中加载 -->
+    <div id="sidebar-placeholder"></div>
+    <!-- Main Content Canvas (850px-1000px centered) -->
+    <main class="pt-24 pb-12 xl:ml-64 flex justify-center">
+        <div class="w-full max-w-[1000px] px-6">
+            <!-- Channel Header Banner -->
+            <header class="mb-12">
+                <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-primary mb-6">
+                    <img class="w-full h-full object-cover opacity-60 mix-blend-overlay"
+                        data-alt="clean minimal workspace with glowing mechanical keyboard and high-end technical hardware in cold blue studio lighting"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLx0Z58vRrMioIsqVYAG6gYt1FfCdzHFxbk3WEH-InuENcBrNQwF4tMCWM7DjhfZZxlyOG1MoIfF3_WL3DREXhosRBG50t3aiXuGqR9lHT4zVsM4dpkQ-w5kDwA0my2Ow8YEME1FTmRH9Zr0Nal9z79Yek3SwTp3PXqFU0nCZTujXZdB0sdRQZb7XBIC0Cnykplf8HEsL1_e0smumHASZB_2FWVzshfp3S2kI_hYdStrqRVSd0eW93uPnHASkl9zXIENbbS8d789nH" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-6 items-start md:items-end -mt-20 relative px-6">
+                    <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden shadow-lg bg-white">
+                        <img class="w-full h-full object-cover"
+                            data-alt="professional male portrait with minimalist glasses wearing a dark tech hoodie in a bright studio environment"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYQf_q4sedfDcLLIVU9ZG62PcJK1PXnj20lL_Zksp04qcNmjl_6jY80BDFTVV9VjBltxefYQVEEU9WQAOF1X-FUygSxjHWwZaKihKeNzhdwOVmvPHGNwCPBRyGvnlwDo870AO1rmRo4XlxmqHB2ZQDZjoEOWI9Dku2ugeacivfZWESNpG98pqmDIoWIOYtK2mM28mo8OgsnOb0-hBIY9-RlnhrYBCyb27dxTO7oXX9GBYR7kDql0MeKJZ3_WfR9ZwXvHZbp7CzczM8" />
+                    </div>
+                    <div class="flex-1 pb-2">
+                        <div class="flex items-center gap-3 mb-1">
+                            <h1 class="text-3xl font-bold headline tracking-tight">The Monolith / 技术讨论</h1>
+                            <span
+                                class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-widest">PRO</span>
+                        </div>
+                        <p class="text-on-surface-variant text-sm mb-4 max-w-md">深耕嵌入式与工业设计，用代码构建数字世界的新秩序。每周二、五更新深度解析。
+                        </p>
+                        <div class="flex gap-8 border-t border-outline-variant/20 pt-4">
+                            <div class="text-center md:text-left">
+                                <span class="block text-xl font-bold headline">1.2M</span>
+                                <span
+                                    class="text-xs text-on-surface-variant label-text uppercase tracking-wider">粉丝</span>
+                            </div>
+                            <div class="text-center md:text-left">
+                                <span class="block text-xl font-bold headline">45.8M</span>
+                                <span
+                                    class="text-xs text-on-surface-variant label-text uppercase tracking-wider">总播放</span>
+                            </div>
+                            <div class="text-center md:text-left">
+                                <span class="block text-xl font-bold headline">890K</span>
+                                <span
+                                    class="text-xs text-on-surface-variant label-text uppercase tracking-wider">获赞</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 pb-2">
+                        <button
+                            class="px-6 py-2.5 bg-primary-container text-white rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all active:scale-95">关注</button>
+                        <button
+                            class="p-2.5 bg-surface-container-high rounded-xl hover:bg-surface-variant transition-all">
+                            <span class="material-symbols-outlined text-on-surface" data-icon="mail">mail</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <!-- Video List Section (Left) -->
+                <section class="lg:col-span-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-xl font-bold headline flex items-center gap-2">最近上传 <span
+                                class="w-8 h-[2px] bg-primary"></span></h2>
+                        <div class="flex gap-4 text-sm font-medium label-text text-on-surface-variant">
+                            <button class="text-primary border-b-2 border-primary pb-1">最新</button>
+                            <button class="hover:text-primary transition-colors pb-1">热门</button>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <!-- Video Card 1 -->
+                        <div class="group video-card-transition cursor-pointer">
+                            <div
+                                class="relative aspect-video rounded-2xl overflow-hidden mb-4 shadow-sm bg-surface-container">
+                                <img class="w-full h-full object-cover"
+                                    data-alt="close-up of complex circuit board with glowing blue microchips and data transmission paths in cinematic lighting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUXg4B5MEF9N_AEmQQb0ueQPgoS1PIEWOSa6S9bKJQd8nyFZzenogY7I_6MjEh5SU4eXIH7m1DaFVx41t3EtdHAiH0vC1FDWexvigoPqGeUKXBEz9UJbURQUuJt8hW71xH8OXTlN8D6nkXcqJhsVgfNHIdJqaV3irchxKCkvg_-QBVWnSnRfpeRvilgPmPG77CNy7Uzlxz_Lj_ccrgPlGWF1svm754yIwdgrS6JDws677TDRMKHECiE8pY4iMhvttJevemq4VD--P0" />
+                                <div
+                                    class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded font-bold backdrop-blur-md">
+                                    15:24</div>
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-5xl" data-icon="play_circle"
+                                        style="font-variation-settings: 'FILL' 1;">play_circle</span>
+                                </div>
+                            </div>
+                            <div class="px-1">
+                                <h3
+                                    class="text-lg font-bold headline leading-tight mb-2 group-hover:text-primary transition-colors">
+                                    深入浅出 RISC-V 架构：为什么它是嵌入式的未来？</h3>
+                                <div class="flex items-center gap-4 text-xs text-on-surface-variant label-text">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="play_arrow">play_arrow</span> 124K</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="chat_bubble">chat_bubble</span> 2.1K</span>
+                                    <span>2 天前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Video Card 2 -->
+                        <div class="group video-card-transition cursor-pointer">
+                            <div
+                                class="relative aspect-video rounded-2xl overflow-hidden mb-4 shadow-sm bg-surface-container">
+                                <img class="w-full h-full object-cover"
+                                    data-alt="industrial robot arm performing precise electronic assembly in a clean high-tech manufacturing facility with bokeh background"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvGuDuYrtopfiMjZ6TDhNahgpEz-LM2oRYR-a8J42QnzqcYCtC6GgDv8lrVgb2SR-HfS7o85hsz8Ci3ZVAJWmRbMygWSnnwhODFNgJyx99SPBEg4YHe_85vC-2jqJ-H9-4J4dajjuSW95IRRmNDEvZ6ZexWQKcPkA1AEijun2fzTU5GsB3vEdjtWJGHISFfcluZMEr_5Ux8KBRKEA-YuveYcstvFMV5L4g4h5_6P2aj0usQYlq2DvjXu9LdSndloTnWJbmB24X1azl" />
+                                <div
+                                    class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded font-bold backdrop-blur-md">
+                                    24:08</div>
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-5xl" data-icon="play_circle"
+                                        style="font-variation-settings: 'FILL' 1;">play_circle</span>
+                                </div>
+                            </div>
+                            <div class="px-1">
+                                <h3
+                                    class="text-lg font-bold headline leading-tight mb-2 group-hover:text-primary transition-colors">
+                                    从零开始：构建你的第一台工业自动化机械臂</h3>
+                                <div class="flex items-center gap-4 text-xs text-on-surface-variant label-text">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="play_arrow">play_arrow</span> 89K</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="chat_bubble">chat_bubble</span> 1.5K</span>
+                                    <span>1 周前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Video Card 3 -->
+                        <div class="group video-card-transition cursor-pointer">
+                            <div
+                                class="relative aspect-video rounded-2xl overflow-hidden mb-4 shadow-sm bg-surface-container">
+                                <img class="w-full h-full object-cover"
+                                    data-alt="close-up of code editor with syntax highlighting showing advanced systems programming on a clean dark interface"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFK4W7GIMZGOl2ahjHQtIQorrcLiwisky5zgvUPfkOL8ug-Wtm1synn-EG9qqJdgEKOBYTTtUSIeeKTi5SS6w-oWgUyE4hMIvu-VPQDnVhpPbjHQtzXvsqBaihGvSKkvUaw8mgZ9ZrWQbCWjVkaMDIqff_hSCVm7yBeWuH0thB3jEORb_uRjxVFSSsLKLP_ZUGRdltvJhCeITW8Ip1u9WwhCrjF97_H3kQ5b6Abu7XJHty4S27YowrGqzCEdSesWzgEXUWyMAufiN6" />
+                                <div
+                                    class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded font-bold backdrop-blur-md">
+                                    18:45</div>
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-5xl" data-icon="play_circle"
+                                        style="font-variation-settings: 'FILL' 1;">play_circle</span>
+                                </div>
+                            </div>
+                            <div class="px-1">
+                                <h3
+                                    class="text-lg font-bold headline leading-tight mb-2 group-hover:text-primary transition-colors">
+                                    Rust 语言在实时操作系统中的性能极限挑战</h3>
+                                <div class="flex items-center gap-4 text-xs text-on-surface-variant label-text">
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="play_arrow">play_arrow</span> 210K</span>
+                                    <span class="flex items-center gap-1"><span
+                                            class="material-symbols-outlined text-sm"
+                                            data-icon="chat_bubble">chat_bubble</span> 3.4K</span>
+                                    <span>2 周前</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Sidebar (Right) -->
+                <aside class="lg:col-span-4 space-y-10">
+                    <!-- About Author Card -->
+                    <div class="bg-surface-container-low p-6 rounded-2xl">
+                        <h3 class="text-sm font-bold headline uppercase tracking-widest text-primary mb-4">关于作者</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed mb-6">
+                            前华为高级硬件工程师，现独立开发者。专注于开源硬件生态与底层技术科普。愿景是让复杂的技术变得触手可及。
+                        </p>
+                        <div class="space-y-3">
+                            <a class="flex items-center gap-3 text-sm font-medium label-text text-on-surface hover:text-primary transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined text-primary"
+                                    data-icon="alternate_email">alternate_email</span>
+                                collab@monolith.tech
+                            </a>
+                            <a class="flex items-center gap-3 text-sm font-medium label-text text-on-surface hover:text-primary transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined text-primary" data-icon="code">code</span>
+                                github.com/monolith-tech
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Latest Updates Card -->
+                    <div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm">
+                        <h3 class="text-sm font-bold headline uppercase tracking-widest text-primary mb-6">动态更新</h3>
+                        <div class="space-y-6">
+                            <div class="relative pl-6 border-l-2 border-primary/20">
+                                <div class="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-primary"></div>
+                                <span
+                                    class="block text-[10px] font-bold text-on-surface-variant/60 uppercase mb-1">昨天</span>
+                                <p class="text-sm font-medium leading-snug">正在筹备《嵌入式 Rust 进阶指南》系列课程，大家有什么想听的？</p>
+                            </div>
+                            <div class="relative pl-6 border-l-2 border-primary/20">
+                                <div class="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-primary/30"></div>
+                                <span class="block text-[10px] font-bold text-on-surface-variant/60 uppercase mb-1">3
+                                    天前</span>
+                                <p class="text-sm font-medium leading-snug">新入手的单片机到了，做个简单的开箱测评。</p>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full mt-8 py-2.5 text-sm font-bold text-primary hover:bg-primary/5 rounded-xl transition-all border border-primary/10">查看全部动态</button>
+                    </div>
+                    <!-- Tags / Categories -->
+                    <div>
+                        <h3 class="text-sm font-bold headline uppercase tracking-widest text-on-surface-variant mb-4">
+                            热门标签</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-surface-container text-xs font-semibold rounded-full hover:bg-primary hover:text-white cursor-pointer transition-colors">#RISC-V</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container text-xs font-semibold rounded-full hover:bg-primary hover:text-white cursor-pointer transition-colors">#Embedded</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container text-xs font-semibold rounded-full hover:bg-primary hover:text-white cursor-pointer transition-colors">#RustLang</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container text-xs font-semibold rounded-full hover:bg-primary hover:text-white cursor-pointer transition-colors">#Hardware</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container text-xs font-semibold rounded-full hover:bg-primary hover:text-white cursor-pointer transition-colors">#Linux</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile only) -->
+
+</body>
+
+</html>
