@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>文章详情 | TechEditorial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#131b2e",
+                        "background": "#f7f9fb",
+                        "tertiary": "#4d556b",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d5e3fc",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#dae2fd",
+                        "secondary": "#515f74",
+                        "on-surface": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7f9fb",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "on-surface-variant": "#434655",
+                        "tertiary-container": "#656d84",
+                        "on-secondary-container": "#57657a",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-container": "#d5e3fc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#eef0ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1e",
+                        "primary-container": "#2563eb",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "body": ["Manrope", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "label": ["Inter", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "mono": ["Fira Code", "ui-monospace", "SFMono-Regular"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .article-content h1,
+        .article-content h2,
+        .article-content h3 {
+            margin-top: 1.5em;
+            margin-bottom: 1em;
+            color: rgb(25 28 30);
+        }
+
+        .dark .article-content h1,
+        .dark .article-content h2,
+        .dark .article-content h3 {
+            color: rgb(239 241 243);
+        }
+
+        .article-content p {
+            margin-bottom: 1em;
+            line-height: 1.8;
+        }
+
+        .article-content img {
+            margin: 1.5em 0;
+            border-radius: 0.5rem;
+        }
+
+        .article-content pre {
+            background-color: #f0f2f5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+
+        .dark .article-content pre {
+            background-color: #111827;
+        }
+
+        .article-content code {
+            font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <div id="header-placeholder"></div>
+
+    <div class="flex min-h-screen pt-16">
+        <div id="sidebar-placeholder"></div>
+
+        <main class="flex-1 ml-0 lg:ml-64 px-4 sm:px-8 py-12">
+            <article class="max-w-4xl mx-auto w-full">
+                <header class="mb-8">
+                    <div
+                        class="flex items-center gap-3 text-xs font-label text-primary font-bold tracking-widest uppercase mb-4">
+                        <span class="category-tag"></span>
+                        <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                        <span class="text-on-surface-variant font-medium publish-date"></span>
+                    </div>
+
+                    <h1 class="text-4xl font-headline font-bold text-on-surface mb-4 article-title"></h1>
+
+                    <div class="flex items-center gap-4 pt-4 border-t border-outline-variant/20">
+                        <div class="flex items-center gap-2">
+                            <img class="w-8 h-8 rounded-full author-avatar" src="" alt="作者头像" />
+                            <span class="text-sm font-medium text-on-surface author-name"></span>
+                        </div>
+                        <span class="text-sm text-outline font-label read-time"></span>
+                    </div>
+                </header>
+
+                <div id="article-content" class="article-content text-on-surface-variant"></div>
+
+                <footer class="mt-12 pt-8 border-t border-outline-variant/20">
+                    <div class="flex flex-wrap gap-2 tags-section"></div>
+
+                    <div class="mt-8 flex justify-between items-center">
+                        <div class="flex gap-4 social-actions">
+                            <button class="p-2 hover:bg-surface-container-low rounded-full transition-colors like-btn"
+                                type="button">
+                                <span class="material-symbols-outlined text-on-surface-variant">favorite</span>
+                            </button>
+                            <button class="p-2 hover:bg-surface-container-low rounded-full transition-colors share-btn"
+                                type="button">
+                                <span class="material-symbols-outlined text-on-surface-variant">share</span>
+                            </button>
+                        </div>
+                        <div class="text-sm text-on-surface-variant last-updated"></div>
+                    </div>
+                </footer>
+            </article>
+        </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/articles-data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/article-detail.js"></script>
+</body>
+
+</html>

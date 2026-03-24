@@ -1,0 +1,33 @@
+<template id="article-card-template">
+    <article class="group cursor-pointer" data-article-url="">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            <div class="md:col-span-8 space-y-4">
+                <div
+                    class="flex items-center gap-3 text-xs font-label text-primary font-bold tracking-widest uppercase category-section">
+                    <span class="category-name">类别</span>
+                    <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                    <span class="text-on-surface-variant font-medium date-text">日期</span>
+                </div>
+                <h2
+                    class="text-3xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors duration-300 article-title-hover title-text">
+                    标题
+                </h2>
+                <p class="text-on-surface-variant leading-relaxed line-clamp-3 font-body summary-text">
+                    摘要
+                </p>
+                <div class="flex items-center gap-4 pt-2">
+                    <div class="flex items-center gap-2">
+                        <img class="w-6 h-6 rounded-full author-img" data-alt="Author image" src="" />
+                        <span class="text-xs font-medium text-on-surface author-name">作者</span>
+                    </div>
+                    <span class="text-xs text-outline font-label read-time">阅读时间</span>
+                </div>
+            </div>
+            <div class="md:col-span-4 aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-low shadow-sm">
+                <img alt="封面图片"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cover-img"
+                    data-alt="Cover image" src="" />
+            </div>
+        </div>
+    </article>
+</template>

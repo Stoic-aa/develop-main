@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary": "#515f74",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "on-primary-fixed": "#00174b",
+                        "secondary-fixed": "#d5e3fc",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2d3133",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-container": "#57657a",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "primary-container": "#2563eb",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary": "#4d556b",
+                        "surface-container": "#eceef0",
+                        "tertiary-container": "#656d84",
+                        "on-tertiary-container": "#eef0ff",
+                        "surface-container-high": "#e6e8ea",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface": "#191c1e",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "inverse-primary": "#b4c5ff",
+                        "on-error-container": "#93000a",
+                        "primary": "#004ac6",
+                        "surface-tint": "#0053db",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#dae2fd",
+                        "background": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary-fixed": "#131b2e",
+                        "on-background": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d5e3fc",
+                        "on-surface-variant": "#434655"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .bounce-hover {
+            transition: transform 300s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition-duration: 300ms;
+        }
+
+        .bounce-hover:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+
+        .no-line {
+            border: none !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // 加载必需的组件
+                const [headerHtml, sidebarHtml, footerHtml] = await Promise.all([
+                    fetch('components/header.html').then(r => r.text()),
+                    fetch('components/sidebar.html').then(r => r.text()),
+                    fetch('components/footer.html').then(r => r.text())
+                ]);
+
+                // 插入组件
+                document.getElementById('header-placeholder').innerHTML = headerHtml;
+                document.getElementById('sidebar-placeholder').innerHTML = sidebarHtml;
+                document.getElementById('footer-placeholder').innerHTML = footerHtml;
+
+                // 检查是否有右侧边栏占位符，如果有则加载右侧边栏
+                const rightSidebarPlaceholders = document.querySelectorAll('.right-sidebar-placeholder');
+                if (rightSidebarPlaceholders.length > 0) {
+                    try {
+                        const rightSidebarHtml = await fetch('components/right-sidebar.html').then(r => r.text());
+                        rightSidebarPlaceholders.forEach(placeholder => {
+                            placeholder.innerHTML = rightSidebarHtml;
+                        });
+                    } catch (e) {
+                        console.warn('右侧边栏组件不存在或加载失败');
+                    }
+                }
+
+                // 初始化搜索功能
+                const searchInput = document.querySelector('input[placeholder*="搜索"]');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (typeof performSearch === 'function') {
+                                performSearch(this.value);
+                            }
+                        }
+                    });
+                }
+
+                // 确保 DOM 更新后再执行导航高亮
+                setTimeout(() => {
+                    if (typeof setActiveNav === 'function') {
+                        setActiveNav();
+                    }
+                }, 100);
+
+            } catch (error) {
+                console.error('Error loading components:', error);
+            }
+        });
+    </script>
+
+    <script src="js/articles-data.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <!-- TopNavBar (Shared Component Execution) -->
+    <!-- 从components/header.html中加载 -->
+    <div id="header-placeholder"></div>
+    <!-- SideNavBar (Shared Component Execution) -->
+    <!-- 从components/sidebar.html中加载 -->
+    <div id="sidebar-placeholder"></div>
+    <!-- Main Content Canvas -->
+    <main class="pt-24 pb-20 lg:ml-64 px-6 min-h-screen">
+        <div class="max-w-[800px] mx-auto">
+            <!-- Hero Section -->
+            <section class="mb-20 text-center md:text-left flex flex-col md:flex-row items-center gap-10">
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-tr from-primary to-primary-container rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200">
+                    </div>
+                    <img alt="The Monolith Profile"
+                        class="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-surface-container-lowest shadow-xl"
+                        data-alt="editorial style close-up of a high-tech professional portrait with cinematic lighting and soft bokeh background"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZoLzxw_4EaZ76dg4I-zs3__iHc9MgyPaQ9wDtrTYp5KiLhQTZirtasOiRmnwiPmECAVkbSGZxld7OIsJttQh9SGiC9pGsfendqBlchxKfAfCnLURynKqnUUWiIarWMQG7-CRf6p90u7sdPxtAesJEmPDQ16GrB_TueFr-1bCPN1dnO77ATWnyON0vN9rraO0Pp28UIAZhCd7_kxxtIvv0H2q2iL8XVTSFJjeqdNVgMS4WqFKaNutVA3-tv9e4ykNdscUYCHmUBffa" />
+                </div>
+                <div class="flex-1">
+                    <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-surface mb-2">The
+                        Monolith / 某博主</h1>
+                    <p class="font-label text-primary font-medium text-lg mb-4 tracking-wide">Senior Embedded Systems
+                        Architect</p>
+                    <p class="font-body text-on-surface-variant text-lg leading-relaxed max-w-lg">
+                        探索底层硬件与高级抽象的边界。专注于通过简洁、高效的代码构建新一代智能交通与互联系统。
+                    </p>
+                    <div class="mt-8 flex gap-4 justify-center md:justify-start">
+                        <a class="px-6 py-2.5 bg-primary text-on-primary rounded-md font-medium shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-95"
+                            href="mailto:hello@monolith.tech">联系我</a>
+                        <a class="px-6 py-2.5 border border-outline-variant text-on-surface rounded-md font-medium hover:bg-surface-container-low transition-all"
+                            href="#projects">查看作品</a>
+                    </div>
+                </div>
+            </section>
+            <!-- Introduction -->
+            <section class="mb-24">
+                <h2 class="font-headline text-2xl font-bold mb-8 flex items-center gap-3 bounce-hover">
+                    <span class="w-8 h-[2px] bg-primary"></span>
+                    核心理念
+                </h2>
+                <div class="font-body text-on-surface-variant space-y-6 text-lg leading-loose">
+                    <p
+                        class="first-letter:text-4xl first-letter:font-bold first-letter:text-primary first-letter:mr-2 first-letter:float-left">
+                        在超过十年的职业生涯中，我始终致力于解决 IoT 与汽车电子领域的关键技术难题。我的职业生涯始于对嵌入式 Linux 内核的热爱，这种热爱逐渐扩展到了自动驾驶系统的高度复杂性与安全性要求中。
+                    </p>
+                    <p>
+                        我认为技术不应当只是堆砌功能，而是应当在极端限制的条件下追求极致的效率与稳定性。在自动驾驶领域，每一行代码的延迟都可能关乎生死，这种对精确性的极致追求贯穿于我的所有技术决策之中。
+                    </p>
+                    <p>
+                        目前，我的研究重点在于 RTOS 的异构计算优化以及 Rust 在内存受限环境下的工业级应用。我坚信“代码即文学”，优秀的工程实践应当像精美的社论一样条理清晰且富有洞察力。
+                    </p>
+                </div>
+            </section>
+            <!-- Skill Map -->
+            <section class="mb-24">
+                <h2 class="font-headline text-2xl font-bold mb-10 flex items-center gap-3 bounce-hover">
+                    <span class="w-8 h-[2px] bg-primary"></span>
+                    专业技能
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div
+                        class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary" data-icon="code">code</span>
+                            <h3 class="font-bold text-on-surface">编程语言</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">C/C++
+                                (Expert)</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">Rust</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">Python</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">Assembly</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary"
+                                data-icon="settings_input_component">settings_input_component</span>
+                            <h3 class="font-bold text-on-surface">系统架构</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">RTOS
+                                (FreeRTOS/Zephyr)</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">Linux
+                                Kernel</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">AUTOSAR
+                                CP/AP</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary"
+                                data-icon="car_repair">car_repair</span>
+                            <h3 class="font-bold text-on-surface">汽车电子</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">CAN/LIN/Ethernet</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">ISO
+                                26262</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">AD
+                                Stack</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+                            <h3 class="font-bold text-on-surface">工具链</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">CMake</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">QEMU</span>
+                            <span
+                                class="px-3 py-1 bg-surface-container-low text-on-surface-variant text-sm font-label rounded-full">Docker/CI-CD</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Key Projects -->
+            <section class="mb-24" id="projects">
+                <h2 class="font-headline text-2xl font-bold mb-10 flex items-center gap-3 bounce-hover">
+                    <span class="w-8 h-[2px] bg-primary"></span>
+                    精选项目
+                </h2>
+                <div class="space-y-12">
+                    <article class="group">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div
+                                class="w-full md:w-1/3 aspect-video bg-surface-container-low rounded-xl overflow-hidden shadow-sm">
+                                <img alt="Project 1"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    data-alt="high-tech circuit board with blue glowing led lights and intricate microprocessors in a dark laboratory setting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyYqdjC5zmUh1AdYMD0kB6nH51_y4IRjl2dpU7uCQog2dCd2Wnzc-soN2MsAeGP-pSPvv-Ax-1C58Iqe8wpvuVteuD9tsd3aQduqsc85hFRZd6Trtr45PISQInRTHihBP-_7hzrwgXVOwY9zt0owb6ZnXe5CuVC7IOylaFFTROhKEjeUXLqzA9XTxLxXUlgTszUZrM2pMk5iAWLQjxjT3TgMrgdLz8jI_5Xg7Jj3EJ3Un7xryvkSDJ4uOgOkSqCKLyr0xI6EHetXh3" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="text-xl font-bold font-headline group-hover:text-primary transition-colors bounce-hover cursor-pointer">
+                                        Project Zero: 自研分布式RTOS内核</h3>
+                                    <a class="text-primary hover:underline font-label text-sm flex items-center gap-1"
+                                        href="#">GitHub <span class="material-symbols-outlined text-xs"
+                                            data-icon="open_in_new">open_in_new</span></a>
+                                </div>
+                                <p class="text-on-surface-variant font-body leading-relaxed mb-4">
+                                    针对异构SoC设计的硬实时操作系统内核，实现了纳秒级的上下文切换与高度可预测的调度算法。已在多家无人机导航模块中成功验证。
+                                </p>
+                                <div class="flex gap-2">
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">C11</span>
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">ARM-v8</span>
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">Real-time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="group">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div
+                                class="w-full md:w-1/3 aspect-video bg-surface-container-low rounded-xl overflow-hidden shadow-sm">
+                                <img alt="Project 2"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    data-alt="interior dashboard of a futuristic autonomous car with sleek digital displays and ambient blue interior lighting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiwH3NDLidX9gBveOOK-03bkFsu_C4fJUBKjWC1QkNbuIiyGD_vLEgPyxEvVthVJAe2NHWbtFAKEjHKPQ0BXiT9RWTPaJg7BZiSxrq0v280ZM6ZgZ--z9jspVu97aujrTe1CV03FH3d0h2O0tL0GLY7b_Mw9nDmdvkQ18hp8iFVZDdE3oJOVFPx-Um0r9u0Yb_cMoga1hq6bNpXx5BfjcAmttlCEfQJRLTkMK4aLYAG30qFtHc0FIP6TyWCiHf1OOP4p5bre2QIFHg" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="text-xl font-bold font-headline group-hover:text-primary transition-colors bounce-hover cursor-pointer">
+                                        AutoVision: 安全关键型感知引擎</h3>
+                                    <a class="text-primary hover:underline font-label text-sm flex items-center gap-1"
+                                        href="#">Documentation <span class="material-symbols-outlined text-xs"
+                                            data-icon="open_in_new">open_in_new</span></a>
+                                </div>
+                                <p class="text-on-surface-variant font-body leading-relaxed mb-4">
+                                    基于 Rust 开发的自动驾驶感知融合层，通过严格的内存安全检查，确保在复杂的动态环境中传感器数据的可靠性。符合 ISO 26262 ASIL-D 标准。
+                                </p>
+                                <div class="flex gap-2">
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">Rust</span>
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">CUDA</span>
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">Safety-Critical</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="group">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div
+                                class="w-full md:w-1/3 aspect-video bg-surface-container-low rounded-xl overflow-hidden shadow-sm">
+                                <img alt="Project 3"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    data-alt="server room with rows of blinking lights on high-speed networking equipment in a modern data center"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiBC_N6NiBVGRTB4rm4ZldmZL9mwTHXk0AjwF5LUmDueoKcaLL2NwsJpBmu_H9ai3YH2kTNbdQ2Ithp1SMT8XKn1UtFip2sPuu55CUp8eIjkZwxS8QbqRXBTkpC_tLcHqsbFNY94kDLSbcsY6CPUXiM_5Gthj6Ev5SbidTxc3pOKJTllkOtoEvTSbmY_wRLLMgM5Vp10_u4rS1JSNXGhKeGXQyFhPegtkjZAwHoNM4wdYXm9q6b0-2YYcW9bYLHLJJnJmxIThEIrV4" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3
+                                        class="text-xl font-bold font-headline group-hover:text-primary transition-colors bounce-hover cursor-pointer">
+                                        Nebula Gateway: 低功耗边缘网关</h3>
+                                    <a class="text-primary hover:underline font-label text-sm flex items-center gap-1"
+                                        href="#">Demo <span class="material-symbols-outlined text-xs"
+                                            data-icon="open_in_new">open_in_new</span></a>
+                                </div>
+                                <p class="text-on-surface-variant font-body leading-relaxed mb-4">
+                                    为工业 4.0 设计的超低功耗网关方案，集成了多种通信协议栈（LoRa, Zigbee, MQTT），支持端侧 AI 异常检测。
+                                </p>
+                                <div class="flex gap-2">
+                                    <span
+                                        class="text-[10px] uppercase tracking-widest font-bold text-outline">IoT</span>
+                                    <span class="text-[10px] uppercase tracking-widest font-bold text-outline">Edge
+                                        AI</span>
+                                    <span class="text-[10px] uppercase tracking-widest font-bold text-outline">Embedded
+                                        Linux</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- Social/Contact -->
+            <section class="py-16 bg-surface-container rounded-3xl text-center px-10">
+                <h2 class="font-headline text-2xl font-bold mb-6 bounce-hover inline-block">保持联系</h2>
+                <p class="text-on-surface-variant font-body mb-10 max-w-md mx-auto">
+                    如果你对我的项目感兴趣，或者有关于嵌入式系统与自动驾驶的技术探讨，欢迎通过以下方式找到我。
+                </p>
+                <div class="flex justify-center gap-8">
+                    <a class="group flex flex-col items-center gap-2" href="#">
+                        <div
+                            class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+                            <span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+                        </div>
+                        <span
+                            class="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">Email</span>
+                    </a>
+                    <a class="group flex flex-col items-center gap-2" href="#">
+                        <div
+                            class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+                            <span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+                        </div>
+                        <span
+                            class="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">GitHub</span>
+                    </a>
+                    <a class="group flex flex-col items-center gap-2" href="#">
+                        <div
+                            class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+                            <span class="material-symbols-outlined" data-icon="work">work</span>
+                        </div>
+                        <span
+                            class="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">LinkedIn</span>
+                    </a>
+                    <a class="group flex flex-col items-center gap-2" href="#">
+                        <div
+                            class="w-14 h-14 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+                            <span class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span>
+                        </div>
+                        <span
+                            class="text-xs font-label font-bold text-on-surface-variant uppercase tracking-widest">Feed</span>
+                    </a>
+                </div>
+            </section>
+            <footer class="mt-20 pt-10 border-t border-outline-variant/20 text-center">
+                <p class="text-on-surface-variant/40 font-label text-xs tracking-tighter">
+                    © 2024 THE MONOLITH. POWERED BY PRECISION &amp; CAFFEINE.
+                </p>
+            </footer>
+        </div>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile only) -->
+    <!-- 从components/footer.html中加载 -->
+    <div id="footer-placeholder"></div>
+</body>
+
+</html>

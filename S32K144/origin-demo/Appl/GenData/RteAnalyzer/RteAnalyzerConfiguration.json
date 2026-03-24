@@ -262,6 +262,90 @@
       {
          "ExecutedOnTaskLevel" : "1",
          "NamePattern" : "Rte_NvMNotifyInitBlock.*"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbk_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTAck_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTErr_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTxTOut_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTOut_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkRxTOut_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkInv_sig_FrongtlntorLight_omsg_Transmit2_oCAN00_61f332fa_Tx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbk_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTAck_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTErr_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTxTOut_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTOut_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkRxTOut_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkInv_sig_RearLeftWindowPosition_omsg_Receive2_oCAN00_89d4d489_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbk_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTAck_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTErr_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTxTOut_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkTOut_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkRxTOut_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
+      },
+      {
+         "ExecutedOnTaskLevel" : "1",
+         "NamePattern" : "Rte_COMCbkInv_sig_RearRightWindowPosition_omsg_Receive2_oCAN00_94575df2_Rx"
       }
    ],
    "InitFunctionNamePatternList" : [

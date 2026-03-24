@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>TechEditorial | 技术社论</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-tint": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#131b2e",
+                        "background": "#f7f9fb",
+                        "tertiary": "#4d556b",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d5e3fc",
+                        "outline": "#737686",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#dae2fd",
+                        "secondary": "#515f74",
+                        "on-surface": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "surface": "#f7f9fb",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "on-surface-variant": "#434655",
+                        "tertiary-container": "#656d84",
+                        "on-secondary-container": "#57657a",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-container": "#d5e3fc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#eef0ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1e",
+                        "primary-container": "#2563eb",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "body": ["Manrope", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "label": ["Inter", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                        "mono": ["Fira Code", "ui-monospace", "SFMono-Regular"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .no-line-container {
+            border: none !important;
+        }
+
+        .article-title-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+
+        .group:hover .article-title-hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // 并行加载所有组件
+                const [headerHtml, sidebarHtml, footerHtml, rightSidebarHtml] = await Promise.all([
+                    fetch('components/header.html').then(r => r.text()),
+                    fetch('components/sidebar.html').then(r => r.text()),
+                    fetch('components/footer.html').then(r => r.text()),
+                    fetch('components/right-sidebar.html').then(r => r.text())
+                ]);
+
+                // 插入组件
+                document.getElementById('header-placeholder').innerHTML = headerHtml;
+                document.getElementById('sidebar-placeholder').innerHTML = sidebarHtml;
+                document.getElementById('footer-placeholder').innerHTML = footerHtml;
+
+                const placeholders = document.querySelectorAll('.right-sidebar-placeholder');
+                placeholders.forEach(placeholder => {
+                    placeholder.innerHTML = rightSidebarHtml;
+                });
+
+                // 初始化搜索功能
+                const searchInput = document.querySelector('input[placeholder*="搜索"]');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            if (typeof performSearch === 'function') {
+                                performSearch(this.value);
+                            }
+                        }
+                    });
+                }
+
+                // 等待DOM完全更新后执行导航高亮
+                setTimeout(() => {
+                    if (typeof setActiveNav === 'function') {
+                        setActiveNav();
+                    }
+                }, 0);
+
+            } catch (error) {
+                console.error('Error loading components:', error);
+            }
+        });
+    </script>
+
+    <!-- 添加这两行 -->
+    <script src="js/articles-data.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <!-- TopNavBar -->
+    <!-- 从components/header.html中加载 -->
+    <div id="header-placeholder"></div>
+
+    <div class="flex min-h-screen pt-16">
+        <!-- SideNavBar -->
+        <!-- 从components/sidebar.html中加载 -->
+        <div id="sidebar-placeholder"></div>
+        <!-- Main Content Area -->
+        <!-- 修改 main 标签的类名 -->
+        <main class="flex-1 ml-0 lg:ml-64 px-4 sm:px-8 py-12 flex justify-center">
+            <!-- 主内容容器 -->
+            <div class="max-w-[850px] w-full space-y-24">
+                <!-- Section 1: Featured Article -->
+                <!-- Section 1: Featured Article - 将由 JavaScript 动态渲染 -->
+                <section id="featured-article-section" class="mb-16">
+                    <!-- 特色文章将由 JavaScript 渲染 -->
+                </section>
+                <!-- Section 2: Four Core Category Cards (Bento Grid Style) -->
+                <section class="mb-20">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div
+                            class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span class="material-symbols-outlined text-primary mb-4 text-3xl">router</span>
+                            <h3 class="font-headline font-bold text-on-surface text-lg">物联网</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">IoT Hub
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span class="material-symbols-outlined text-primary mb-4 text-3xl">memory</span>
+                            <h3 class="font-headline font-bold text-on-surface text-lg">嵌入式系统</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Hardware
+                                Lab
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-primary mb-4 text-3xl">precision_manufacturing</span>
+                            <h3 class="font-headline font-bold text-on-surface text-lg">自动驾驶</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">
+                                Self-Driving
+                                AI
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span class="material-symbols-outlined text-primary mb-4 text-3xl">directions_car</span>
+                            <h3 class="font-headline font-bold text-on-surface text-lg">汽车电子</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Vehicle
+                                Systems
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Section 3: Latest Technical Insights -->
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="font-headline text-2xl font-bold tracking-tight">最新技术动态</h2>
+                        <a class="text-primary font-label text-xs font-bold uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all"
+                            href="#">
+                            查看全部 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div class="space-y-10">
+                        <!-- 文章将由 JavaScript 动态渲染 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧边栏占位符 -->
+            <div class="right-sidebar-placeholder"></div>
+        </main>
+    </div>
+    <!-- Footer -->
+    <!-- 从components/footer.html中加载 -->
+    <div id="footer-placeholder"></div>
+    <!-- FAB -->
+    <button
+        class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 lg:hidden">
+        <span class="material-symbols-outlined">edit</span>
+    </button>
+</body>
+
+</html>
