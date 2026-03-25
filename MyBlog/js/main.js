@@ -12,13 +12,20 @@ let allSortedArticles = [];
 let currentPage = 0;
 const ARTICLES_PER_PAGE = 5;
 
-function setupMobileSidebar() {
+function setupMobileSidebar(retryLeft = 20) {
+    // 避免重复绑定（例如组件加载较慢时会重试）
+    if (window.__mobileSidebarBound) return;
+
     const menuButton = document.getElementById('mobile-menu-button');
     const overlay = document.getElementById('mobile-sidebar-overlay');
     const sidebar = document.getElementById('mobile-sidebar');
 
     // 文章详情页也会引入 main.js，但不一定包含这些元素
-    if (!menuButton || !overlay || !sidebar) return;
+    if (!menuButton || !overlay || !sidebar) {
+        if (retryLeft <= 0) return;
+        setTimeout(() => setupMobileSidebar(retryLeft - 1), 150);
+        return;
+    }
 
     const lgMedia = window.matchMedia('(min-width: 1024px)');
     const isMobile = () => !lgMedia.matches;
@@ -39,6 +46,7 @@ function setupMobileSidebar() {
         document.body.classList.remove('overflow-hidden');
     };
 
+    window.__mobileSidebarBound = true;
     menuButton.addEventListener('click', open);
     overlay.addEventListener('click', close);
 
