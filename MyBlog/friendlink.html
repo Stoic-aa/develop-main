@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>TechLog - friendlink</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+
+        .video-card-transition {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .video-card-transition:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .headline {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .label-text {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#434655",
+                        "on-primary-container": "#eeefff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface": "#191c1e",
+                        "primary": "#004ac6",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#656d84",
+                        "primary-container": "#2563eb",
+                        "surface-container-low": "#f2f4f6",
+                        "surface": "#f7f9fb",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed": "#d5e3fc",
+                        "secondary": "#515f74",
+                        "tertiary": "#4d556b",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d5e3fc",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#00174b",
+                        "outline": "#737686",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed": "#dae2fd",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container": "#eceef0",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-secondary-container": "#57657a",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-container": "#eef0ff",
+                        "on-secondary-fixed-variant": "#3a485b"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+
+    <script src="js/layout-init.js"></script>
+    <script>
+        // 组件注入/搜索绑定/导航高亮：统一由 layout-init 管理
+        initLayout({
+            componentsBasePath: 'components',
+            linkBasePrefix: ''
+        });
+    </script>
+
+    <script src="js/articles-data.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen">
+    <!-- TopNavBar -->
+    <!-- 从components/header.html中加载 -->
+    <div id="header-placeholder"></div>
+    <!-- Side Navigation Bar (Shared Component) -->
+    <!-- SideNavBar -->
+    <!-- 从components/sidebar.html中加载 -->
+    <div id="sidebar-placeholder"></div>
+    <!-- Main Content Canvas (850px-1000px centered) -->
+    <main class="lg:ml-1 pt-24 pb-20 px-6 sm:px-12">
+        <div class="max-w-[1100px] mx-auto">
+            <!-- Header Section -->
+            <header class="mb-16">
+                <h1 class="font-headline text-5xl font-bold tracking-tight text-slate-900 mb-4">友情链接</h1>
+                <p class="text-xl text-slate-500 font-body max-w-2xl leading-relaxed">
+                    一群在技术荒野中同行的开发者、设计师与终身学习者。欢迎交换链接，共同构建高质量的内容网络。
+                </p>
+                <div class="h-1 w-20 bg-primary mt-8 rounded-full"></div>
+            </header>
+            <!-- Friend Links Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="abstract geometric shape pattern with cyan and dark blue colors, minimalist tech aesthetic"
+                            src="https://www.cdstm.cn/gallery/hycx/qyzx/201911/W020191104521429960046.jpg" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">量子隧道</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">专注量子计算与前端工程化的深度融合探索。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="abstract block-based identicon in primary blue and white, clean professional style"
+                            src="https://img.tukuppt.com/bg_grid/00/17/93/EkMU02XBiu.jpg" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">极客之光</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">分享最新嵌入式系统架构与Rust语言实战心得。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="abstract shapes in violet and slate gray, artistic tech profile avatar"
+                            src="http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">像素边界</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">UI设计与代码实现的完美桥梁，关注极致用户体验。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 4 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="stylized robot head icon with tech components, modern blue and silver palette"
+                            src="http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">逻辑原点</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">算法导论与数据结构的可视化学习笔记记录者。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 5 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="soft blue flowing shapes on white background, ethereal and tech-modern aesthetic"
+                            src="http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">云端漫步</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">分布式系统与容器云的原生技术架构分享。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 6 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="complex geometric pattern icon in emerald and gold, highly detailed digital art"
+                            src="http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">内核工坊</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">深入Linux内核，探索操作系统的底层运作奥秘。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Card 7 -->
+                <div
+                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img class="w-full h-full object-cover"
+                            data-alt="crisp black and white geometric shapes, high contrast modernist design"
+                            src="http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png" />
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">二进制生活</h3>
+                    <p class="text-sm text-slate-500 font-label leading-relaxed mb-4">一个关于代码、生活与哲学的个人思考博客。</p>
+                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="#">Visit
+                        Site</a>
+                </div>
+                <!-- Add Friend CTA Card -->
+                <div
+                    class="friend-card border-2 border-dashed border-slate-200 p-6 rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary group transition-colors">
+                    <div
+                        class="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-slate-400 group-hover:text-primary text-3xl transition-colors">add</span>
+                    </div>
+                    <h3 class="font-headline font-bold text-lg text-slate-900 mb-2">申请加入</h3>
+                    <p class="text-xs text-slate-400 font-label px-4">欢迎提交你的站点信息，审核通过后将在此展示</p>
+                </div>
+            </div>
+            <!-- Footer Guideline Section -->
+            <section class="mt-24 p-12 bg-slate-100 rounded-3xl">
+                <div class="max-w-3xl">
+                    <h2 class="font-headline text-3xl font-bold text-slate-900 mb-6">申请规则</h2>
+                    <ul class="space-y-4 text-slate-600 font-body">
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span>站点内容必须包含技术分享、设计心得或高质量个人生活思考，拒绝采集站与商业广告站。</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span>站点需支持 HTTPS 协议，且最近三个月内有持续的内容更新。</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-primary text-xl"
+                                style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span>请先在贵站添加本站链接，并提供站点名称、简介、链接及头像 URL。</span>
+                        </li>
+                    </ul>
+                    <div class="mt-10 p-6 bg-white rounded-xl border border-slate-200/60">
+                        <h4 class="font-headline font-bold text-slate-800 mb-3">本站信息</h4>
+                        <code
+                            class="block bg-slate-50 p-4 rounded-lg text-sm font-mono text-slate-600 border border-slate-100">
+                            名称：Technical Editorial<br/>
+                            简介：专注开发者体验的精品技术刊物<br/>
+                            链接：https://tech-editorial.com<br/>
+                            头像：https://tech-editorial.com/avatar.png
+                        </code>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile only) -->
+    <!-- 从components/footer.html中加载 -->
+    <div id="footer-placeholder"></div>
+
+</body>
+
+
+</html>

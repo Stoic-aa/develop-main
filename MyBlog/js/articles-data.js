@@ -43,7 +43,7 @@ const articlesData = [
         readTime: "阅读时间 14 分钟",
         author: "Michael Brown",
         authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        coverImage: "https://img2.auto-testing.net/202102/08/211527251.jpg",
+        coverImage: "http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png",
         url: "articles/article-template.html?slug=autosar-software-defined-cars",
         contentFile: "content/autosar-software-defined-cars.html",
         categoryPage: "emed.html",
