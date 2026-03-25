@@ -16,6 +16,10 @@
             </nav>
         </div>
         <div class="flex items-center gap-4">
+            <button id="mobile-menu-button" aria-label="打开菜单"
+                class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95 md:hidden">
+                <span class="material-symbols-outlined text-on-surface-variant">menu</span>
+            </button>
             <div class="relative group hidden sm:block">
                 <span
                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
@@ -35,3 +39,6 @@
         </div>
     </div>
 </header>
+
+<!-- Mobile sidebar overlay -->
+<div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupDarkModeToggle();
     initializeArticles();
     setupArticleHoverEffects();
+    setupMobileSidebar();
 });
 
 // 全局变量
@@ -10,6 +11,46 @@ let displayedArticles = [];
 let allSortedArticles = [];
 let currentPage = 0;
 const ARTICLES_PER_PAGE = 5;
+
+function setupMobileSidebar() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const overlay = document.getElementById('mobile-sidebar-overlay');
+    const sidebar = document.getElementById('mobile-sidebar');
+
+    // 文章详情页也会引入 main.js，但不一定包含这些元素
+    if (!menuButton || !overlay || !sidebar) return;
+
+    const lgMedia = window.matchMedia('(min-width: 1024px)');
+    const isMobile = () => !lgMedia.matches;
+
+    const open = () => {
+        if (!isMobile()) return;
+        overlay.classList.remove('hidden');
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        document.body.classList.add('overflow-hidden'); // 防止抽屉展开时页面滚动
+    };
+
+    const close = () => {
+        if (!isMobile()) return;
+        overlay.classList.add('hidden');
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        document.body.classList.remove('overflow-hidden');
+    };
+
+    menuButton.addEventListener('click', open);
+    overlay.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+    });
+
+    // 点击侧栏链接后自动关闭
+    sidebar.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', close);
+    });
+}
 
 function initializeArticles() {
     // 获取当前页面路径
@@ -261,14 +302,14 @@ function createArticleCard(article) {
     articleDiv.dataset.articleUrl = article.url;
 
     articleDiv.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
             <div class="md:col-span-8 space-y-4">
                 <div class="flex items-center gap-3 text-xs font-label text-primary font-bold tracking-widest uppercase">
                     <span>${article.category}</span>
                     <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
                     <span class="text-on-surface-variant font-medium">${article.date}</span>
                 </div>
-                <h2 class="text-3xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors duration-300 article-title-hover">
+                <h2 class="text-2xl sm:text-3xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors duration-300 article-title-hover">
                     ${article.title}
                 </h2>
                 <p class="text-on-surface-variant leading-relaxed line-clamp-3 font-body">
@@ -338,11 +379,11 @@ function renderFeaturedArticle() {
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                     </div>
                 </div>
-                <div class="absolute bottom-0 p-8 w-full">
+                <div class="absolute bottom-0 p-5 sm:p-8 w-full">
                     <span
                         class="inline-block px-3 py-1 bg-primary text-white text-[10px] font-label font-bold tracking-widest uppercase mb-4 rounded-full">${featuredArticleConfig.categoryLabel || featuredArticle.category}</span>
                     <h1
-                        class="text-3xl md:text-4xl font-headline font-bold text-white mb-4 leading-tight elastic-hover">
+                        class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-white mb-4 leading-tight elastic-hover">
                         ${featuredArticle.title}</h1>
                     <p class="text-slate-200 font-body text-sm max-w-xl line-clamp-2">
                         ${featuredArticle.summary}</p>

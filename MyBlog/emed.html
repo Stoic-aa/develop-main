@@ -159,12 +159,12 @@
         <!-- 从components/sidebar.html中加载 -->
         <div id="sidebar-placeholder"></div>
         <!-- Main Content Area -->
-        <main class="flex-1 ml-0 lg:ml-0 px-4 sm:px-8 py-12 flex justify-center">
-            <div class="max-w-[850px] w-full space-y-24">
+        <main class="flex-1 ml-0 lg:ml-0 px-4 sm:px-8 py-12 flex flex-col xl:flex-row justify-center">
+            <div class="max-w-[850px] w-full space-y-16 sm:space-y-24">
                 <!-- Hero Section -->
                 <section class="space-y-6">
                     <h1
-                        class="text-5xl sm:text-6xl font-headline font-bold text-on-surface tracking-tighter leading-tight">
+                        class="text-4xl sm:text-6xl font-headline font-bold text-on-surface tracking-tighter leading-tight">
                         重塑数字 <span class="text-primary">基石</span>
                     </h1>
                     <p class="text-xl text-on-surface-variant font-body leading-relaxed max-w-2xl">
@@ -172,13 +172,13 @@
                     </p>
                 </section>
                 <!-- Blog List -->
-                <div class="space-y-16">
+                <div class="space-y-12 sm:space-y-16">
                     <!-- 文章列表将通过JavaScript动态生成 -->
                 </div>
                 <!-- Pagination/Load More -->
                 <div class="pt-12 flex justify-center">
                     <button
-                        class="px-8 py-3 bg-surface-container-lowest text-on-surface font-headline font-bold text-sm tracking-widest border border-outline-variant/10 rounded-full hover:bg-primary hover:text-on-primary transition-all duration-300 shadow-sm">
+                        class="px-6 sm:px-8 py-3 bg-surface-container-lowest text-on-surface font-headline font-bold text-sm tracking-widest border border-outline-variant/10 rounded-full hover:bg-primary hover:text-on-primary transition-all duration-300 shadow-sm">
                         加载历史存档
                     </button>
                 </div>
