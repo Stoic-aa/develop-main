@@ -30,12 +30,24 @@ function setupMobileSidebar(retryLeft = 20) {
     const lgMedia = window.matchMedia('(min-width: 1024px)');
     const isMobile = () => !lgMedia.matches;
 
+    const getEditFabs = () => {
+        // 页面里可能存在多个 FAB（例如 footer 注入后页面文件里又各自放了一个）
+        // 这里匹配“移动端 lg:hidden 且内部 material-symbols-outlined 文本为 edit”的按钮
+        return Array.from(document.querySelectorAll('button.lg\\:hidden')).filter(btn => {
+            const icon = btn.querySelector('span.material-symbols-outlined');
+            return icon && (icon.textContent || '').trim() === 'edit';
+        });
+    };
+
     const open = () => {
         if (!isMobile()) return;
         overlay.classList.remove('hidden');
         sidebar.classList.remove('-translate-x-full');
         sidebar.classList.add('translate-x-0');
         document.body.classList.add('overflow-hidden'); // 防止抽屉展开时页面滚动
+
+        // 抽屉展开时让 FAB 不挡住主要交互（避免用户点不到遮罩/侧栏）
+        getEditFabs().forEach(btn => (btn.style.pointerEvents = 'none'));
     };
 
     const close = () => {
@@ -44,6 +56,9 @@ function setupMobileSidebar(retryLeft = 20) {
         sidebar.classList.add('-translate-x-full');
         sidebar.classList.remove('translate-x-0');
         document.body.classList.remove('overflow-hidden');
+
+        // 恢复 FAB 可点击
+        getEditFabs().forEach(btn => (btn.style.pointerEvents = 'auto'));
     };
 
     window.__mobileSidebarBound = true;
@@ -57,6 +72,16 @@ function setupMobileSidebar(retryLeft = 20) {
     // 点击侧栏链接后自动关闭
     sidebar.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', close);
+    });
+
+    // 兼容你红框里的 FAB：在移动端点击它也打开菜单
+    getEditFabs().forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 如果当前是打开态就关上，否则打开
+            const isCurrentlyOpen = !overlay.classList.contains('hidden');
+            if (isCurrentlyOpen) close();
+            else open();
+        });
     });
 }
 
