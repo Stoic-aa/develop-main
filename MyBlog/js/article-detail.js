@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function () {
     try {
         setupDarkModeToggle();
-
-        await loadArticleLayoutComponents();
         await renderArticleDetail();
 
         setTimeout(() => {
@@ -16,43 +14,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.error('文章详情页初始化失败:', error);
     }
 });
-
-async function loadArticleLayoutComponents() {
-    const [headerHtml, sidebarHtml, footerHtml] = await Promise.all([
-        fetch('../components/header.html').then(r => r.text()),
-        fetch('../components/sidebar.html').then(r => r.text()),
-        fetch('../components/footer.html').then(r => r.text())
-    ]);
-
-    document.getElementById('header-placeholder').innerHTML = patchComponentLinks(headerHtml, '..');
-    document.getElementById('sidebar-placeholder').innerHTML = patchComponentLinks(sidebarHtml, '..');
-    document.getElementById('footer-placeholder').innerHTML = patchComponentLinks(footerHtml, '..');
-
-    initSearchInput();
-}
-
-function patchComponentLinks(html, basePrefix) {
-    return html.replace(
-        /(href|src)=["'](?!https?:|mailto:|tel:|#|javascript:|\/)([^"']+)["']/g,
-        function (_, attr, value) {
-            return `${attr}="${basePrefix}/${value}"`;
-        }
-    );
-}
-
-function initSearchInput() {
-    const searchInput = document.querySelector('input[placeholder*="搜索"]');
-    if (!searchInput) return;
-
-    searchInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (typeof performSearch === 'function') {
-                performSearch(this.value);
-            }
-        }
-    });
-}
 
 async function renderArticleDetail() {
     const slug = getArticleSlugFromQuery();
