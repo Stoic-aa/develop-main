@@ -1,5 +1,11 @@
+// 确保在DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', async function () {
     try {
+        // 检查 articlesData 是否存在
+        if (typeof articlesData === 'undefined') {
+            throw new Error('articlesData 未定义，请确保 articles-data.js 已正确加载');
+        }
+
         setupDarkModeToggle();
         await renderArticleDetail();
 
@@ -12,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         bindArticleActionButtons();
     } catch (error) {
         console.error('文章详情页初始化失败:', error);
+        renderArticleError('页面初始化失败，请刷新重试。');
     }
 });
 
@@ -164,4 +171,10 @@ function bindArticleActionButtons() {
             }
         });
     }
+}
+
+// 辅助函数：规范化路径
+function normalizePath(path) {
+    if (!path) return '';
+    return path.replace(/\\/g, '/').replace(/\/+/g, '/');
 }
