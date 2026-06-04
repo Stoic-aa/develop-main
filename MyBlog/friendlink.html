@@ -48,6 +48,14 @@
         .label-text {
             font-family: 'Inter', sans-serif;
         }
+
+        /* ========== 移动端适配：消除主内容容器的 70vw 宽度和 20vw 左边距 ========== */
+        @media (max-width: 768px) {
+            .friendlink-main-container {
+                max-width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
     </style>
     <script id="tailwind-config">
         tailwind.config = {
@@ -129,15 +137,13 @@
 
 <body class="bg-surface text-on-surface min-h-screen">
     <!-- TopNavBar -->
-    <!-- 从components/header.html中加载 -->
     <div id="header-placeholder"></div>
-    <!-- Side Navigation Bar (Shared Component) -->
     <!-- SideNavBar -->
-    <!-- 从components/sidebar.html中加载 -->
     <div id="sidebar-placeholder"></div>
-    <!-- Main Content Canvas (850px-1000px centered) -->
+    <!-- Main Content Canvas -->
     <main class="flex-1 px-4 sm:px-8 py-12 mt-24 flex flex-col xl:flex-row">
-        <div class="max-w-[70vw] ml-[20vw] w-full px-6">
+        <!-- 主内容容器：添加 friendlink-main-container 类用于移动端覆盖 -->
+        <div class="max-w-[70vw] ml-[20vw] w-full px-6 friendlink-main-container">
             <!-- Header Section -->
             <header class="mb-16">
                 <h1 class="font-headline text-5xl font-bold tracking-tight text-slate-900 mb-4">友情链接</h1>
@@ -286,11 +292,9 @@
             </section>
         </div>
     </main>
-    <!-- Bottom Navigation Bar (Mobile only) -->
-    <!-- 从components/footer.html中加载 -->
+    <!-- Footer -->
     <div id="footer-placeholder"></div>
 
 </body>
-
 
 </html>

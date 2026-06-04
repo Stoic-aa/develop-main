@@ -96,6 +96,14 @@
         .group:hover .article-title-hover {
             transform: translateY(-4px) scale(1.02);
         }
+
+        /* ========== 移动端适配：消除主内容容器的 40vw 宽度和 20vw 左边距 ========== */
+        @media (max-width: 768px) {
+            .home-main-container {
+                max-width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
     </style>
 
     <script src="js/layout-init.js"></script>
@@ -114,20 +122,16 @@
 
 <body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
     <!-- TopNavBar -->
-    <!-- 从components/header.html中加载 -->
     <div id="header-placeholder"></div>
 
     <div class="flex min-h-screen pt-16">
         <!-- SideNavBar -->
-        <!-- 从components/sidebar.html中加载 -->
         <div id="sidebar-placeholder"></div>
         <!-- Main Content Area -->
-        <!-- 修改 main 标签的类名 -->
         <main class="flex-1 px-4 sm:px-8 py-12 flex flex-col xl:flex-row">
-            <!-- 主内容容器 -->
-            <div class="max-w-[50vw] ml-[20vw] w-full space-y-16 sm:space-y-24">
+            <!-- 主内容容器：添加 home-main-container 类用于移动端覆盖 -->
+            <div class="max-w-[40vw] ml-[20vw] w-full space-y-16 sm:space-y-24 home-main-container">
                 <!-- Section 1: Featured Article -->
-                <!-- Section 1: Featured Article - 将由 JavaScript 动态渲染 -->
                 <section id="featured-article-section" class="mb-10 sm:mb-16">
                     <!-- 特色文章将由 JavaScript 渲染 -->
                 </section>
@@ -190,7 +194,6 @@
         </main>
     </div>
     <!-- Footer -->
-    <!-- 从components/footer.html中加载 -->
     <div id="footer-placeholder"></div>
     <!-- FAB -->
     <button

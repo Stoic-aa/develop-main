@@ -48,6 +48,14 @@
         .label-text {
             font-family: 'Inter', sans-serif;
         }
+
+        /* ========== 移动端适配：消除主内容容器的 50vw 宽度和 20vw 左边距 ========== */
+        @media (max-width: 768px) {
+            .channel-main-container {
+                max-width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
     </style>
     <script id="tailwind-config">
         tailwind.config = {
@@ -129,16 +137,13 @@
 
 <body class="bg-surface text-on-surface min-h-screen">
     <!-- TopNavBar -->
-    <!-- 从components/header.html中加载 -->
     <div id="header-placeholder"></div>
-    <!-- Side Navigation Bar (Shared Component) -->
     <!-- SideNavBar -->
-    <!-- 从components/sidebar.html中加载 -->
     <div id="sidebar-placeholder"></div>
-    <!-- Main Content Canvas (850px-1000px centered) -->
-    <!-- 修改后 -->
+    <!-- Main Content Canvas -->
     <main class="flex-1 px-4 sm:px-8 py-12 flex flex-col xl:flex-row">
-        <div class="max-w-[50vw] ml-[20vw] w-full px-6">
+        <!-- 主内容容器：添加 channel-main-container 类用于移动端覆盖 -->
+        <div class="max-w-[50vw] ml-[20vw] w-full px-6 channel-main-container">
             <!-- Channel Header Banner -->
             <header class="mb-12">
                 <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-primary mb-6">
@@ -359,11 +364,9 @@
             </div>
         </div>
     </main>
-    <!-- Bottom Navigation Bar (Mobile only) -->
-    <!-- 从components/footer.html中加载 -->
+    <!-- Footer -->
     <div id="footer-placeholder"></div>
 
 </body>
-
 
 </html>

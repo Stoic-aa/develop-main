@@ -103,6 +103,14 @@
         .no-line {
             border: none !important;
         }
+
+        /* ========== 移动端适配：消除主内容容器的 50vw 宽度和 20vw 左边距 ========== */
+        @media (max-width: 768px) {
+            .profile-main-container {
+                max-width: 100% !important;
+                margin-left: 0 !important;
+            }
+        }
     </style>
 
     <script src="js/layout-init.js"></script>
@@ -119,15 +127,14 @@
 </head>
 
 <body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
-    <!-- TopNavBar (Shared Component Execution) -->
-    <!-- 从components/header.html中加载 -->
+    <!-- TopNavBar -->
     <div id="header-placeholder"></div>
-    <!-- SideNavBar (Shared Component Execution) -->
-    <!-- 从components/sidebar.html中加载 -->
+    <!-- SideNavBar -->
     <div id="sidebar-placeholder"></div>
     <!-- Main Content Canvas -->
     <main class="flex-1 px-4 sm:px-8 py-12 mt-24 flex flex-col xl:flex-row">
-        <div class="max-w-[50vw] ml-[20vw] w-full px-6">
+        <!-- 主内容容器：添加 profile-main-container 类用于移动端覆盖 -->
+        <div class="max-w-[50vw] ml-[20vw] w-full px-6 profile-main-container">
             <!-- Hero Section -->
             <section class="mb-20 text-center md:text-left flex flex-col md:flex-row items-center gap-10">
                 <div class="relative group">
@@ -407,8 +414,7 @@
             </footer>
         </div>
     </main>
-    <!-- Bottom Navigation Bar (Mobile only) -->
-    <!-- 从components/footer.html中加载 -->
+    <!-- Footer -->
     <div id="footer-placeholder"></div>
 </body>
 
