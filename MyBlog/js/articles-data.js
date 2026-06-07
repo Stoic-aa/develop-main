@@ -214,8 +214,8 @@ const articlesData = [
         author: "Tech Editorial Team",
         authorAvatar: "",
         coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        contentFile: "content/test-2.html",
+        url: "articles/article-template.html?slug=test-md",
+        contentFile: "content/test-md.html",
         categoryPage: "auto.html",
         tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
         lastUpdated: "2024年6月10日"
