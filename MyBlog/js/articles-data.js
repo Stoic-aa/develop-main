@@ -10,8 +10,8 @@ const articlesData = [
         author: "Alex Rivera",
         authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
         coverImage: "https://www.techphant.cn/wp-content/uploads/2023/03/10355465.jpg",
-        url: "articles/article-template.html?slug=rust-embedded-iot",
-        contentFile: "content/rust-embedded-iot.html",
+        url: "articles/article-template.html?slug=example",
+        contentFile: "content/example.html",
         categoryPage: "emed.html",
         tags: ["Rust", "物联网", "嵌入式系统", "微内核"],
         lastUpdated: "2024年5月24日"

@@ -43,13 +43,13 @@ if sudo nginx -t; then
     sudo systemctl reload nginx
     # 检查 Nginx 状态
     if sudo systemctl is-active --quiet nginx; then
-        echo "✅ 部署成功！Nginx 正在运行。"
+        echo "部署成功！Nginx 正在运行。"
     else
-        echo "❌ Nginx 启动失败，请检查配置。"
+        echo "Nginx 启动失败，请检查配置。"
         sudo systemctl status nginx
     fi
 else
-    echo "❌ Nginx 配置错误，请检查配置文件。"
+    echo "Nginx 配置错误，请检查配置文件。"
     exit 1
 fi
 
