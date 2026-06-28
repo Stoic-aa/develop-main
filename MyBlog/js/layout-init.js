@@ -133,6 +133,12 @@
                 const rightHtml = await fetchTextResource(`${basePath}/right-sidebar.html`)
                     .then(h => fixRelativeLinks(h, linkPrefix));
                 rightSideList.forEach(el => el.innerHTML = rightHtml);
+
+                // 右侧边栏加载完成后，触发统计数据更新
+                const updateFn = window.updateSiteStats;
+                if (typeof updateFn === 'function') {
+                    updateFn();
+                }
             } catch (err) {
                 console.warn('右侧边栏加载异常（不影响主布局）:', err.message);
             }

@@ -319,6 +319,19 @@
     window.featuredArticleData = featuredArticleData;
     window.featuredArticleConfig = featuredArticleConfig;
 
+    /**
+     * 更新站点统计数据（文章总数）
+     */
+    function updateSiteStats() {
+        const articleCountEl = document.getElementById('stats-article-count');
+        if (articleCountEl) {
+            articleCountEl.textContent = articlesData.length;
+        }
+    }
+
+    // 暴露到全局，供 layout-init.js 调用
+    window.updateSiteStats = updateSiteStats;
+
     // 分类页自动渲染
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', renderEmedPageArticles);
