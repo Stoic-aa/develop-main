@@ -81,7 +81,8 @@
      */
     function isHomePage() {
         const path = window.location.pathname;
-        return path.endsWith('/') || path.includes('index.html');
+        // return path.endsWith('/') || path.includes('index.html');
+        return false; // 这样所有页面都会按照分类页的逻辑渲染
     }
 
     /**

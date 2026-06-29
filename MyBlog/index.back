@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes"
         name="viewport" />
-    <title>TechEditorial | 物联网/嵌入式</title>
+    <title>TechEditorial | 技术社论</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap"
@@ -99,13 +99,12 @@
 
         /* ========== 移动端适配：消除主内容容器的 40vw 宽度和 20vw 左边距 ========== */
         @media (max-width: 768px) {
-            .category-main-container {
+            .home-main-container {
                 max-width: 100% !important;
                 margin-left: 0 !important;
             }
         }
     </style>
-
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -117,9 +116,9 @@
     </script>
 
     <!-- 正确的脚本引入顺序 -->
-    <script src="js/articles-data.js?v=1.0.1"></script> <!-- 1. 文章数据 -->
-    <script src="js/main.js?v=1.0.1"></script> <!-- 3. 文章渲染 -->
-    <script src="js/layout-init.js?v=1.0.1"></script> <!-- 4. 布局初始化 -->
+    <script src="js/articles-data.js?v=1.0.0"></script> <!-- 1. 文章数据 -->
+    <script src="js/main.js?v=1.0.0"></script> <!-- 3. 文章渲染 -->
+    <script src="js/layout-init.js?v=1.0.0"></script> <!-- 4. 布局初始化 -->
     <script>
         initLayout({
             componentsBasePath: 'components',
@@ -137,32 +136,68 @@
         <!-- SideNavBar -->
         <div id="sidebar-placeholder"></div>
         <!-- Main Content Area -->
-        <main class="flex-1 ml-0 lg:ml-0 px-4 sm:px-8 py-12 flex flex-col xl:flex-row">
-            <!-- 主内容容器：添加 category-main-container 类用于移动端覆盖 -->
-            <div class="max-w-[40vw] ml-[20vw] pr-0 w-full space-y-16 sm:space-y-24 category-main-container">
-                <!-- Hero Section -->
-                <!-- <section class="space-y-6">
-                    <h1
-                        class="text-4xl sm:text-6xl font-headline font-bold text-on-surface tracking-tighter leading-tight">
-                        重塑数字 <span class="text-primary">基石</span>
-                    </h1>
-                    <p class="text-xl text-on-surface-variant font-body leading-relaxed max-w-2xl">
-                        深入探讨底层系统、优雅的 UI 架构以及软硬件的交汇点. 为现代工程师提供的密集的硬核知识.
-                    </p>
-                </section> -->
-                <!-- Blog List -->
-                <div class="space-y-12 sm:space-y-16">
-                    <!-- 文章列表将通过JavaScript动态生成 -->
-                </div>
-                <!-- Pagination/Load More -->
-                <div class="pt-12 flex justify-center">
-                    <button
-                        class="px-6 sm:px-8 py-3 bg-surface-container-lowest text-on-surface font-headline font-bold text-sm tracking-widest border border-outline-variant/10 rounded-full hover:bg-primary hover:text-on-primary transition-all duration-300 shadow-sm">
-                        加载历史存档
-                    </button>
+        <main class="flex-1 px-4 sm:px-8 py-12 flex flex-col xl:flex-row">
+            <!-- 主内容容器：添加 home-main-container 类用于移动端覆盖 -->
+            <div class="max-w-[40vw] ml-[20vw] w-full space-y-16 sm:space-y-24 home-main-container">
+                <!-- Section 1: Featured Article -->
+                <section id="featured-article-section" class="mb-10 sm:mb-16">
+                    <!-- 特色文章将由 JavaScript 渲染 -->
+                </section>
+                <!-- Section 2: Four Core Category Cards (Bento Grid Style) -->
+                <section class="mb-20">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div
+                            class="bg-surface-container-low p-5 sm:p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span class="material-symbols-outlined text-primary mb-4 text-2xl sm:text-3xl">router</span>
+                            <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">物联网</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">IoT Hub
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-5 sm:p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span class="material-symbols-outlined text-primary mb-4 text-2xl sm:text-3xl">memory</span>
+                            <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">嵌入式系统</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Hardware
+                                Lab
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-5 sm:p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-primary mb-4 text-2xl sm:text-3xl">precision_manufacturing</span>
+                            <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">自动驾驶</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">
+                                Self-Driving
+                                AI
+                            </p>
+                        </div>
+                        <div
+                            class="bg-surface-container-low p-5 sm:p-6 rounded-xl hover:bg-surface-bright transition-colors group">
+                            <span
+                                class="material-symbols-outlined text-primary mb-4 text-2xl sm:text-3xl">directions_car</span>
+                            <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">汽车电子</h3>
+                            <p class="text-xs text-on-surface-variant font-label uppercase tracking-wider mt-1">Vehicle
+                                Systems
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Section 3: Latest Technical Insights -->
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="font-headline text-2xl font-bold tracking-tight">最新技术动态</h2>
+                        <a class="text-primary font-label text-xs font-bold uppercase tracking-widest flex items-center gap-1 hover:gap-2 transition-all"
+                            href="#">
+                            查看全部 <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div class="space-y-10">
+                        <!-- 文章将由 JavaScript 动态渲染 -->
+                    </div>
                 </div>
             </div>
-            <!-- Right Sidebar - Blog Info & Trends -->
+
+            <!-- 右侧边栏占位符 -->
             <div class="right-sidebar-placeholder"></div>
         </main>
     </div>
