@@ -184,39 +184,39 @@
             categoryPage: "auto.html",
             tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
             lastUpdated: "2024年6月8日"
-        },
-        {
-            id: 12,
-            title: "测试文章新增5",
-            summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-            category: "深度解析",
-            date: "2024年6月9日",
-            readTime: "阅读时间 15 分钟",
-            author: "Tech Editorial Team",
-            authorAvatar: "",
-            coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-            url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-            contentFile: "content/test-2.html",
-            categoryPage: "auto.html",
-            tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-            lastUpdated: "2024年6月9日"
-        },
-        {
-            id: 13,
-            title: "测试文章新增6",
-            summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-            category: "深度解析",
-            date: "2024年6月10日",
-            readTime: "阅读时间 15 分钟",
-            author: "Tech Editorial Team",
-            authorAvatar: "",
-            coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-            url: "articles/article-template.html?slug=example",
-            contentFile: "content/example.html",
-            categoryPage: "auto.html",
-            tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-            lastUpdated: "2024年6月10日"
         }
+        // {
+        //     id: 12,
+        //     title: "测试文章新增5",
+        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
+        //     category: "深度解析",
+        //     date: "2024年6月9日",
+        //     readTime: "阅读时间 15 分钟",
+        //     author: "Tech Editorial Team",
+        //     authorAvatar: "",
+        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
+        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
+        //     contentFile: "content/test-2.html",
+        //     categoryPage: "auto.html",
+        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
+        //     lastUpdated: "2024年6月9日"
+        // }
+        // {
+        //     id: 13,
+        //     title: "测试文章新增6",
+        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
+        //     category: "深度解析",
+        //     date: "2024年6月10日",
+        //     readTime: "阅读时间 15 分钟",
+        //     author: "Tech Editorial Team",
+        //     authorAvatar: "",
+        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
+        //     url: "articles/article-template.html?slug=example",
+        //     contentFile: "content/example.html",
+        //     categoryPage: "auto.html",
+        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
+        //     lastUpdated: "2024年6月10日"
+        // }
     ];
 
     // ====================== 数据工具函数 ======================
