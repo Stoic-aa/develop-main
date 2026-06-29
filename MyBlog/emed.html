@@ -106,17 +106,26 @@
         }
     </style>
 
-    <script src="js/layout-init.js"></script>
     <script>
-        // 组件注入/搜索绑定/导航高亮：统一由 layout-init 管理
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?fb9922958f21d052c8e0c7fc88cf9045";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    <!-- 正确的脚本引入顺序 -->
+    <script src="js/articles-data.js?v=1.0.0"></script> <!-- 1. 文章数据 -->
+    <script src="js/main.js?v=1.0.0"></script> <!-- 3. 文章渲染 -->
+    <script src="js/layout-init.js?v=1.0.0"></script> <!-- 4. 布局初始化 -->
+    <script>
         initLayout({
             componentsBasePath: 'components',
             linkBasePrefix: ''
         });
     </script>
-
-    <script src="js/articles-data.js"></script>
-    <script src="js/main.js"></script>
 
 </head>
 
@@ -130,7 +139,7 @@
         <!-- Main Content Area -->
         <main class="flex-1 ml-0 lg:ml-0 px-4 sm:px-8 py-12 flex flex-col xl:flex-row">
             <!-- 主内容容器：添加 category-main-container 类用于移动端覆盖 -->
-            <div class="max-w-[40vw] ml-[20vw] w-full space-y-16 sm:space-y-24 category-main-container">
+            <div class="max-w-[40vw] ml-[20vw] pr-0 w-full space-y-16 sm:space-y-24 category-main-container">
                 <!-- Hero Section -->
                 <section class="space-y-6">
                     <h1

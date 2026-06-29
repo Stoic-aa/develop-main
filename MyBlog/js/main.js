@@ -9,6 +9,7 @@
 
     // ====================== 常量配置 ======================
     const ARTICLE_PER_PAGE = 5;
+    const ARTICLE_CARD_SCALE = 0.8; // 文章卡片整体缩放系数 (1 = 100%, 0.95 = 95%)
     const GLOBAL_FLAGS = {
         mobileSidebarBound: '__mobile_sidebar_bound',
         articleHoverBound: '__article_hover_bound'
@@ -116,6 +117,16 @@
         articleEl.className = 'group cursor-pointer';
         articleEl.dataset.articleUrl = article.url;
 
+        // 添加整体缩放效果
+        if (ARTICLE_CARD_SCALE !== 1) {
+            articleEl.style.transform = `scale(${ARTICLE_CARD_SCALE})`;
+            articleEl.style.transformOrigin = 'top left';
+            // 缩放后需要调整margin来补偿间距
+            // const scaleDiff = (1 - ARTICLE_CARD_SCALE) * 50;
+            // articleEl.style.marginBottom = `-${scaleDiff}px`;
+            articleEl.style.marginBottom = '-8px'; // 固定减少8px间距
+        }
+
         articleEl.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
             <div class="md:col-span-8 space-y-4">
@@ -124,7 +135,7 @@
                     <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
                     <span class="text-on-surface-variant font-medium">${article.date}</span>
                 </div>
-                <h2 class="text-2xl sm:text-3xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors duration-300 article-title-hover">
+                <h2 class="text-xl sm:text-2xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors duration-300 article-title-hover">
                     ${article.title}
                 </h2>
                 <p class="text-on-surface-variant leading-relaxed line-clamp-3 font-body">${article.summary}</p>
@@ -161,7 +172,7 @@
         container.innerHTML = '';
 
         const wrapper = document.createElement('div');
-        wrapper.className = isHomePage() ? 'space-y-10' : 'space-y-16';
+        wrapper.className = isHomePage() ? 'space-y-10' : 'space-y-0';
         displayedArticles.forEach(art => wrapper.appendChild(createArticleCard(art)));
         container.appendChild(wrapper);
 
