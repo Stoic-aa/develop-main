@@ -15,3 +15,22 @@
 .group:hover .article-title-hover {
     transform: translateY(-4px) scale(1.02);
 }
+
+/* 阅读模式 */
+.read-mode {
+    max-width: 800px;
+    margin: 0 auto !important;
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+.read-mode .right-sidebar-placeholder,
+.read-mode #mobile-sidebar,
+.read-mode .fixed.bottom-8 {
+    display: none !important;
+}
+
+.read-mode .category-main-container {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+}

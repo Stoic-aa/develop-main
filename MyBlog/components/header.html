@@ -28,12 +28,48 @@
                     placeholder="搜索深度洞察..." type="text"
                     onkeyup="if(event.key === 'Enter') window.performSearch(this.value)" />
             </div>
-            <button class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95">
+            <button id="notification-btn"
+                class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95 relative"
+                aria-label="通知">
                 <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+                <!-- 装饰性红点 -->
+                <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full animate-pulse"></span>
             </button>
-            <button class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95">
-                <span class="material-symbols-outlined text-on-surface-variant">settings</span>
-            </button>
+            <div class="relative group">
+                <button id="settings-toggle-btn"
+                    class="p-2 hover:bg-slate-100/50 rounded-full transition-transform active:opacity-80 scale-95"
+                    aria-label="设置">
+                    <span class="material-symbols-outlined text-on-surface-variant">settings</span>
+                    <!-- 阅读模式指示器 -->
+                    <span id="read-mode-indicator"
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full border-2 border-white dark:border-slate-900 opacity-0 transition-opacity"
+                        title="阅读模式已开启"></span>
+                </button>
+                <!-- 设置下拉菜单 -->
+                <div id="settings-dropdown"
+                    class="absolute right-0 top-full mt-2 w-48 bg-surface-container-lowest border border-outline-variant/20 rounded-xl shadow-lg shadow-black/5 opacity-0 invisible transform translate-y-[-10px] transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-50 overflow-hidden">
+                    <div class="py-2">
+                        <button onclick="window.scrollToTop()"
+                            class="w-full px-4 py-2.5 text-left text-sm font-label flex items-center gap-3 hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-sm">arrow_upward</span>
+                            <span>返回顶部</span>
+                        </button>
+                        <button onclick="window.toggleReadMode()"
+                            class="w-full px-4 py-2.5 text-left text-sm font-label flex items-center gap-3 hover:bg-surface-container-low transition-colors">
+                            <span class="material-symbols-outlined text-sm">text_format</span>
+                            <span class="flex-1">阅读模式</span>
+                            <!-- 状态指示器 -->
+                            <span id="read-mode-status"
+                                class="w-10 h-5 rounded-full bg-surface-container-high relative transition-colors">
+                                <span
+                                    class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-outline-variant transition-all"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 点击外部关闭下拉菜单 -->
+            <div id="settings-dropdown-overlay" class="fixed inset-0 z-40 hidden"></div>
             <a href="./author.html" class="block">
                 <img alt="用户头像"
                     class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm cursor-pointer hover:opacity-80 transition-opacity"
@@ -45,3 +81,18 @@
 
 <!-- Mobile sidebar overlay -->
 <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+
+<!-- 通知提示弹窗 - 放在 header 外面！ -->
+<div id="notification-toast"
+    class="fixed top-24 left-1/2 -translate-x-1/2 max-w-sm bg-surface-container-lowest border border-outline-variant/20 rounded-xl shadow-xl shadow-black/10 p-4 opacity-0 invisible transform transition-all duration-300 z-50">
+    <div class="flex items-start gap-3">
+        <span class="material-symbols-outlined text-primary text-xl">lightbulb</span>
+        <div class="flex-1">
+            <h4 class="font-headline font-bold text-on-surface text-sm mb-1">📢 温馨提示</h4>
+            <p id="notification-message" class="text-sm text-on-surface-variant font-body"></p>
+        </div>
+        <button onclick="hideNotification()" class="p-1 hover:bg-surface-container-low rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-sm text-outline">close</span>
+        </button>
+    </div>
+</div>
