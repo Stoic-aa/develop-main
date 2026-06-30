@@ -19,6 +19,7 @@
     let displayedArticles = [];
     let allSortedArticles = [];
     let currentPage = 0;
+    let allArticlesBackup = []; // 新增：保存所有文章的备份，用于搜索
 
     // ====================== 公共工具函数（全局复用，避免多文件重复） ======================
     /**
@@ -169,12 +170,16 @@
         const container = getArticleListContainer();
         if (!container) return;
 
+        // 关键：先获取并保存按钮元素，在清空前保存引用
         const loadMoreBtn = document.querySelector('.pt-12.flex.justify-center');
-        container.innerHTML = '';
 
+        // 创建新的文章列表容器
         const wrapper = document.createElement('div');
         wrapper.className = isHomePage() ? 'space-y-10' : 'space-y-0';
         displayedArticles.forEach(art => wrapper.appendChild(createArticleCard(art)));
+
+        // 清空容器并重新添加内容（保留按钮）
+        container.innerHTML = '';
         container.appendChild(wrapper);
 
         // 控制加载更多按钮显隐
@@ -238,6 +243,9 @@
             source = window.articlesData;
         }
 
+        // 保存所有文章备份（用于搜索）
+        allArticlesBackup = sortArticlesByDate(window.articlesData || []);
+        // 当前页面的文章列表
         allSortedArticles = sortArticlesByDate(source);
         currentPage = 0;
         displayedArticles = allSortedArticles.slice(0, ARTICLE_PER_PAGE);
@@ -417,10 +425,111 @@
      */
     window.performSearch = function performSearch(query) {
         const val = query.trim();
-        if (!val) return;
-        console.log('搜索关键词：', val);
-        alert(`正在搜索：${val}`);
+        if (!val) {
+            // 清空搜索，恢复原列表
+            resetArticleList();
+            return;
+        }
+
+        // 使用所有文章进行搜索（而非当前页面的文章）
+        const searchResults = allArticlesBackup.filter(article => {
+            const searchable = [
+                article.title.toLowerCase(),
+                article.summary.toLowerCase(),
+                article.category.toLowerCase(),
+                ...article.tags.map(tag => tag.toLowerCase())
+            ];
+            return searchable.some(item => item.includes(val.toLowerCase()));
+        });
+
+        // 渲染搜索结果
+        renderSearchResults(searchResults, val);
     };
+
+    /**
+     * 重置文章列表为初始状态
+     */
+    function resetArticleList() {
+        // 重新初始化数据（关键：恢复到页面初始状态）
+        let source = [];
+        if (isHomePage() && window.homepageArticlesData) {
+            source = window.homepageArticlesData;
+        } else if (window.articlesData) {
+            source = window.articlesData;
+        }
+
+        // 重新设置当前页面的文章列表
+        allSortedArticles = sortArticlesByDate(source);
+        currentPage = 1;
+        displayedArticles = allSortedArticles.slice(0, ARTICLE_PER_PAGE);
+        renderArticleList(); // ← 这里会自动处理按钮显隐
+
+        // 隐藏搜索结果提示
+        const searchHint = document.getElementById('search-hint');
+        if (searchHint) searchHint.remove();
+
+        // 删除下面这段代码，因为 renderArticleList() 会自动处理
+        // const loadMoreBtn = document.querySelector('.pt-12.flex.justify-center');
+        // if (loadMoreBtn) {
+        //     loadMoreBtn.style.display = 'flex';
+        // }
+    }
+
+    /**
+     * 渲染搜索结果
+     * @param {Array} results 搜索结果数组
+     * @param {string} query 搜索关键词
+     */
+    function renderSearchResults(results, query) {
+        const container = getArticleListContainer();
+        if (!container) return;
+
+        // 关键：先保存按钮引用
+        const loadMoreBtn = document.querySelector('.pt-12.flex.justify-center');
+
+        displayedArticles = results;
+        currentPage = 1;
+
+        // 添加搜索提示
+        const hintEl = document.createElement('div');
+        hintEl.id = 'search-hint';
+        hintEl.className = 'mb-6 flex items-center justify-between';
+        hintEl.innerHTML = `
+        <p class="text-on-surface-variant font-body">
+            搜索 "<span class="text-primary font-bold">${query.trim()}</span>" 找到 <span class="text-primary font-bold">${results.length}</span> 篇文章
+        </p>
+        <button onclick="resetArticleList()" class="text-sm text-primary hover:text-primary/80 font-medium">
+            清除搜索
+        </button>
+    `;
+
+        // 创建结果列表
+        const wrapper = document.createElement('div');
+        wrapper.className = isHomePage() ? 'space-y-10' : 'space-y-0';
+
+        if (results.length === 0) {
+            const emptyEl = document.createElement('div');
+            emptyEl.className = 'text-center py-16';
+            emptyEl.innerHTML = `
+            <p class="text-on-surface-variant font-body">未找到匹配的文章</p>
+            <p class="text-on-surface-variant/70 font-body text-sm mt-2">请尝试其他关键词</p>
+        `;
+            wrapper.appendChild(emptyEl);
+        } else {
+            results.forEach(art => wrapper.appendChild(createArticleCard(art)));
+        }
+
+        // 清空并重新构建
+        container.innerHTML = '';
+        container.appendChild(hintEl);
+        container.appendChild(wrapper);
+
+        // 添加按钮并隐藏
+        if (loadMoreBtn) {
+            container.appendChild(loadMoreBtn);
+            loadMoreBtn.style.display = 'none';
+        }
+    }
 
     // ====================== 入口：监听布局就绪事件，保证执行顺序 ======================
     function bootstrap() {
