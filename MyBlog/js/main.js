@@ -380,7 +380,7 @@
                         return currentSlug ? artSlug === currentSlug : artFile === fileName;
                     });
                     // 文章未指定分类页 → 属于首页分支
-                    if (currArt && (!currArt.categoryPage || normalizePath(currArt.categoryPage) === '')) {
+                    if (currArt && (!currArt.categoryPage || normalizePath(currArt.categoryPage) === '' || normalizePath(currArt.categoryPage) === 'index.html')) {
                         isMatch = true;
                     }
                 }
