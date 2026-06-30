@@ -113,17 +113,17 @@
         }
     </style>
 
-    <script src="js/layout-init.js"></script>
+    <!-- 正确的脚本引入顺序 -->
+    <script src="js/articles-data.js?v=1.0.1"></script> <!-- 1. 文章数据 -->
+    <script src="js/main.js?v=1.0.1"></script> <!-- 3. 文章渲染 -->
+    <script src="js/layout-init.js?v=1.0.1"></script> <!-- 4. 布局初始化 -->
     <script>
-        // 组件注入/搜索绑定/导航高亮：统一由 layout-init 管理
         initLayout({
             componentsBasePath: 'components',
             linkBasePrefix: ''
         });
     </script>
 
-    <script src="js/articles-data.js"></script>
-    <script src="js/main.js"></script>
 </head>
 
 <body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
