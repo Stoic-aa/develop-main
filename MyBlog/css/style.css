@@ -1,5 +1,7 @@
 .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px;
     vertical-align: middle;
 }
 
@@ -33,4 +35,15 @@
 .read-mode .category-main-container {
     max-width: 100% !important;
     margin-left: 0 !important;
+}
+
+/* material-symbols-regular - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/material-symbols-v89-latin-600.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
