@@ -2,6 +2,8 @@
     font-family: 'Material Symbols Outlined';
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     font-size: 20px;
+    display: inline-block;
+    line-height: 1;
     vertical-align: middle;
 }
 
@@ -16,6 +18,30 @@
 
 .group:hover .article-title-hover {
     transform: translateY(-4px) scale(1.02);
+}
+
+.video-card-transition {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.video-card-transition:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.headline {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.label-text {
+    font-family: 'Inter', sans-serif;
 }
 
 /* 阅读模式 */
@@ -40,10 +66,23 @@
 /* material-symbols-regular - latin */
 @font-face {
     font-display: swap;
-    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    /* Check `https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display` for other options. */
     font-family: 'Material Symbols Outlined';
     font-style: normal;
     font-weight: 600;
     src: url('../fonts/material-symbols-v89-latin-600.woff2') format('woff2');
     /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* ========== 移动端适配：消除主内容容器的 40vw 宽度和 20vw 左边距 ========== */
+@media (max-width: 768px) {
+    .category-main-container {
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    .friendlink-main-container {
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
 }

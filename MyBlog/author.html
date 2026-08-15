@@ -4,118 +4,21 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes"
-        name="viewport" />
+    <meta content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes" name="viewport" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/tailwind-config.js"></script>
     <link rel="stylesheet" href="css/style.css" /> <!-- ← 新增这一行 -->
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary-fixed-dim": "#b4c5ff",
-                        "secondary": "#515f74",
-                        "on-secondary-fixed-variant": "#3a485b",
-                        "on-primary": "#ffffff",
-                        "on-primary-container": "#eeefff",
-                        "on-primary-fixed": "#00174b",
-                        "secondary-fixed": "#d5e3fc",
-                        "surface-dim": "#d8dadc",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-highest": "#e0e3e5",
-                        "outline-variant": "#c3c6d7",
-                        "secondary-fixed-dim": "#b9c7df",
-                        "surface": "#f7f9fb",
-                        "error": "#ba1a1a",
-                        "inverse-surface": "#2d3133",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed-dim": "#bec6e0",
-                        "surface-bright": "#f7f9fb",
-                        "on-secondary-container": "#57657a",
-                        "surface-container-low": "#f2f4f6",
-                        "on-secondary-fixed": "#0d1c2e",
-                        "primary-container": "#2563eb",
-                        "on-primary-fixed-variant": "#003ea8",
-                        "tertiary": "#4d556b",
-                        "surface-container": "#eceef0",
-                        "tertiary-container": "#656d84",
-                        "on-tertiary-container": "#eef0ff",
-                        "surface-container-high": "#e6e8ea",
-                        "primary-fixed": "#dbe1ff",
-                        "on-surface": "#191c1e",
-                        "outline": "#737686",
-                        "on-tertiary-fixed-variant": "#3f465c",
-                        "inverse-primary": "#b4c5ff",
-                        "on-error-container": "#93000a",
-                        "primary": "#004ac6",
-                        "surface-tint": "#0053db",
-                        "on-error": "#ffffff",
-                        "tertiary-fixed": "#dae2fd",
-                        "background": "#f7f9fb",
-                        "on-secondary": "#ffffff",
-                        "inverse-on-surface": "#eff1f3",
-                        "on-tertiary-fixed": "#131b2e",
-                        "on-background": "#191c1e",
-                        "surface-variant": "#e0e3e5",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-container": "#d5e3fc",
-                        "on-surface-variant": "#434655"
-                    },
-                    fontFamily: {
-                        "headline": ["Space Grotesk"],
-                        "body": ["Manrope"],
-                        "label": ["Inter"]
-                    },
-                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
-                },
-            },
-        }
-    </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-
-        .bounce-hover {
-            transition: transform 300s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transition-duration: 300ms;
-        }
-
-        .bounce-hover:hover {
-            transform: translateY(-4px) scale(1.02);
-        }
-
-        body {
-            font-family: 'Manrope', sans-serif;
-            background-color: #f7f9fb;
-            color: #191c1e;
-        }
-
-        .no-line {
-            border: none !important;
-        }
-
-        /* ========== 移动端适配：消除主内容容器的 50vw 宽度和 20vw 左边距 ========== */
-        @media (max-width: 768px) {
-            .profile-main-container {
-                max-width: 100% !important;
-                margin-left: 0 !important;
-            }
-        }
-    </style>
 
     <!-- 正确的脚本引入顺序 -->
     <script src="js/articles-data.js?v=1.0.7"></script> <!-- 1. 文章数据 -->
-    <script src="js/main.js?v=1.0.7"></script> <!-- 3. 文章渲染 -->
-    <script src="js/layout-init.js?v=1.0.7"></script> <!-- 4. 布局初始化 -->
+    <script src="js/main.js?v=1.0.7"></script>          <!-- 2. 文章渲染 -->
+    <script src="js/layout-init.js?v=1.0.7"></script>   <!-- 3. 布局初始化 -->
     <script>
         initLayout({
             componentsBasePath: 'components',
             linkBasePrefix: ''
         });
     </script>
-
 </head>
 
 <body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
