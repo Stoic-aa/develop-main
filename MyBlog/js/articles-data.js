@@ -11,19 +11,19 @@
     const articlesData = [
         {
             id: 1,
-            title: "MCAL概述",
-            summary: "嵌入式系统的内存安全不再是一种奢侈品。在本篇社论中，我们将探讨 Rust 的所有权模型如何转化为裸机硬件操作，以及为什么它是构建弹性物联网基础设施的未来。",
+            title: "SSL站点证书申请及更换记录",
+            summary: "记录自己站点证书过期时，申请和更换证书需要的关键步骤，方便下次证书的重新更换上线",
             category: "车载嵌入式",
-            date: "2026年6月30日",
+            date: "2026年8月16日",
             readTime: "阅读时间 12 分钟",
             author: "Ethan",
             authorAvatar: "./picture/author.png",
             coverImage: "https://www.techphant.cn/wp-content/uploads/2023/03/10355465.jpg",
-            url: "articles/article-template.html?slug=example",
-            contentFile: "content/example.html",
+            url: "articles/article-template.html?slug=SSL_Certificate_Install_Record",
+            contentFile: "content/SSL_Certificate_Install_Record.html",
             categoryPage: "index.html",
             tags: ["Rust", "物联网", "嵌入式系统", "微内核"],
-            lastUpdated: "2026年6月30日"
+            lastUpdated: "2026年8月16日"
         },
         {
             id: 2,
