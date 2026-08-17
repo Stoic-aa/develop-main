@@ -130,6 +130,41 @@
     }
 
     // ====================== 交互绑定 ======================
+
+    /**
+     * 绑定图片点击放大
+     */
+    function bindImageModal() {
+        const articleContent = document.getElementById('article-content');
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const closeModal = document.getElementById('modal-close');
+
+        if (articleContent && imageModal && modalImage && closeModal) {
+            articleContent.addEventListener('click', function (e) {
+                if (e.target.tagName === 'IMG') {
+                    modalImage.src = e.target.src;
+                    imageModal.classList.remove('hidden');
+                    imageModal.classList.add('flex'); // 使用 flex 居中
+                }
+            });
+
+            const close = () => {
+                imageModal.classList.add('hidden');
+                imageModal.classList.remove('flex');
+                modalImage.src = ''; // 清空 src
+            };
+
+            closeModal.addEventListener('click', close);
+            imageModal.addEventListener('click', function (e) {
+                // 如果点击的是背景（而不是图片本身），则关闭
+                if (e.target === imageModal) {
+                    close();
+                }
+            });
+        }
+    }
+
     /**
      * 绑定分享、点赞按钮
      */
@@ -190,6 +225,9 @@
 
             // 绑定按钮交互
             bindActionButtons();
+
+            // 绑定图片模态框交互
+            bindImageModal();
         } catch (err) {
             console.error('文章详情页初始化失败:', err);
             renderErrorPage('页面初始化异常，请刷新页面。');
