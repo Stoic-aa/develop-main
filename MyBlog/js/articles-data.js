@@ -10,7 +10,7 @@
     const articlesData = [
         {
             id            : 1,
-            title         : "SSL站点证书申请及更换记录",
+            title         : "SSL证书申请及更换",
             summary       : "记录自己站点证书过期时，申请和更换证书需要的关键步骤，方便下次证书的重新更换上线",
             category      : "车载嵌入式",
             date          : "2026年8月16日",
