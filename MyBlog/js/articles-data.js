@@ -1,13 +1,12 @@
 /**
  * @file articles-data.js
  * @description 全站文章唯一数据源、数据筛选、分类渲染、HTML模板定义
- * @coupling 向外暴露全局 articlesData / homepageArticlesData / featuredArticleData 供业务脚本读取
- * @version 1.1
+ * @version 1.4 (重构排序逻辑，实现复用)
  */
 (function () {
     'use strict';
 
-    // ====================== 核心文章数据源（单一数据源） ======================
+    // ====================== 核心文章数据源 ======================
     const articlesData = [
         {
             id            : 1,
@@ -24,236 +23,61 @@
             categoryPage  : "index.html",
             tags          : ["Rust", "物联网", "嵌入式系统", "微内核"],
             lastUpdated   : "2026年8月16日"
+            // ...其他字段
         }
-        // {
-        //     id: 2,
-        //     title: "RISC-V 在嵌入式 AI 领域的崛起：高性能指令集的机遇",
-        //     summary: "分析 RISC-V 架构如何通过可扩展指令集为边缘计算设备提供差异化竞争优势...",
-        //     category: "RISC-V",
-        //     date: "2024年5月20日",
-        //     readTime: "阅读时间 10 分钟",
-        //     author: "David Park",
-        //     authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        //     coverImage: "https://pic4.zhimg.com/v2-b8dce38a8a8bff1e2f77d7d46c6b3dab_180x120.jpg",
-        //     url: "articles/article-template.html?slug=riscv-embedded-ai",
-        //     contentFile: "content/riscv-embedded-ai.html",
-        //     categoryPage: "emed.html",
-        //     tags: ["RISC-V", "嵌入式AI", "边缘计算", "指令集架构"],
-        //     lastUpdated: "2024年5月20日"
-        // },
-        // {
-        //     id: 3,
-        //     title: "AUTOSAR 架构下的软件定义汽车：应对复杂度挑战",
-        //     summary: "面对日益复杂的车载软件，传统的开发模式正向 Adaptive AUTOSAR 快速演进...",
-        //     category: "汽车电子",
-        //     date: "2024年5月15日",
-        //     readTime: "阅读时间 14 分钟",
-        //     author: "Michael Brown",
-        //     authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        //     coverImage: "http://opinion.people.com.cn/NMediaFile/2024/0313/MAIN1710292606512BWZWGLKSNI.png",
-        //     url: "articles/article-template.html?slug=autosar-software-defined-cars",
-        //     contentFile: "content/autosar-software-defined-cars.html",
-        //     categoryPage: "emed.html",
-        //     tags: ["AUTOSAR", "软件定义汽车", "汽车电子", "车载软件"],
-        //     lastUpdated: "2024年5月15日"
-        // },
-        // {
-        //     id: 4,
-        //     title: "从硬件根信任 (RoT) 出发：构建坚不可摧的物联网安全底座",
-        //     summary: "在碎片化的 IoT 环境中，硬件级安全加密芯片为何成为大规模部署的先决条件...",
-        //     category: "安全防御",
-        //     date: "2024年5月10日",
-        //     readTime: "阅读时间 11 分钟",
-        //     author: "Emily Wilson",
-        //     authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        //     coverImage: "https://pic.pngsucai.com/00/53/14/fecaef5df5624bfc.webp",
-        //     url: "articles/article-template.html?slug=hardware-root-of-trust-iot-security",
-        //     contentFile: "content/hardware-root-of-trust-iot-security.html",
-        //     categoryPage: "emed.html",
-        //     tags: ["IoT安全", "硬件根信任", "安全芯片", "可信计算"],
-        //     lastUpdated: "2024年5月10日"
-        // },
-        // {
-        //     id: 5,
-        //     title: "UI 设计中的'无感'哲学：通过色彩层级营造深度",
-        //     summary: "为什么现代 UI 正在摒弃 1px 边框，转而利用背景色块切换和负空间。这是一份为技术内容打造高端社论级体验的视觉指南。",
-        //     category: "设计系统",
-        //     date: "2024年5月18日",
-        //     readTime: "阅读时间 8 分钟",
-        //     author: "Sarah Chen",
-        //     authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        //     coverImage: "http://www.lanlanwork.com/blog/content/uploadfile/202409/d6491727073785.jpg",
-        //     url: "articles/article-template.html?slug=ui-design-philosophy",
-        //     contentFile: "content/ui-design-philosophy.html",
-        //     categoryPage: "emed.html",
-        //     tags: ["UI设计", "设计系统", "视觉层级", "用户体验"],
-        //     lastUpdated: "2024年5月18日"
-        // },
-        // {
-        //     id: 6,
-        //     title: "Serverless 大规模应用实践：应对月均千万级请求",
-        //     summary: "深入了解冷启动优化、状态管理以及当你的基础设施完全是瞬态时的可观测性实战策略。",
-        //     category: "DevOps",
-        //     date: "2024年5月12日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Marco K.",
-        //     authorAvatar: "https://bpic.588ku.com/element_origin_min_pic/25/08/01/8afb633d2d9a300d88254c6f71a0912b.jpg",
-        //     coverImage: "https://www.uux.cn/attachments/2022/12/1_202212081152461611A.jpg",
-        //     url: "articles/article-template.html?slug=serverless-practice",
-        //     contentFile: "content/serverless-practice.html",
-        //     categoryPage: "emed.html",
-        //     tags: ["Serverless", "DevOps", "云原生", "高并发"],
-        //     lastUpdated: "2024年5月12日"
-        // },
-        // {
-        //     id: 7,
-        //     title: "从 L3 到 L5 的跨越：自动驾驶系统的算法演进与硬件瓶颈",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年5月25日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/serverless-practice.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年5月25日"
-        // },
-        // {
-        //     id: 8,
-        //     title: "测试文章新增1",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月4日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/test-1.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月4日"
-        // },
-        // {
-        //     id: 9,
-        //     title: "测试文章新增2",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月6日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/test-2.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月6日"
-        // },
-        // {
-        //     id: 10,
-        //     title: "测试文章新增3",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月7日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/test-2.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月7日"
-        // },
-        // {
-        //     id: 11,
-        //     title: "测试文章新增4",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月8日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/test-2.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月8日"
-        // },
-        // {
-        //     id: 12,
-        //     title: "测试文章新增5",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月9日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=l3-to-l5-autonomous-driving",
-        //     contentFile: "content/test-2.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月9日"
-        // },
-        // {
-        //     id: 13,
-        //     title: "测试文章新增6",
-        //     summary: "探讨端到端大模型如何重塑自动驾驶架构，以及车载计算平台在向全自动驾驶迈进过程中面临的功耗与算力挑战。",
-        //     category: "深度解析",
-        //     date: "2024年6月10日",
-        //     readTime: "阅读时间 15 分钟",
-        //     author: "Tech Editorial Team",
-        //     authorAvatar: "",
-        //     coverImage: "https://img.shetu66.com/2023/07/20/1689844191148923.png",
-        //     url: "articles/article-template.html?slug=example",
-        //     contentFile: "content/example.html",
-        //     categoryPage: "auto.html",
-        //     tags: ["自动驾驶", "人工智能", "车载计算", "算法"],
-        //     lastUpdated: "2024年6月10日"
-        // }
     ];
 
     // ====================== 数据工具函数 ======================
+
     /**
-     * 获取最新N篇文章（按ID倒序）
-     * @param {number} count 数量
-     * @returns {Array}
+     * [核心] 将 "YYYY年M月D日" 格式的字符串解析为 Date 对象
+     */
+    function parseDate(dateString) {
+        if (!dateString) return new Date(0);
+        const parts = dateString.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+        if (!parts) return new Date(0);
+        return new Date(parts[1], parts[2] - 1, parts[3]);
+    }
+
+    /**
+     * [重构] 创建一个可复用的函数，专门用于按日期获取排序后的文章数组
+     * @returns {Array} 一个按日期降序排列的新数组
+     */
+    function getSortedArticles() {
+        // 使用 memoization 思想，如果已排序，则直接返回，避免重复计算
+        if (!window._sortedArticlesCache) {
+            window._sortedArticlesCache = [...articlesData].sort((a, b) => parseDate(b.date) - parseDate(a.date));
+        }
+        return window._sortedArticlesCache;
+    }
+
+    /**
+     * [简化] 获取最新N篇文章
      */
     function getLatestArticles(count) {
-        return [...articlesData].sort((a, b) => b.id - a.id).slice(0, count);
+        return getSortedArticles().slice(0, count);
     }
 
     /**
-     * 获取全站最新单篇文章（首页特色文章）
-     * @returns {Object|null}
+     * [简化] 获取全站最新单篇文章
      */
     function getLatestFeaturedArticle() {
-        const sorted = [...articlesData].sort((a, b) => b.id - a.id);
-        return sorted[0] || null;
+        return getSortedArticles()[0] || null;
     }
 
     /**
-     * 生成分类页文章卡片HTML（emed专用）
-     * @param {Object} article 文章对象
-     * @returns {string} HTML字符串
+     * 生成分类页文章卡片HTML
      */
     function buildEmedArticleCard(article) {
         if (!article) return '';
         const tagHtml = (article.tags || [])
             .map(tag => `<span class="px-3 py-1 bg-surface-container-highest text-slate-600 rounded-full text-xs font-label font-bold tag-item">#${tag}</span>`)
             .join('');
-
         return `
         <article class="group relative bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/20 hover:border-primary/30 transition-all duration-300">
-            <a href="${article.url}" class="block">
+            <a href="${article.url || '#'}" class="block">
                 <div class="aspect-video overflow-hidden">
-                    <img src="${article.coverImage}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="${article.coverImage || ''}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
                 <div class="p-6 sm:p-8 space-y-4">
                     <div class="flex items-center gap-4 text-sm">
@@ -267,7 +91,7 @@
                     <p class="text-lg text-on-surface-variant font-body leading-relaxed">${article.summary}</p>
                     <div class="flex items-center justify-between pt-4">
                         <div class="flex items-center gap-3">
-                            <img src="${article.authorAvatar}" alt="${article.author}" class="w-10 h-10 rounded-full">
+                            <img src="${article.authorAvatar || ''}" alt="${article.author}" class="w-10 h-10 rounded-full">
                             <span class="font-label font-bold text-on-surface">${article.author}</span>
                         </div>
                         <div class="tags-section flex gap-2">${tagHtml}</div>
@@ -278,65 +102,99 @@
     }
 
     /**
-     * 渲染 emed.html 分类页面文章列表
+     * [简化] 渲染 emed.html 分类页面文章列表
      */
     function renderEmedPageArticles() {
         if (!window.location.pathname.includes('emed.html')) return;
-
         const container = document.querySelector('.space-y-12.sm\\:space-y-16');
-        if (!container) {
-            console.error('emed页面：未找到文章容器');
-            return;
-        }
+        if (!container) return;
 
-        // 筛选分类文章
-        const targetArticles = articlesData
-            .filter(item => item.categoryPage === 'emed.html')
-            .sort((a, b) => b.id - a.id);
+        const targetArticles = getSortedArticles().filter(item => item.categoryPage === 'emed.html');
 
         if (targetArticles.length === 0) {
             container.innerHTML = '<p class="text-center text-gray-500 py-12">暂无相关文章</p>';
             return;
         }
-
         container.innerHTML = targetArticles.map(buildEmedArticleCard).join('');
     }
 
-    // ====================== 对外暴露全局数据 ======================
-    // 首页列表数据
-    const homepageArticlesData = getLatestArticles(4);
-    // 首页特色文章
-    const featuredArticleData = getLatestFeaturedArticle();
+    /**
+     * [简化] 渲染侧边栏热门趋势
+     */
+    function renderTrendingTopics() {
+        const container = document.getElementById('trending-topics');
+        if (!container) return;
+
+        const trendingItems = [];
+        const usedTags = new Set();
+        const sortedArticles = getSortedArticles(); // 直接使用排序好的数组
+
+        for (const article of sortedArticles) {
+            if (trendingItems.length >= 3) break;
+            if (!article.tags || article.tags.length === 0) continue;
+            const firstUnusedTag = article.tags.find(tag => !usedTags.has(tag));
+            if (firstUnusedTag) {
+                trendingItems.push({ tag: firstUnusedTag, title: article.title, url: article.url || '#' });
+                usedTags.add(firstUnusedTag);
+            }
+        }
+
+        // ... 默认值填充逻辑不变 ...
+        const defaultTopics = [
+            { tag: 'Hello',  title: 'hello world!', url: '#' },
+            { tag: 'Me',     title: 'again happy',  url: '#' },
+            { tag: 'You',    title: 'world for me', url: '#' }
+        ];
+        while (trendingItems.length < 3) {
+            const nextDefault = defaultTopics.find(topic => !usedTags.has(topic.tag));
+            if (nextDefault) {
+                trendingItems.push(nextDefault);
+                usedTags.add(nextDefault.tag);
+            } else {
+                break;
+            }
+        }
+
+        const topicsHtml = trendingItems.slice(0, 3).map(item => `
+            <a class="block p-3 rounded-xl hover:bg-surface-container-high transition-colors group" href="${item.url}">
+                <p class="text-xs text-primary font-bold mb-1">#${item.tag}</p>
+                <p class="text-sm font-semibold text-on-surface line-clamp-2">${item.title}</p>
+            </a>
+        `).join('');
+        container.innerHTML = topicsHtml;
+    }
+
+    // ====================== 对外暴露及执行 ======================
+    const homepageArticlesData  = getLatestArticles(4);
+    const featuredArticleData   = getLatestFeaturedArticle();
     const featuredArticleConfig = {
-        articleId: featuredArticleData?.id || 0,
-        categoryLabel: featuredArticleData?.category || '',
-        isFeatured: true
+        articleId     : featuredArticleData?.id || 0,
+        categoryLabel : featuredArticleData?.category || '',
+        isFeatured    : true
     };
 
-    // 挂载到全局
     window.articlesData = articlesData;
-    window.homepageArticlesData = homepageArticlesData;
-    window.featuredArticleData = featuredArticleData;
+    window.homepageArticlesData  = homepageArticlesData;
+    window.featuredArticleData   = featuredArticleData;
     window.featuredArticleConfig = featuredArticleConfig;
+    window.renderTrendingTopics  = renderTrendingTopics;
 
-    /**
-     * 更新站点统计数据（文章总数）
-     */
     function updateSiteStats() {
         const articleCountEl = document.getElementById('stats-article-count');
-        if (articleCountEl) {
-            articleCountEl.textContent = articlesData.length;
-        }
+        if (articleCountEl) {articleCountEl.textContent = articlesData.length;}
     }
 
-    // 暴露到全局，供 layout-init.js 调用
     window.updateSiteStats = updateSiteStats;
-
-    // 分类页自动渲染
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', renderEmedPageArticles);
-    } else {
+    function initRendering() {
         renderEmedPageArticles();
+        setTimeout(renderTrendingTopics, 100);
     }
+    
+    document.addEventListener('layout:ready', initRendering);
 
+    if (document.readyState !== 'loading') {
+        setTimeout(initRendering, 200);
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {setTimeout(initRendering, 200);});
+    }
 })();
