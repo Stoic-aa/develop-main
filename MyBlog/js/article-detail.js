@@ -34,15 +34,25 @@
      * @throws {Error}
      */
 // c:\Users\Administrator\Desktop\develop-main\MyBlog\js\article-detail.js
-function resolveContentPath(contentFile) {
-    if (!contentFile) throw new Error('缺少正文文件配置 contentFile');
-    
-    // 使用 window.location.origin 构建绝对路径，彻底避免相对路径问题
-    // 对于您的站点 origin 就是 https://www.mylog.world
-    const fullUrl = new URL(contentFile, window.location.origin).href;
-    console.log('尝试加载文章路径:', fullUrl);
-    return fullUrl;
-}
+    function resolveContentPath(contentFile) {
+        if (!contentFile) throw new Error('缺少正文文件配置 contentFile');
+        
+        // 假定所有 contentFile 路径都是从项目根目录开始的
+        // 例如 "articles/content/some-article.html"
+        // 我们需要确保 fetch 时使用的是相对于当前页面的正确路径
+        
+        // 获取当前页面的路径，并计算出到根目录的相对路径
+        const currentPagePath = window.location.pathname;
+        const pathSegments = currentPagePath.split('/').filter(Boolean);
+        
+        // 如果在文章详情页（如 /articles/article-template.html），则需要回退一级
+        let basePath = '';
+        if (pathSegments.includes('articles')) {
+            basePath = '../';
+        }
+
+        return `${basePath}${contentFile}`;
+    }
     // ====================== 渲染函数 ======================
     /**
      * 渲染标签列表
