@@ -24,7 +24,7 @@
             categoryPage  : "index.html",
             tags          : ["Rust", "物联网", "嵌入式系统", "微内核"],
             lastUpdated   : "2026年8月16日"
-        },
+        }
         // {
         //     id: 2,
         //     title: "RISC-V 在嵌入式 AI 领域的崛起：高性能指令集的机遇",
