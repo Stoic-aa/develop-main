@@ -18,9 +18,9 @@
             readTime      : "阅读时间 12 分钟",
             author        : "Ethan",
             authorAvatar  : "./picture/author.png",
-            coverImage    : "./picture/ssl_certificate_install_record/cover.png",
+            coverImage    : "./articles/picture/ssl_certificate_install_record/cover.png",
             url           : "articles/article-template.html?slug=ssl_certificate_install_record",
-            contentFile   : "content/ssl_certificate_install_record.html",
+            contentFile   : "articles/content/ssl_certificate_install_record.html",
             categoryPage  : "index.html",
             tags          : ["Rust", "物联网", "嵌入式系统", "微内核"],
             lastUpdated   : "2026年8月16日"
