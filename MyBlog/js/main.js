@@ -221,7 +221,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             </div>
             <div class="absolute bottom-0 p-5 sm:p-8 w-full">
-                <span class="inline-block px-3 py-1 bg-primary text-white text-[10px] font-label font-bold tracking-widest uppercase mb-4 rounded-full">
+                <span class="inline-block px-3 py-1 bg-primary text-on-primary text-[10px] font-label font-bold tracking-widest uppercase mb-4 rounded-full">
                     ${label}
                 </span>
                 <h1 class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-white mb-4 leading-tight">${art.title}</h1>
@@ -279,29 +279,65 @@
     }
 
     /**
-     * 深色模式切换（系统偏好 + 本地存储）
+     * 主题模式：浅色 / 灰色（灰色配色由 html.dark 承载，见 css/style.css）
+     * 优先读取本地存储，其次跟随系统偏好；本地存储值：'light' | 'gray'
      */
+    const THEME_KEY = 'theme';
+
+    /**
+     * 应用主题模式
+     * @param {'light'|'gray'} mode
+     */
+    function applyThemeMode(mode) {
+        const isGray = mode === 'gray';
+        document.documentElement.classList.toggle('dark', isGray);
+        updateGrayModeIndicator(isGray);
+    }
+
+    /**
+     * 更新设置菜单里的灰色模式开关状态
+     * @param {boolean} isGray
+     */
+    function updateGrayModeIndicator(isGray) {
+        const status = document.getElementById('gray-mode-status');
+        const knob = document.getElementById('gray-mode-knob');
+        if (!status || !knob) return;
+
+        status.classList.toggle('bg-primary', isGray);
+        status.classList.toggle('bg-surface-container-high', !isGray);
+        knob.classList.toggle('bg-white', isGray);
+        knob.classList.toggle('bg-outline-variant', !isGray);
+        knob.style.transform = isGray ? 'translateX(20px)' : '';
+    }
+
     function setupDarkModeToggle() {
-        const storedTheme = localStorage.getItem('theme');
-        const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const storedTheme = localStorage.getItem(THEME_KEY);
+        const preferGray = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const mode = (storedTheme === 'gray' || storedTheme === 'light')
+            ? storedTheme
+            : (preferGray ? 'gray' : 'light');
 
-        if (storedTheme === 'dark' || (!storedTheme && preferDark)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        applyThemeMode(mode);
 
-        // 监听系统主题变化
+        // 监听系统主题变化（未手动选择时才跟随）
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                e.matches
-                    ? document.documentElement.classList.add('dark')
-                    : document.documentElement.classList.remove('dark');
+            if (!localStorage.getItem(THEME_KEY)) {
+                applyThemeMode(e.matches ? 'gray' : 'light');
             }
         });
     }
     // 暴露给详情页使用
     window.setupDarkModeToggle = setupDarkModeToggle;
+
+    /**
+     * 手动切换 浅色 / 灰色 模式（设置菜单调用）
+     */
+    window.toggleGrayMode = function toggleGrayMode() {
+        const isGray = document.documentElement.classList.contains('dark');
+        const next = isGray ? 'light' : 'gray';
+        localStorage.setItem(THEME_KEY, next);
+        applyThemeMode(next);
+    };
 
     /**
      * 移动端侧边栏（带DOM重试）
@@ -367,8 +403,8 @@
         const currentSlug = getCurrentSlug();
         const navLinks = document.querySelectorAll('.flex-1.space-y-1 a');
 
-        const baseCls = ['text-slate-500', 'dark:text-slate-400', 'hover:text-slate-900', 'dark:hover:text-slate-900'];
-        const activeCls = ['bg-blue-50', 'dark:bg-blue-900/20', 'text-blue-700', 'dark:text-blue-300', 'rounded-lg'];
+        const baseCls = ['text-on-surface-variant', 'hover:text-on-surface'];
+        const activeCls = ['bg-primary/10', 'text-primary', 'rounded-lg'];
 
         navLinks.forEach(link => {
             link.classList.remove(...activeCls);

@@ -86,3 +86,108 @@ h3,
         margin-left: 0 !important;
     }
 }
+
+/* ==================================================================
+   主题令牌：浅色（默认） / 中性深灰（.dark）
+   语义色以 RGB 通道形式暴露，供 Tailwind 通过 rgb(var(--c-xxx) / <alpha-value>) 引用，
+   这样 /20 这类透明度修饰符依然有效。切换 html.dark 即可整体换肤。
+   ================================================================== */
+:root {
+    --c-surface: 247 249 251;
+    --c-surface-bright: 247 249 251;
+    --c-surface-dim: 216 218 220;
+    --c-surface-variant: 224 227 229;
+    --c-surface-container-lowest: 255 255 255;
+    --c-surface-container-low: 242 244 246;
+    --c-surface-container: 236 238 240;
+    --c-surface-container-high: 230 232 234;
+    --c-surface-container-highest: 224 227 229;
+    --c-surface-tint: 0 83 219;
+    --c-background: 247 249 251;
+    --c-on-background: 25 28 30;
+    --c-on-surface: 25 28 30;
+    --c-on-surface-variant: 67 70 85;
+    --c-outline: 115 118 134;
+    --c-outline-variant: 195 198 215;
+    --c-primary: 0 74 198;
+    --c-on-primary: 255 255 255;
+    --c-primary-container: 37 99 235;
+    --c-on-primary-container: 238 239 255;
+    --c-primary-fixed: 219 225 255;
+    --c-primary-fixed-dim: 180 197 255;
+    --c-on-primary-fixed: 0 23 75;
+    --c-on-primary-fixed-variant: 0 62 168;
+    --c-inverse-primary: 180 197 255;
+    --c-secondary: 81 95 116;
+    --c-on-secondary: 255 255 255;
+    --c-secondary-container: 213 227 252;
+    --c-on-secondary-container: 87 101 122;
+    --c-secondary-fixed: 213 227 252;
+    --c-secondary-fixed-dim: 185 199 223;
+    --c-on-secondary-fixed: 13 28 46;
+    --c-on-secondary-fixed-variant: 58 72 91;
+    --c-tertiary: 77 85 107;
+    --c-on-tertiary: 255 255 255;
+    --c-tertiary-container: 101 109 132;
+    --c-on-tertiary-container: 238 240 255;
+    --c-tertiary-fixed: 218 226 253;
+    --c-tertiary-fixed-dim: 190 198 224;
+    --c-on-tertiary-fixed: 19 27 46;
+    --c-on-tertiary-fixed-variant: 63 70 92;
+    --c-error: 186 26 26;
+    --c-on-error: 255 255 255;
+    --c-error-container: 255 218 214;
+    --c-on-error-container: 147 0 10;
+    --c-inverse-surface: 45 49 51;
+    --c-inverse-on-surface: 239 241 243;
+}
+
+html.dark {
+    --c-surface: 28 28 30;
+    --c-surface-bright: 38 38 40;
+    --c-surface-dim: 20 20 22;
+    --c-surface-variant: 58 58 61;
+    --c-surface-container-lowest: 38 38 40;
+    --c-surface-container-low: 35 35 37;
+    --c-surface-container: 41 41 44;
+    --c-surface-container-high: 47 47 51;
+    --c-surface-container-highest: 54 54 57;
+    --c-surface-tint: 138 180 255;
+    --c-background: 28 28 30;
+    --c-on-background: 230 230 232;
+    --c-on-surface: 230 230 232;
+    --c-on-surface-variant: 180 180 184;
+    --c-outline: 133 133 138;
+    --c-outline-variant: 58 58 61;
+    --c-primary: 138 180 255;
+    --c-on-primary: 16 35 63;
+    --c-primary-container: 42 63 102;
+    --c-on-primary-container: 219 230 255;
+    --c-primary-fixed: 42 63 102;
+    --c-primary-fixed-dim: 138 180 255;
+    --c-on-primary-fixed: 219 230 255;
+    --c-on-primary-fixed-variant: 180 197 255;
+    --c-inverse-primary: 0 74 198;
+    --c-secondary: 194 194 198;
+    --c-on-secondary: 28 28 30;
+    --c-secondary-container: 58 58 61;
+    --c-on-secondary-container: 220 220 224;
+    --c-secondary-fixed: 58 58 61;
+    --c-secondary-fixed-dim: 194 194 198;
+    --c-on-secondary-fixed: 230 230 232;
+    --c-on-secondary-fixed-variant: 194 194 198;
+    --c-tertiary: 194 194 198;
+    --c-on-tertiary: 28 28 30;
+    --c-tertiary-container: 58 58 61;
+    --c-on-tertiary-container: 230 230 232;
+    --c-tertiary-fixed: 58 58 61;
+    --c-tertiary-fixed-dim: 194 194 198;
+    --c-on-tertiary-fixed: 230 230 232;
+    --c-on-tertiary-fixed-variant: 194 194 198;
+    --c-error: 255 180 171;
+    --c-on-error: 92 0 6;
+    --c-error-container: 140 29 36;
+    --c-on-error-container: 255 218 214;
+    --c-inverse-surface: 230 230 232;
+    --c-inverse-on-surface: 28 28 30;
+}
