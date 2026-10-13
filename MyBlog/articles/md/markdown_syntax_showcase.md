@@ -52,7 +52,7 @@ categoryPage: "index.html"
 
 图片建议直接写 `<img>` 标签并指定宽度百分比，点击可放大查看：
 
-<img src="./picture/ssl_certificate_install_record/cover.png" alt="示例封面" title="点击可放大" width="50%" />
+<img src="./picture/ssl_certificate_install_record/cover.webp" alt="示例封面" title="点击可放大" width="50%" />
 
 ## 三、表格
 

@@ -15,7 +15,7 @@ md_change_to_html.py —— Markdown 正文 → 文章正文片段，并同步�
     1. 正文片段不含 <html>/<head>/<body>，只有内容块本身（旧的整份文档写法是错的，
        注入模板后会嵌套 html/body，必须避免）。
     2. 图片等资源路径按「相对 articles/ 目录」书写，例如
-       <img src="./picture/xxx/cover.png"> —— 注入后以详情页 /articles/article-template.html 为基准解析。
+       <img src="./picture/xxx/cover.webp"> —— 注入后以详情页 /articles/article-template.html 为基准解析。
     3. 顶部 front-matter（--- 包裹）字段：
          title(必填) / summary / category / date / readTime / author
          tags(数组) / coverImage / authorAvatar / categoryPage / lastUpdated
@@ -40,8 +40,8 @@ CONTENT_DIR = ARTICLES_DIR / 'content'                # .../articles/content
 DATA_FILE = ARTICLES_DIR.parent / 'js' / 'articles-data.js'   # .../js/articles-data.js
 
 # 占位图：当 front-matter 未给出 coverImage 时使用
-DEFAULT_COVER = './articles/picture/image.png'
-DEFAULT_AVATAR = './picture/author.png'
+DEFAULT_COVER = './articles/picture/image.webp'
+DEFAULT_AVATAR = './picture/author.webp'
 
 # ====================== 代码块语言归一化 ======================
 # 目标值必须是 js/vendor/microlighter/grammars/ 下真实存在的文件名

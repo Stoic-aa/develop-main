@@ -42,6 +42,7 @@ sudo find "$WEB_ROOT" -type f -name "*.html" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.css" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.js" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.png" -exec chmod 644 {} \;
+sudo find "$WEB_ROOT" -type f -name "*.webp" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.jpg" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.jpeg" -exec chmod 644 {} \;
 sudo find "$WEB_ROOT" -type f -name "*.gif" -exec chmod 644 {} \;

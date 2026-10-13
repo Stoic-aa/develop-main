@@ -6,7 +6,7 @@ date: "2026-08-16"
 category: "车载嵌入式"
 tags: ["Rust", "物联网", "嵌入式系统", "微内核"]
 readTime: "阅读时间 12 分钟"
-coverImage: "./articles/picture/ssl_certificate_install_record/cover.png"
+coverImage: "./articles/picture/ssl_certificate_install_record/cover.webp"
 lastUpdated: "2026-08-16"
 ---
 
@@ -18,7 +18,7 @@ lastUpdated: "2026-08-16"
 
 - 如下图，阿里云直接申请个人免费测试证书即可
 
-<img src="./picture/ssl_certificate_install_record/getssl.png" alt="内联图片" title="图片标题" width="50%" />
+<img src="./picture/ssl_certificate_install_record/getssl.webp" alt="内联图片" title="图片标题" width="50%" />
 
 
 ### 查询个人站点的证书路径、并进行替换
@@ -27,6 +27,6 @@ lastUpdated: "2026-08-16"
 cat /etc/nginx/nginx.conf
 ```
 
-<img src="./picture/ssl_certificate_install_record/sslpath.png" alt="内联图片" title="图片标题" width="50%" />
+<img src="./picture/ssl_certificate_install_record/sslpath.webp" alt="内联图片" title="图片标题" width="50%" />
 
-<img src="./picture/ssl_certificate_install_record/sslcopy.png" alt="内联图片" title="图片标题" width="50%" />
+<img src="./picture/ssl_certificate_install_record/sslcopy.webp" alt="内联图片" title="图片标题" width="50%" />
