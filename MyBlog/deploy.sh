@@ -6,13 +6,16 @@ echo "开始部署..."
 # 获取当前时间戳
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
-# ==================== 路径配置 ====================
+# ==================== 配置 ====================
 WEB_ROOT="/usr/share/nginx/html"
-# Nginx 缓存策略片段，由 server 块的 `include /etc/nginx/default.d/*.conf;` 引入
-NGINX_SNIPPET_SRC="nginx/cache.conf"
-NGINX_SNIPPET_DIR="/etc/nginx/default.d"
-NGINX_SNIPPET_DEST="$NGINX_SNIPPET_DIR/cache.conf"
-NGINX_SNIPPET_BAK="$NGINX_SNIPPET_DIR/cache.conf.bak"
+SITE_DOMAIN="www.mylog.world"          # 用于部署后自检缓存响应头
+
+# 仓库中的 Nginx 配置文件 | 服务器目标路径（同步前备份，nginx -t 失败则回滚）
+NGINX_CONFIG_MAP=(
+    "nginx/cache.conf|/etc/nginx/default.d/cache.conf"
+    "nginx/blog.conf|/etc/nginx/conf.d/blog.conf"
+)
+NGINX_BACKUP_SUFFIX=".deploy.bak"
 
 # 备份当前 web 目录
 echo "备份当前网站文件..."
@@ -51,46 +54,68 @@ sudo find "$WEB_ROOT" -type d -exec chmod 755 {} \;
 # 确保所有文件属于 nginx 用户
 sudo chown -R nginx:nginx "$WEB_ROOT"/
 
-# ==================== 同步 Nginx 缓存策略 ====================
-if [ -f "$NGINX_SNIPPET_SRC" ]; then
-    echo "同步 Nginx 缓存配置..."
-    sudo mkdir -p "$NGINX_SNIPPET_DIR"
-    if [ -f "$NGINX_SNIPPET_DEST" ]; then
-        sudo cp "$NGINX_SNIPPET_DEST" "$NGINX_SNIPPET_BAK"
+# ==================== 同步 Nginx 配置 ====================
+echo "同步 Nginx 配置..."
+for item in "${NGINX_CONFIG_MAP[@]}"; do
+    src="${item%%|*}"
+    dest="${item##*|}"
+    if [ ! -f "$src" ]; then
+        echo "  跳过（仓库中不存在）: $src"
+        continue
     fi
-    sudo cp "$NGINX_SNIPPET_SRC" "$NGINX_SNIPPET_DEST"
-fi
+    echo "  $src -> $dest"
+    sudo mkdir -p "$(dirname "$dest")"
+    sudo rm -f "${dest}${NGINX_BACKUP_SUFFIX}"
+    if [ -f "$dest" ]; then
+        sudo cp "$dest" "${dest}${NGINX_BACKUP_SUFFIX}"
+    fi
+    sudo cp "$src" "$dest"
+done
 
 # 验证 Nginx 配置
 echo "验证 Nginx 配置..."
 if sudo nginx -t; then
     echo "Nginx 配置正确，重启服务..."
     sudo systemctl reload nginx
-    # 检查 Nginx 状态
     if sudo systemctl is-active --quiet nginx; then
         echo "部署成功！Nginx 正在运行。"
+        for item in "${NGINX_CONFIG_MAP[@]}"; do
+            sudo rm -f "${item##*|}${NGINX_BACKUP_SUFFIX}"
+        done
     else
         echo "Nginx 启动失败，请检查配置。"
         sudo systemctl status nginx
     fi
 else
-    echo "Nginx 配置错误，已回滚缓存配置，请检查。"
-    if [ -f "$NGINX_SNIPPET_BAK" ]; then
-        sudo mv "$NGINX_SNIPPET_BAK" "$NGINX_SNIPPET_DEST"
-    else
-        sudo rm -f "$NGINX_SNIPPET_DEST"
-    fi
+    echo "Nginx 配置错误，回滚本次同步的配置："
+    for item in "${NGINX_CONFIG_MAP[@]}"; do
+        dest="${item##*|}"
+        if [ -f "${dest}${NGINX_BACKUP_SUFFIX}" ]; then
+            sudo mv "${dest}${NGINX_BACKUP_SUFFIX}" "$dest"
+            echo "  已还原 $dest"
+        else
+            sudo rm -f "$dest"
+            echo "  已移除 $dest"
+        fi
+    done
     exit 1
 fi
 
 echo "部署完成！"
 
 # ==================== 校验缓存响应头（仅提示，不影响部署结果） ====================
-echo "校验缓存响应头..."
-if curl -k -sI "https://127.0.0.1/" 2>/dev/null | grep -qi "cache-control: *no-cache"; then
-    echo "缓存策略已生效：Cache-Control: no-cache"
+# 用真实域名 + --resolve 指向本机，保证携带正确的 SNI / Host，命中站点 server 块
+CURL_RESOLVE="$SITE_DOMAIN:443:127.0.0.1"
+echo "校验缓存响应头（$SITE_DOMAIN）..."
+for path in "/" "/js/articles-data.js" "/css/style.css"; do
+    header=$(curl -k -sI "https://$SITE_DOMAIN$path" --resolve "$CURL_RESOLVE" 2>/dev/null | grep -i "^cache-control" | tr -d '\r')
+    echo "  $path -> ${header:-（无 Cache-Control 响应头）}"
+done
+
+if curl -k -sI "https://$SITE_DOMAIN/" --resolve "$CURL_RESOLVE" 2>/dev/null | grep -qi "cache-control: *no-cache"; then
+    echo "缓存策略已生效。"
 else
-    echo "警告：未检测到 Cache-Control: no-cache 响应头。"
-    echo "      请确认站点 server 块中是否包含：include /etc/nginx/default.d/*.conf;"
+    echo "警告：未检测到 Cache-Control: no-cache。"
+    echo "      请确认 server 块包含：include /etc/nginx/default.d/*.conf;"
     echo "      排查命令：sudo nginx -T | grep -n 'default.d'"
 fi
