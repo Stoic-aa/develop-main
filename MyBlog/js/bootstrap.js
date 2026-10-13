@@ -15,7 +15,7 @@
 
     // ====================== 常量配置区 ======================
     // 公共脚本加载顺序（严格串行：后面的脚本依赖前面的全局变量）
-    const COMMON_SCRIPTS = ['articles-data.js', 'main.js', 'layout-init.js'];
+    const COMMON_SCRIPTS = ['articles-data.js', 'utils.js', 'article-list.js', 'ui.js', 'layout-init.js'];
 
     // 默认页面配置（data-* 未提供时生效）
     const DEFAULT_OPTIONS = Object.freeze({

@@ -191,3 +191,226 @@ html.dark {
     --c-inverse-surface: 230 230 232;
     --c-inverse-on-surface: 28 28 30;
 }
+
+/* ==================================================================
+   文章正文样式（原 articles/article-template.html 内联，统一外置到全局样式表）
+   ================================================================== */
+
+/* 标题样式 - 颜色跟随主题令牌（浅色≈#191c1e，灰色≈#e6e6e8），无需再写 .dark 覆盖 */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    color: rgb(var(--c-on-surface));
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.article-content h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.article-content h2 {
+    font-size: 1.5rem;
+}
+
+.article-content h3 {
+    font-size: 1.25rem;
+}
+
+.article-content h4 {
+    font-size: 1.125rem;
+}
+
+.article-content h5 {
+    font-size: 1rem;
+}
+
+.article-content h6 {
+    font-size: 0.9rem;
+    color: rgb(var(--c-on-surface-variant));
+}
+
+.article-content p {
+    margin-bottom: 1em;
+    line-height: 1.8;
+}
+
+/* 列表样式 */
+.article-content ul,
+.article-content ol {
+    margin: 1.5em 0;
+    padding-left: 1.5em;
+}
+
+.article-content li {
+    margin: 0.5em 0;
+    line-height: 1.6;
+}
+
+.article-content ul {
+    list-style-type: disc;
+}
+
+.article-content ol {
+    list-style-type: decimal;
+}
+
+.article-content ul ul,
+.article-content ol ul {
+    list-style-type: circle;
+}
+
+.article-content ol ol,
+.article-content ul ol {
+    list-style-type: lower-alpha;
+}
+
+.article-content img {
+    margin: 1.5em 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+/* 链接 / 行内代码 / 引用 / 分割线 / 表格 —— 让 Markdown 常见元素都有主题化外观 */
+.article-content a {
+    color: rgb(var(--c-primary));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.article-content a:hover {
+    opacity: 0.8;
+}
+
+.article-content :not(pre)>code {
+    background-color: rgb(var(--c-surface-container-high));
+    color: rgb(var(--c-on-surface));
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.article-content blockquote {
+    margin: 1.5em 0;
+    padding: 0.5em 1.25em;
+    border-left: 3px solid rgb(var(--c-primary));
+    background-color: rgb(var(--c-surface-container-low));
+    color: rgb(var(--c-on-surface-variant));
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.article-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.article-content hr {
+    margin: 2.5em 0;
+    border: 0;
+    border-top: 1px solid rgb(var(--c-outline-variant));
+}
+
+.article-content table {
+    width: 100%;
+    margin: 1.5em 0;
+    border-collapse: collapse;
+    font-size: 0.95em;
+}
+
+.article-content th,
+.article-content td {
+    border: 1px solid rgb(var(--c-outline-variant) / 0.6);
+    padding: 0.6em 0.9em;
+    text-align: left;
+}
+
+.article-content thead th {
+    background-color: rgb(var(--c-surface-container-high));
+    color: rgb(var(--c-on-surface));
+    font-weight: 600;
+}
+
+.article-content tbody tr:nth-child(even) {
+    background-color: rgb(var(--c-surface-container-low));
+}
+
+.article-content strong {
+    font-weight: 700;
+    color: rgb(var(--c-on-surface));
+}
+
+/* 代码块外观交给 MicroLighter 主题变量控制，这里只负责排版 */
+.article-content pre {
+    background-color: var(--syntax-background, #f0f2f5);
+    color: var(--syntax-foreground, inherit);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1.5em 0;
+}
+
+.dark .article-content pre {
+    background-color: var(--syntax-background, #111827);
+    color: var(--syntax-foreground, inherit);
+}
+
+.article-content code {
+    font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* 代码块高亮配色：跟随本站 .dark 切换。
+   注意：::highlight() 中不解析 light-dark()，所以这里必须直接给出明/暗两套纯色变量，
+   不能依赖主题自带的 light-dark() 写法（否则代码块只会渲染成单一颜色）。 */
+[data-syntax-theme="github"] {
+    color-scheme: light;
+    --syntax-background: #ffffff;
+    --syntax-foreground: #24292f;
+    --syntax-comment: #6e7781;
+    --syntax-keyword: #cf222e;
+    --syntax-operator: #24292f;
+    --syntax-string: #0a3069;
+    --syntax-constant: #0550ae;
+    --syntax-function: #8250df;
+    --syntax-type: #8250df;
+    --syntax-variable: #953800;
+    --syntax-property: #0550ae;
+    --syntax-tag: #116329;
+    --syntax-selector: #8250df;
+    --syntax-inserted: #116329;
+    --syntax-deleted: #cf222e;
+}
+
+html.dark [data-syntax-theme="github"] {
+    color-scheme: dark;
+    --syntax-background: #1e1e20;
+    --syntax-foreground: #e6e6e8;
+    --syntax-comment: #8b949e;
+    --syntax-keyword: #ff7b72;
+    --syntax-operator: #c9d1d9;
+    --syntax-string: #a5d6ff;
+    --syntax-constant: #79c0ff;
+    --syntax-function: #d2a8ff;
+    --syntax-type: #d2a8ff;
+    --syntax-variable: #ffa657;
+    --syntax-property: #79c0ff;
+    --syntax-tag: #7ee787;
+    --syntax-selector: #d2a8ff;
+    --syntax-inserted: #7ee787;
+    --syntax-deleted: #ff7b72;
+}
+
+/* ========== 移动端适配：消除文章内容容器 30% 左右留白 ========== */
+@media (max-width: 768px) {
+    .article-container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
