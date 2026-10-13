@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-                            <html lang="zh-CN">
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <title>"SSL站点证书申请及更换记录"</title>
-                            </head>
-                            <body>
-                            <h2>SSL站点证书申请及更换记录</h2>
 <ul>
 <li>记录自己站点证书过期时，申请和更换证书需要的关键步骤，方便下次证书的重新更换上线</li>
 </ul>
@@ -16,13 +7,7 @@
 </ul>
 <p><img src="./picture/ssl_certificate_install_record/getssl.png" alt="内联图片" title="图片标题" width="50%" /></p>
 <h3>查询个人站点的证书路径、并进行替换</h3>
-<pre><code class="language-bash">#!/bin/bash
-str="hello123"
-if [[ $str =~ ^[a-z]+[0-9]+$ ]]; then
-   echo "字符串符合正则表达式"
-fi
+<pre><code class="language-bash">cat /etc/nginx/nginx.conf
 </code></pre>
 <p><img src="./picture/ssl_certificate_install_record/sslpath.png" alt="内联图片" title="图片标题" width="50%" /></p>
 <p><img src="./picture/ssl_certificate_install_record/sslcopy.png" alt="内联图片" title="图片标题" width="50%" /></p>
-                            </body>
-                            </html>

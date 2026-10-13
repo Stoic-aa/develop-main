@@ -23,7 +23,22 @@
             categoryPage  : "index.html",
             tags          : ["Rust", "物联网", "嵌入式系统", "微内核"],
             lastUpdated   : "2026年8月16日"
-            // ...其他字段
+        },
+        {
+            id            : 2,
+            title         : "Markdown 写作与代码高亮测试",
+            summary       : "一篇用于验证写作链路的内容样例：涵盖标题、列表、表格、引用、分割线以及 C / C++ / Bash / Python / Java / CSS 等多语言代码块。",
+            category      : "写作",
+            date          : "2026年10月14日",
+            readTime      : "阅读时间 8 分钟",
+            author        : "Ethan",
+            authorAvatar  : "./picture/author.png",
+            coverImage    : "./articles/picture/image.png",
+            url           : "articles/article-template.html?slug=markdown_syntax_showcase",
+            contentFile   : "articles/content/markdown_syntax_showcase.html",
+            categoryPage  : "index.html",
+            tags          : ["Markdown", "写作", "语法高亮"],
+            lastUpdated   : "2026年10月14日"
         }
     ];
 

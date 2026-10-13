@@ -1,10 +1,13 @@
 ---
 title: "SSL站点证书申请及更换记录"
+summary: "记录自己站点证书过期时，申请和更换证书需要的关键步骤，方便下次证书的重新更换上线"
 author: "Ethan"
 date: "2026-08-16"
-category: "技术教程"
-tags: ["Markdown", "写作", "格式"]
-readTime: "10分钟阅读"
+category: "车载嵌入式"
+tags: ["Rust", "物联网", "嵌入式系统", "微内核"]
+readTime: "阅读时间 12 分钟"
+coverImage: "./articles/picture/ssl_certificate_install_record/cover.png"
+lastUpdated: "2026-08-16"
 ---
 
 ## SSL站点证书申请及更换记录

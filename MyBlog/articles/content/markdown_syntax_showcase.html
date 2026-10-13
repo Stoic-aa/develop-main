@@ -1,0 +1,241 @@
+<h2>为什么写这篇测试</h2>
+<p>这是一篇<strong>自检用</strong>的文章，用来确认 Markdown 转换脚本与文章模板的配合是否完整。
+如果下面每个区块都显示正常，说明写作链路工作良好。</p>
+<p>需要重点确认的元素有：</p>
+<ul>
+<li>各级标题的层级与字号</li>
+<li>有序 / 无序 / 嵌套列表</li>
+<li>表格、引用、分割线</li>
+<li>行内代码 <code>inline code</code> 与多语言代码块高亮</li>
+</ul>
+<hr>
+<h2>一、文本与列表</h2>
+<p>普通段落支持 <strong>加粗</strong>、<em>斜体</em>，以及指向 <a href="https://www.trae.ai/">Trae 官网</a> 的链接。</p>
+<p>无序列表（含两层嵌套）：</p>
+<ul>
+<li>嵌入式方向<ul>
+<li>STM32 / AUTOSAR</li>
+<li>RTOS 实时性分析</li>
+</ul>
+</li>
+<li>Web 方向<ul>
+<li>前端工程化</li>
+</ul>
+</li>
+</ul>
+<p>有序列表：</p>
+<ol>
+<li>先在 <code>md/</code> 目录写好 Markdown</li>
+<li>执行转换脚本生成正文片段</li>
+<li>在文章详情页验证渲染</li>
+</ol>
+<blockquote>
+<p>引用块用来强调背景或结论。
+第二行会与第一行同属一个引用段落。</p>
+<blockquote>
+<p>还支持嵌套引用。</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2>二、图片</h2>
+<p>图片建议直接写 <code>&lt;img&gt;</code> 标签并指定宽度百分比，点击可放大查看：</p>
+<p><img src="./picture/ssl_certificate_install_record/cover.png" alt="示例封面" title="点击可放大" width="50%" /></p>
+<h2>三、表格</h2>
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>典型用途</th>
+<th>高亮语法名</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>底层驱动</td>
+<td><code>language-c</code></td>
+<td>裸机开发主力</td>
+</tr>
+<tr>
+<td>C++</td>
+<td>上位机 / 框架</td>
+<td><code>language-cpp</code></td>
+<td>注意 fence 写 c++</td>
+</tr>
+<tr>
+<td>Bash</td>
+<td>部署与运维脚本</td>
+<td><code>language-bash</code></td>
+<td>sh/shell 会自动映射</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>工具与数据处理</td>
+<td><code>language-python</code></td>
+<td>转换脚本本身的语言</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>服务端</td>
+<td><code>language-java</code></td>
+<td>企业级后端</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>页面样式</td>
+<td><code>language-css</code></td>
+<td>本站主题所用</td>
+</tr>
+</tbody>
+</table>
+<h2>四、C 语言</h2>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+
+#define BUFFER_SIZE 16
+
+typedef struct {
+    uint8_t  id;
+    float    temperature;
+} sensor_t;
+
+int main(void) {
+    sensor_t sensor = { .id = 1, .temperature = 36.5f };
+    /* 打印传感器读数 */
+    printf(&quot;sensor=%u temp=%.1f\n&quot;, sensor.id, sensor.temperature);
+    return 0;
+}
+</code></pre>
+<h2>五、C++</h2>
+<p>（这一段故意用 <code>c++</code> 作为代码块语言，验证别名会自动归一化为 cpp）</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+template &lt;typename T&gt;
+class Stack {
+public:
+    void push(const T&amp; value) { items_.push_back(value); }
+
+    T pop() {
+        T top = items_.back();
+        items_.pop_back();
+        return top;
+    }
+
+private:
+    std::vector&lt;T&gt; items_;
+};
+
+int main() {
+    Stack&lt;std::string&gt; stack;
+    stack.push(&quot;embedded&quot;);
+    std::cout &lt;&lt; stack.pop() &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<h2>六、Bash</h2>
+<pre><code class="language-bash">#!/bin/bash
+set -euo pipefail
+
+TARGET_DIR=&quot;/var/www/blog&quot;
+
+if [[ ! -d &quot;$TARGET_DIR&quot; ]]; then
+    echo &quot;目录不存在: $TARGET_DIR&quot; &gt;&amp;2
+    exit 1
+fi
+
+for file in &quot;$TARGET_DIR&quot;/*.html; do
+    echo &quot;部署 $file&quot;
+done
+
+echo &quot;部署完成&quot;
+</code></pre>
+<h2>七、Python</h2>
+<pre><code class="language-python">from dataclasses import dataclass
+from pathlib import Path
+
+
+@dataclass
+class Article:
+    slug: str
+    title: str
+    tags: list[str]
+
+
+def load_articles(content_dir: Path) -&gt; list[Article]:
+    &quot;&quot;&quot;读取 content 目录下的所有文章片段。&quot;&quot;&quot;
+    articles = []
+    for path in sorted(content_dir.glob(&quot;*.html&quot;)):
+        text = path.read_text(encoding=&quot;utf-8&quot;)
+        articles.append(Article(slug=path.stem, title=path.stem, tags=[]))
+    return articles
+
+
+if __name__ == &quot;__main__&quot;:
+    for item in load_articles(Path(&quot;articles/content&quot;)):
+        print(f&quot;{item.slug}: {len(item.tags)} tags&quot;)
+</code></pre>
+<h2>八、Java</h2>
+<pre><code class="language-java">public class TemperatureReader {
+
+    private static final double OFFSET = 0.5;
+
+    public static double toCelsius(int raw) {
+        return raw * 0.0625 - OFFSET;
+    }
+
+    public static void main(String[] args) {
+        int[] samples = { 320, 336, 352 };
+        for (int raw : samples) {
+            System.out.printf(&quot;raw=%d -&gt; %.2f°C%n&quot;, raw, toCelsius(raw));
+        }
+    }
+}
+</code></pre>
+<h2>九、CSS</h2>
+<pre><code class="language-css">:root {
+    --c-primary: 0 74 198;
+    --radius: 0.5rem;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (max-width: 768px) {
+    .card {
+        border-radius: var(--radius);
+    }
+}
+</code></pre>
+<h2>十、其他常用语言</h2>
+<p>JavaScript：</p>
+<pre><code class="language-javascript">const articles = await fetch('/api/articles').then((res) =&gt; res.json());
+articles.filter((item) =&gt; item.tags.includes('embedded')).forEach(console.log);
+</code></pre>
+<p>JSON：</p>
+<pre><code class="language-json">{
+  &quot;slug&quot;: &quot;markdown_syntax_showcase&quot;,
+  &quot;tags&quot;: [&quot;Markdown&quot;, &quot;写作&quot;],
+  &quot;published&quot;: true
+}
+</code></pre>
+<p>SQL：</p>
+<pre><code class="language-sql">SELECT category, COUNT(*) AS total
+FROM articles
+WHERE published = 1
+GROUP BY category
+ORDER BY total DESC;
+</code></pre>
+<p>YAML：</p>
+<pre><code class="language-yaml">site:
+  name: TechEditorial
+  theme: gray
+  nav:
+    - 最新文章
+    - 关于作者
+</code></pre>
