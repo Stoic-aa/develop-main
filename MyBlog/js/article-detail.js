@@ -28,6 +28,29 @@
     }
 
     /**
+     * 计算从当前页面回退到站点根目录的相对前缀
+     * 详情页位于 /articles/ 子目录，需要回退一级
+     * @returns {string}
+     */
+    function siteRootPrefix() {
+        const segments = window.location.pathname.split('/').filter(Boolean);
+        return segments.includes('articles') ? '../' : '';
+    }
+
+    /**
+     * 将「相对站点根目录」的资源路径转换为当前页面可用的相对路径
+     * 数据源中的 authorAvatar / coverImage 均以站点根目录为基准书写
+     * @param {string} assetPath
+     * @returns {string}
+     */
+    function resolveAssetPath(assetPath) {
+        if (!assetPath) return '';
+        // 外链或站点根绝对路径原样返回
+        if (/^(https?:)?\/\//.test(assetPath) || assetPath.startsWith('/')) return assetPath;
+        return siteRootPrefix() + assetPath.replace(/^\.\//, '');
+    }
+
+    /**
      * 解析正文内容文件路径
      * @param {string} contentFile
      * @returns {string}
@@ -35,22 +58,8 @@
      */
     function resolveContentPath(contentFile) {
         if (!contentFile) throw new Error('缺少正文文件配置 contentFile');
-        
-        // 假定所有 contentFile 路径都是从项目根目录开始的
-        // 例如 "articles/content/some-article.html"
-        // 我们需要确保 fetch 时使用的是相对于当前页面的正确路径
-        
-        // 获取当前页面的路径，并计算出到根目录的相对路径
-        const currentPagePath = window.location.pathname;
-        const pathSegments = currentPagePath.split('/').filter(Boolean);
-        
-        // 如果在文章详情页（如 /articles/article-template.html），则需要回退一级
-        let basePath = '';
-        if (pathSegments.includes('articles')) {
-            basePath = '../';
-        }
-
-        return `${basePath}${contentFile}`;
+        // contentFile 形如 "articles/content/some-article.html"，同样以站点根目录为基准
+        return `${siteRootPrefix()}${contentFile}`;
     }
 
     // ====================== 渲染函数 ======================
@@ -121,7 +130,7 @@
         els.category && (els.category.textContent = article.category);
         els.date && (els.date.textContent = article.date);
         els.author && (els.author.textContent = article.author);
-        els.avatar && (els.avatar.src = article.authorAvatar || '');
+        els.avatar && (els.avatar.src = resolveAssetPath(article.authorAvatar));
         els.avatar && (els.avatar.alt = article.author || '作者头像');
         els.readTime && (els.readTime.textContent = article.readTime);
         els.updateTime && (els.updateTime.textContent = `最后更新: ${article.lastUpdated || article.date}`);
