@@ -216,7 +216,20 @@
     }
 
     // ====================== 页面入口 ======================
-    document.addEventListener('DOMContentLoaded', async () => {
+    /**
+     * DOM 就绪后执行
+     * 脚本由 bootstrap.js 动态注入，可能晚于 DOMContentLoaded，需兼容两种情况
+     * @param {Function} task 回调
+     */
+    function onDomReady(task) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', task, { once: true });
+        } else {
+            task();
+        }
+    }
+
+    onDomReady(async () => {
         try {
             // 校验数据源
             if (typeof window.articlesData === 'undefined') {

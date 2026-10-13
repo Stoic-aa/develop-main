@@ -54,9 +54,10 @@ tailwind.config = {
                 "on-surface-variant": "rgb(var(--c-on-surface-variant) / <alpha-value>)"
             },
             fontFamily: {
-                "headline": ["Space Grotesk"],
-                "body": ["Manrope"],
-                "label": ["Inter"]
+                "headline": ["Space Grotesk", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                "body": ["Manrope", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                "label": ["Inter", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                "mono": ["Fira Code", "ui-monospace", "SFMono-Regular"]
             },
             borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
         },
