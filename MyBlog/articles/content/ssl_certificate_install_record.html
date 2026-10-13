@@ -16,7 +16,11 @@
 </ul>
 <p><img src="./picture/ssl_certificate_install_record/getssl.png" alt="内联图片" title="图片标题" width="50%" /></p>
 <h3>查询个人站点的证书路径、并进行替换</h3>
-<pre><code class="language-bash">cat /etc/nginx/nginx.conf
+<pre><code class="language-bash">#!/bin/bash
+str="hello123"
+if [[ $str =~ ^[a-z]+[0-9]+$ ]]; then
+   echo "字符串符合正则表达式"
+fi
 </code></pre>
 <p><img src="./picture/ssl_certificate_install_record/sslpath.png" alt="内联图片" title="图片标题" width="50%" /></p>
 <p><img src="./picture/ssl_certificate_install_record/sslcopy.png" alt="内联图片" title="图片标题" width="50%" /></p>

@@ -9,14 +9,9 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="stylesheet" href="../css/style.css" />
 
-    <!-- 语法高亮支持 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
-        // 为 Prism Autoloader 设置语言文件的正确加载路径
-        Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
-    </script>
+    <!-- 语法高亮：MicroLighter v2.2.0（本地部署，无 CDN / 零运行时依赖） -->
+    <link rel="stylesheet" href="../js/vendor/microlighter/themes/github.css" />
+    <script type="module" src="../js/vendor/microlighter/microlighter.min.js"></script>
 
     <script id="tailwind-config">
         tailwind.config = {
@@ -166,8 +161,10 @@
             cursor: pointer;
         }
 
+        /* 代码块外观交给 MicroLighter 主题变量控制，这里只负责排版 */
         .article-content pre {
-            background-color: #f0f2f5;
+            background-color: var(--syntax-background, #f0f2f5);
+            color: var(--syntax-foreground, inherit);
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
@@ -175,26 +172,36 @@
         }
 
         .dark .article-content pre {
-            background-color: #111827;
+            background-color: var(--syntax-background, #111827);
+            color: var(--syntax-foreground, inherit);
         }
 
-        /* 代码块样式增强 */
-        .article-content pre[class*="language-"] {
-            background: #111827 !important;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            margin: 1.5em 0;
-        }
-
-        .article-content code[class*="language-"] {
+        .article-content code {
             font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
             font-size: 0.9em;
             line-height: 1.5;
         }
 
-        .article-content code {
-            font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        /* 代码块高亮配色：暂固定为浅色主题。
+           注意：::highlight() 中不支持 light-dark()，所以这里直接给出纯色变量，
+           不能依赖主题自带的 light-dark() 写法（否则只会渲染成单一颜色）。 */
+        [data-syntax-theme="github"] {
+            color-scheme: light;
+            --syntax-background: #ffffff;
+            --syntax-foreground: #24292f;
+            --syntax-comment: #6e7781;
+            --syntax-keyword: #cf222e;
+            --syntax-operator: #24292f;
+            --syntax-string: #0a3069;
+            --syntax-constant: #0550ae;
+            --syntax-function: #8250df;
+            --syntax-type: #8250df;
+            --syntax-variable: #953800;
+            --syntax-property: #0550ae;
+            --syntax-tag: #116329;
+            --syntax-selector: #8250df;
+            --syntax-inserted: #116329;
+            --syntax-deleted: #cf222e;
         }
 
         /* ========== 移动端适配：消除内容容器 30% 左右留白 ========== */
@@ -244,7 +251,7 @@
                         </div>
                     </header>
 
-                    <div id="article-content" class="article-content text-on-surface-variant"></div>
+                    <div id="article-content" data-syntax-theme="github" class="article-content text-on-surface-variant"></div>
 
                     <footer class="mt-12 pt-8 border-t border-outline-variant/20">
                         <div class="flex flex-wrap gap-2 tags-section"></div>
@@ -282,15 +289,6 @@
     <script src="../js/articles-data.js?v=1.1.2"></script>
     <script src="../js/main.js?v=1.1.2"></script>
     <script src="../js/article-detail.js?v=1.1.2"></script>
-
-    <script>
-        // 确保 DOM 加载完成后执行语法高亮
-        document.addEventListener('DOMContentLoaded', function () {
-            if (window.Prism) {
-                Prism.highlightAll();
-            }
-        });
-    </script>
 </body>
 
 </html>

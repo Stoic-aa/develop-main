@@ -135,6 +135,9 @@
             const res = await fetch(contentPath);
             if (!res.ok) throw new Error('正文加载失败');
             els.content.innerHTML = await res.text();
+
+            // 正文为异步注入，需通知 MicroLighter 重新扫描并高亮代码块
+            els.content.dispatchEvent(new Event('syntax-highlight', { bubbles: true }));
         } catch (err) {
             console.error('正文加载异常:', err);
             renderErrorPage('文章正文加载失败，请刷新重试。');
