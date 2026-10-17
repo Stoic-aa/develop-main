@@ -284,7 +284,10 @@
     }
 
     // ====================== 入口：布局就绪后渲染 ======================
+    // 文章列表仅存在于带列表容器的页面（首页）；其余页面（如文章阅读页）直接跳过，
+    // 避免无谓执行与「未找到按钮」告警
     window.addEventListener('layout:ready', () => {
+        if (!getArticleListContainer()) return;
         initArticleData();
         bindArticleHover();
     });
