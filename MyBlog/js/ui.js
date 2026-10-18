@@ -13,7 +13,7 @@
 
     // ====================== 主题模式 ======================
     // 浅色 / 灰色（灰色配色由 html.dark 承载，见 css/style.css）
-    // 优先读取本地存储，其次跟随系统偏好；本地存储值：'light' | 'gray'
+    // 一律以本地存储为准，未选择过则默认浅色（不跟随系统偏好）；本地存储值：'light' | 'gray'
 
     /**
      * 应用主题模式
@@ -42,20 +42,9 @@
     }
 
     function setupDarkModeToggle() {
-        const storedTheme = localStorage.getItem(THEME_KEY);
-        const preferGray = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const mode = (storedTheme === 'gray' || storedTheme === 'light')
-            ? storedTheme
-            : (preferGray ? 'gray' : 'light');
-
+        // 一律以本地存储为准；未选择过则默认浅色（不再跟随系统深色偏好）
+        const mode = localStorage.getItem(THEME_KEY) === 'gray' ? 'gray' : 'light';
         applyThemeMode(mode);
-
-        // 监听系统主题变化（未手动选择时才跟随）
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem(THEME_KEY)) {
-                applyThemeMode(e.matches ? 'gray' : 'light');
-            }
-        });
     }
     // 暴露给详情页使用
     window.setupDarkModeToggle = setupDarkModeToggle;

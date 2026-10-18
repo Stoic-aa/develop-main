@@ -13,6 +13,11 @@
 (function () {
     'use strict';
 
+    // 主题预应用：本脚本位于 <head>，在首屏样式渲染前把持久化主题写到 <html>，
+    // 保证所有页面（含 friendlink）都立即继承用户选择，避免浅色/深色首屏闪烁。
+    // 未手动选择过时一律默认浅色（不跟随系统 prefers-color-scheme）。
+    document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'gray');
+
     // ====================== 常量配置区 ======================
     // 公共脚本加载顺序（严格串行：后面的脚本依赖前面的全局变量）
     const COMMON_SCRIPTS = ['articles-data.js', 'utils.js', 'article-list.js', 'ui.js', 'layout-init.js'];

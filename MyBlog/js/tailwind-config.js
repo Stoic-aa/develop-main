@@ -60,6 +60,10 @@ tailwind.config = {
                 "mono": ["Fira Code", "ui-monospace", "SFMono-Regular"]
             },
             borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+            // 移动端整页按 50% 缩放展示（viewport initial-scale=0.5），手机的布局视口被放大到约 780px，
+            // 会误触发默认的 sm(640px) / md(768px) 断点，导致手机出现桌面端布局。
+            // 这里把这两个断点上移到 1024px（与 lg 对齐），保证手机仍使用移动端布局，桌面端（≥1024px）行为不变。
+            screens: { "sm": "1024px", "md": "1024px" },
         },
     },
 }
