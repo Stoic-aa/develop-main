@@ -110,7 +110,7 @@
         }
 
         // 设置页面标题
-        document.title = `${article.title} | TechEditorial`;
+        document.title = `${article.title} | LogBase`;
 
         // 绑定DOM元素
         const els = {

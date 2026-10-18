@@ -240,7 +240,7 @@ YAML：
 
 ```yaml
 site:
-  name: TechEditorial
+  name: LogBase
   theme: gray
   nav:
     - 最新文章
