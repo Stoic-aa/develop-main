@@ -24,7 +24,7 @@
     <!-- Main Content Canvas -->
     <main class="flex-1 px-4 sm:px-8 py-12 mt-24 flex flex-col xl:flex-row">
         <!-- 主内容容器：添加 friendlink-main-container 类用于移动端覆盖 -->
-        <div class="w-full max-w-full ml-0 lg:max-w-[70vw] lg:ml-[20vw] lg:px-6 lg:scale-[0.7] lg:origin-top-left friendlink-main-container">
+        <div class="w-full max-w-full ml-0 lg:max-w-[70vw] lg:ml-72 lg:px-6 lg:scale-[0.7] lg:origin-top-left friendlink-main-container">
             <!-- Header Section -->
             <header class="mb-16">
                 <h1 class="font-headline text-5xl font-bold tracking-tight text-on-surface mb-4">友情链接</h1>
@@ -33,46 +33,121 @@
                 </p>
                 <div class="h-1 w-20 bg-primary mt-8 rounded-full"></div>
             </header>
-            <!-- Friend Links Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div
-                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 flex flex-col items-center text-center">
-                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
-                        <img class="w-full h-full object-cover"
-                            data-alt="abstract geometric shape pattern with cyan and dark blue colors, minimalist tech aesthetic"
-                            src="./picture/logo-open-source.webp" />
-                    </div>
-                    <h3 class="font-headline font-bold text-lg text-on-surface mb-2">有趣的开源社区</h3>
-                    <p class="text-sm text-on-surface-variant font-label leading-relaxed mb-4">一个Github上开源项目推荐站点</p>
-                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="https://hellogithub.com/">Visit
-                        Site</a>
+            <!-- Friend Links：按分类分组的紧凑卡片，新增推荐直接复制卡片到对应分类即可 -->
+            <!-- 分类：技术周刊 -->
+            <section class="mb-12">
+                <h2 class="font-headline text-xl font-bold text-on-surface mb-6 flex items-center gap-3">
+                    <span class="w-6 h-[2px] bg-primary"></span>
+                    技术周刊
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                    <a class="friend-card group flex flex-col items-center text-center gap-2 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all"
+                        href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener">
+                        <div class="h-12 w-12 rounded-xl overflow-hidden shadow-sm">
+                            <img class="w-full h-full object-cover"
+                                data-alt="abstract block-based identicon in primary blue and white, clean professional style"
+                                src="./picture/tech-lover.webp" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="font-headline font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate">
+                                科技爱好者周刊</h3>
+                            <p class="text-xs text-on-surface-variant font-label truncate">记录每周值得分享的科技内容，周五发布</p>
+                        </div>
+                    </a>
                 </div>
-                <!-- Card 2 -->
-                <div
-                    class="friend-card bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 flex flex-col items-center text-center">
-                    <div class="h-20 w-20 rounded-2xl overflow-hidden mb-4 shadow-sm">
-                        <img class="w-full h-full object-cover"
-                            data-alt="abstract block-based identicon in primary blue and white, clean professional style"
-                            src="./picture/tech-lover.webp" />
-                    </div>
-                    <h3 class="font-headline font-bold text-lg text-on-surface mb-2">科技爱好者周刊</h3>
-                    <p class="text-sm text-on-surface-variant font-label leading-relaxed mb-4">记录每周值得分享的科技内容，周五发布</p>
-                    <a class="text-primary text-xs font-bold uppercase tracking-wider hover:underline" href="https://github.com/ruanyf/weekly">Visit
-                        Site</a>
+            </section>
+            <!-- 分类：开源社区 -->
+            <section class="mb-12">
+                <h2 class="font-headline text-xl font-bold text-on-surface mb-6 flex items-center gap-3">
+                    <span class="w-6 h-[2px] bg-primary"></span>
+                    开源社区
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                    <a class="friend-card group flex flex-col items-center text-center gap-2 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all"
+                        href="https://hellogithub.com/" target="_blank" rel="noopener">
+                        <div class="h-12 w-12 rounded-xl overflow-hidden shadow-sm">
+                            <img class="w-full h-full object-cover"
+                                data-alt="abstract geometric shape pattern with cyan and dark blue colors, minimalist tech aesthetic"
+                                src="./picture/logo-open-source.webp" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="font-headline font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate">
+                                有趣的开源社区</h3>
+                            <p class="text-xs text-on-surface-variant font-label truncate">一个Github上开源项目推荐站点</p>
+                        </div>
+                    </a>
                 </div>
-                <!-- Add Friend CTA Card -->
-                <div
-                    class="friend-card border-2 border-dashed border-outline-variant/50 p-6 rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary group transition-colors">
+            </section>
+            <!-- 分类：个人博客 -->
+            <section class="mb-12">
+                <h2 class="font-headline text-xl font-bold text-on-surface mb-6 flex items-center gap-3">
+                    <span class="w-6 h-[2px] bg-primary"></span>
+                    个人博客
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                    <a class="friend-card group flex flex-col items-center text-center gap-2 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all"
+                        href="https://asheradeniyi.com/" target="_blank" rel="noopener">
+                        <div class="h-12 w-12 rounded-xl overflow-hidden shadow-sm">
+                            <img class="w-full h-full object-cover" data-alt="Asher Adeniyi 个人博客网站图标"
+                                src="./picture/friendlink/asheradeniyi.com.ico" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="font-headline font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate">
+                                Asher Adeniyi</h3>
+                            <p class="text-xs text-on-surface-variant font-label truncate">内容优质的个人博客，值得一读</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            <!-- 分类：网站合集（含热点新闻） -->
+            <section class="mb-12">
+                <h2 class="font-headline text-xl font-bold text-on-surface mb-6 flex items-center gap-3">
+                    <span class="w-6 h-[2px] bg-primary"></span>
+                    网站合集
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+                    <a class="friend-card group flex flex-col items-center text-center gap-2 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all"
+                        href="https://hot.pp93.com/#/" target="_blank" rel="noopener">
+                        <div class="h-12 w-12 rounded-xl overflow-hidden shadow-sm">
+                            <img class="w-full h-full object-cover" data-alt="热榜星球网站图标"
+                                src="./picture/friendlink/hot.pp93.com.png" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="font-headline font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate">
+                                热榜星球</h3>
+                            <p class="text-xs text-on-surface-variant font-label truncate">全网热点，一站直达</p>
+                        </div>
+                    </a>
+                    <a class="friend-card group flex flex-col items-center text-center gap-2 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 hover:border-primary hover:shadow-md hover:-translate-y-0.5 transition-all"
+                        href="https://touduyu.com/" target="_blank" rel="noopener">
+                        <div class="h-12 w-12 rounded-xl overflow-hidden shadow-sm">
+                            <img class="w-full h-full object-cover" data-alt="偷渡鱼网址导航网站图标"
+                                src="./picture/friendlink/touduyu.com.ico" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="font-headline font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate">
+                                偷渡鱼</h3>
+                            <p class="text-xs text-on-surface-variant font-label truncate">好用的网址导航，精选优秀网站合集</p>
+                        </div>
+                    </a>
+                    <!-- Add Friend CTA Card -->
                     <div
-                        class="h-16 w-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                        <span
-                            class="material-symbols-outlined text-outline group-hover:text-primary text-3xl transition-colors">add</span>
+                        class="friend-card flex flex-col items-center justify-center text-center gap-2 p-4 rounded-xl border-2 border-dashed border-outline-variant/50 cursor-pointer hover:border-primary group transition-colors">
+                        <div
+                            class="h-12 w-12 rounded-xl bg-surface-container-high flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                            <span
+                                class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">add</span>
+                        </div>
+                        <h3 class="font-headline font-bold text-sm text-on-surface">申请加入</h3>
+                        <p class="text-xs text-outline font-label">欢迎提交你的站点信息</p>
                     </div>
-                    <h3 class="font-headline font-bold text-lg text-on-surface mb-2">申请加入</h3>
-                    <p class="text-xs text-outline font-label px-4">欢迎提交你的站点信息，审核通过后将在此展示</p>
                 </div>
-            </div>
+            </section>
             <!-- Footer Guideline Section -->
             <section class="mt-24 p-12 bg-surface-container-low rounded-3xl">
                 <div class="max-w-3xl">
