@@ -33,7 +33,7 @@
             readTime      : "阅读时间 8 分钟",
             author        : "Ethan",
             authorAvatar  : "./picture/author.webp",
-            coverImage    : "./articles/picture/image.webp",
+            coverImage    : "./articles/picture/markdown_syntax_showcase/image.webp",
             url           : "articles/article-template.html?slug=markdown_syntax_showcase",
             contentFile   : "articles/content/markdown_syntax_showcase.html",
             categoryPage  : "index.html",
